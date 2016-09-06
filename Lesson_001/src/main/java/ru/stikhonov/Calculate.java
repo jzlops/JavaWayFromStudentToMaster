@@ -8,7 +8,7 @@ public class Calculate {
      * @param args WTF
      */
     public static void main(String[] args) {
-        System.out.println("Hello World .. Agaixcvn");
+        System.out.println("Hello World .. ");
 
     }
 
