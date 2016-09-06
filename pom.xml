@@ -10,7 +10,7 @@
     <packaging>pom</packaging>
 
     <modules>
-             <module>Lesson_001</module>
+        <module>Lesson_001</module>
         <module>Lesson_002</module>
     </modules>
 
