@@ -12,26 +12,26 @@ public class CalculatorTest {
     @Test
     public void testAdd() throws Exception {
         testcalc.add(5,5);
-        Assert.assertEquals(10, testcalc.showResult(),0);
+        Assert.assertEquals(10, testcalc.Result(),0);
 
     }
 
     @Test
     public void testSubtract() throws Exception {
         testcalc.subtract(5,5);
-        Assert.assertEquals(0, testcalc.showResult(),0);
+        Assert.assertEquals(0, testcalc.Result(),0);
     }
 
     @Test
     public void testDiv() throws Exception {
         testcalc.div(5,5);
-        Assert.assertEquals(1, testcalc.showResult(),0);
+        Assert.assertEquals(1, testcalc.Result(),0);
     }
 
     @Test
     public void testMultiple() throws Exception {
         testcalc.multiple(5,5);
-        Assert.assertEquals(25, testcalc.showResult(),0);
+        Assert.assertEquals(25, testcalc.Result(),0);
 
     }
 }
