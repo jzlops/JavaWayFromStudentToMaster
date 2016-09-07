@@ -53,7 +53,7 @@ public class Calculator {
      * @return Return the last computational result
      */
 
-    public double Result() {
+    public double getResult() {
         return this.result;
     }
 }

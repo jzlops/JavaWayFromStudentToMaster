@@ -1,7 +1,9 @@
 package ru.stikhonov;
 
-import org.junit.Assert;
 import org.junit.Test;
+
+import static org.hamcrest.Matchers.closeTo;
+import static org.junit.Assert.assertThat;
 
 /**
  * Created by Sergey Tikhonov on 07.09.2016.
@@ -11,27 +13,26 @@ public class CalculatorTest {
 
     @Test
     public void testAdd() throws Exception {
-        testcalc.add(5,5);
-        Assert.assertEquals(10, testcalc.Result(),0);
-
+        testcalc.add(5, 5);
+        assertThat(testcalc.getResult(), closeTo(10,0.001));
     }
 
     @Test
     public void testSubtract() throws Exception {
-        testcalc.subtract(5,5);
-        Assert.assertEquals(0, testcalc.Result(),0);
+        testcalc.subtract(5, 5);
+        assertThat(testcalc.getResult(), closeTo(0,0.001));
     }
 
     @Test
     public void testDiv() throws Exception {
-        testcalc.div(5,5);
-        Assert.assertEquals(1, testcalc.Result(),0);
+        testcalc.div(5, 5);
+        assertThat(testcalc.getResult(), closeTo(1,0.001));
     }
 
     @Test
     public void testMultiple() throws Exception {
-        testcalc.multiple(5,5);
-        Assert.assertEquals(25, testcalc.Result(),0);
+        testcalc.multiple(5, 5);
+        assertThat(testcalc.getResult(), closeTo(25,0.001));
 
     }
 }
