@@ -16,7 +16,6 @@ public class Calculator {
 
     public void add(double first, double second) {
         this.result = first + second;
-        Result();
     }
 
     /**
@@ -26,7 +25,6 @@ public class Calculator {
 
     public void subtract(double first, double second) {
         this.result = first - second;
-        Result();
     }
 
     /**
@@ -37,7 +35,6 @@ public class Calculator {
     public void div(double first, double second) {
         if (second != 0) {
             this.result = first / second;
-            Result();
         } else {
             System.out.println("Неккоректный параметр second");
         }
@@ -50,7 +47,6 @@ public class Calculator {
 
     public void multiple(double first, double second) {
         this.result = first * second;
-        Result();
     }
 
     /**
