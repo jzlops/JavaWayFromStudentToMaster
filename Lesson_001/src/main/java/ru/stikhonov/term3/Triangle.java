@@ -13,7 +13,6 @@ public class Triangle {
 
     /**
      * Конструктор в качестве параметра принимает три объекта Point
-     *
      * @param a точка a
      * @param b точка b
      * @param c точка c
@@ -28,21 +27,21 @@ public class Triangle {
     }
 
     /**
-     * @return Возвращает длинну ребра А
+     * @return Возвращает длинну ребра А (x1 x2 - y1 y2)
      */
     public double getLengthA() {
         return this.lengthA;
     }
 
     /**
-     * @return Возвращает длинну ребра B
+     * @return Возвращает длинну ребра B (x2 x3 - y2 y3)
      */
     public double getLengthB() {
         return this.lengthB;
     }
 
     /**
-     * @return Возвращает длинну ребра C
+     * @return Возвращает длинну ребра C (x3 x1 - y3 y1)
      */
     public double getLengthC() {
         return this.lengthC;
