@@ -6,7 +6,7 @@ package ru.stikhonov.term3;
 public class Run {
     public static void main(String[] args) {
         TriangleActions triangleActions = new TriangleActions();
-        triangleActions.setTrianglePoints(1,1,3,5,6,1);
+        triangleActions.setTrianglePointsCoordinates(1,1,3,5,6,1);
         System.out.println("Triangle area = " + triangleActions.getTriangleArea());
     }
 }

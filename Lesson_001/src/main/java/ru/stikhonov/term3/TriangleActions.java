@@ -10,7 +10,7 @@ public class TriangleActions {
     private Point pointC;
 
 
-    public void setTrianglePoints(double x1, double y1, double x2, double y2, double x3, double y3) {
+    public void setTrianglePointsCoordinates(double x1, double y1, double x2, double y2, double x3, double y3) {
         this.pointA = new Point(x1, y1);
         this.pointB = new Point(x2, y2);
         this.pointC = new Point(x3, y3);
