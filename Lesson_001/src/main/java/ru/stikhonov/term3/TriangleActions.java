@@ -1,24 +1,35 @@
 package ru.stikhonov.term3;
 
 /**
- * Created by Sergey Tikhonov on 09.09.2016.
+ * @author Sergey Tikhonov
  */
 public class TriangleActions {
-    private Triangle triangle;
-    private Point pointA;
-    private Point pointB;
-    private Point pointC;
-
-
-    public void setTrianglePointsCoordinates(double x1, double y1, double x2, double y2, double x3, double y3) {
-        this.pointA = new Point(x1, y1);
-        this.pointB = new Point(x2, y2);
-        this.pointC = new Point(x3, y3);
+    /**
+     * Метод инициализирует треугольник
+     * В качетве параметров метод принимает координаты 3-х точек по оси X и Y соотвественно
+     */
+    public static Triangle initTriangle(double x1, double y1, double x2, double y2, double x3, double y3) {
+        Point pointA = new Point(x1, y1);
+        Point pointB = new Point(x2, y2);
+        Point pointC = new Point(x3, y3);
+        Triangle triangle = new Triangle(pointA, pointB, pointC);
+        return triangle;
     }
 
-    public double getTriangleArea() {
-        this.triangle = new Triangle(this.pointA, this.pointB, this.pointC);
-        return triangle.getArea();
+    /**
+     * @return Метод возвращает максимальную длинну стороны треугольника
+     * @param triangle - в качестве параметра принимает объект Triangle
+     */
+    public static double getMaxTriangleLeg(Triangle triangle) {
+        double maxLeg;
+        if (triangle.getLengthA() > triangle.getLengthB()) {
+            maxLeg = triangle.getLengthA();
+        } else {
+            maxLeg = triangle.getLengthB();
+        }
+        if (triangle.getLengthC() > maxLeg) {
+            maxLeg = triangle.getLengthC();
+        }
+      return maxLeg;
     }
-
 }
