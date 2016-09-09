@@ -5,17 +5,15 @@ package ru.stikhonov.term3;
  */
 public class TriangleActions {
     /**
-     * Метод инициализирует треугольник
+     * Метод инициализирует объект треугольник (Triangle)
      * В качетве параметров метод принимает координаты 3-х точек по оси X и Y соотвественно
      */
     public static Triangle initTriangle(double x1, double y1, double x2, double y2, double x3, double y3) {
         Point pointA = new Point(x1, y1);
         Point pointB = new Point(x2, y2);
         Point pointC = new Point(x3, y3);
-        Triangle triangle = new Triangle(pointA, pointB, pointC);
-        return triangle;
+        return new Triangle(pointA, pointB, pointC);
     }
-
     /**
      * @return Метод возвращает максимальную длинну стороны треугольника
      * @param triangle - в качестве параметра принимает объект Triangle

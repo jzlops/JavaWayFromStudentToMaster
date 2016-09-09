@@ -31,33 +31,33 @@ public class Triangle {
      * @return Возвращает длинну ребра А
      */
     public double getLengthA() {
-        return lengthA;
+        return this.lengthA;
     }
 
     /**
      * @return Возвращает длинну ребра B
      */
     public double getLengthB() {
-        return lengthB;
+        return this.lengthB;
     }
 
     /**
      * @return Возвращает длинну ребра C
      */
     public double getLengthC() {
-        return lengthC;
+        return this.lengthC;
     }
 
     /**
-     * @return метод возвращает площать треугольника (-1 в случае не корректных координат)
+     * @return метод возвращает площать треугольника (-1 в случае некорректных координат)
      */
     public double getArea() {
-        double halfPerimeter;
-        double area;
+        double triangelHalfPerimetr;
+        double triangleArea;
         if (this.lengthA > 0 && this.lengthB > 0 && this.lengthC > 0) {
-            halfPerimeter = (this.lengthA + this.lengthB + this.lengthC) / 2;
-            area = Math.sqrt(halfPerimeter * (halfPerimeter - this.lengthA) * (halfPerimeter - this.lengthB) * (halfPerimeter - this.lengthC));
-            return area;
+            triangelHalfPerimetr = (this.lengthA + this.lengthB + this.lengthC) / 2;
+            triangleArea = Math.sqrt(triangelHalfPerimetr * (triangelHalfPerimetr - this.lengthA) * (triangelHalfPerimetr - this.lengthB) * (triangelHalfPerimetr - this.lengthC));
+            return triangleArea;
         } else {
             return -1;
         }
