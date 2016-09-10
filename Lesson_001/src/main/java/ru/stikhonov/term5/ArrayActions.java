@@ -14,7 +14,12 @@ public class ArrayActions {
                 }
     }
 
-    public static void rotate(int[][] array) {
-
+    public static int[][] rotate(int[][] array) {
+        int[][] tempArray = array.clone();
+        int length = array.length;
+        for (int i = 0; i < length; i++)
+            for (int j = 0; j < length; j++)
+                tempArray[i][j] = array[length - j + 1][i];
+        return tempArray;
     }
 }

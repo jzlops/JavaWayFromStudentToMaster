@@ -7,7 +7,7 @@ public class ArrayGenerator {
 
     public static int[] generate1X(int size) {
         int[] array = new int[size];
-        for (int i = 0; i < size; i++)
+        for (int i = 0; i < size-1; i++)
             array[i] = (int) (Math.random() * 100);
         return array;
     }
@@ -19,5 +19,4 @@ public class ArrayGenerator {
                 array[i][j] = (int) (Math.random() * 100);
         return array;
     }
-
 }
