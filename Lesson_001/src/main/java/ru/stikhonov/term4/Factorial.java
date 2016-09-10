@@ -5,7 +5,7 @@ package ru.stikhonov.term4;
  */
 public class Factorial {
     /**
-     * @param index факториал требуемой велечины
+     * @param index факториал требуемого значения
      * @return фаториал значения index
      */
     public float calculate(int index) {
