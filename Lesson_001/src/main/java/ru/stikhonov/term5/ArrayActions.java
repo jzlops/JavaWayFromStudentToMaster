@@ -19,7 +19,7 @@ public class ArrayActions {
         int length = array.length;
         for (int i = 0; i < length; i++)
             for (int j = 0; j < length; j++)
-                tempArray[i][j] = array[length - j + 1][i];
+                tempArray[i][j] = array[length - j - 1][i];
         return tempArray;
     }
 }
