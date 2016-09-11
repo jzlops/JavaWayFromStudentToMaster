@@ -20,5 +20,6 @@ public class PointTest {
         Point pointA2 = new Point(5, 5);
         Point pointB2 = new Point(10, 10);
         assertThat(pointA2.distanceTo(pointB2), closeTo(7.07, 0.01));
+
     }
 }

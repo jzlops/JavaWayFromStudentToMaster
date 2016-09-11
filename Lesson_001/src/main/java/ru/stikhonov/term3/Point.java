@@ -25,13 +25,9 @@ public class Point {
      * Метод вычисления расстояния между двумя точками
      *
      * @param point метод принимает в качастве параметра объект Point
-     * @return возвращает расстояние между текущей точкой и точкой переданной в качестве параметра метода (-1 в случае наслоения точек)
+     * @return возвращает расстояние между текущей точкой и точкой переданной в качестве параметра метода
      */
     public double distanceTo(Point point) {
-        double distance;
-        distance = Math.sqrt(Math.pow((this.x - point.x), 2) + Math.pow((this.y - point.y), 2));
-        if (distance == 0) {
-            return -1;
-        } else return distance;
+       return  Math.sqrt(Math.pow((this.x - point.x), 2) + Math.pow((this.y - point.y), 2));
     }
 }
