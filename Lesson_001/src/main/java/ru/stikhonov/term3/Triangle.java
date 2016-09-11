@@ -53,7 +53,7 @@ public class Triangle {
     /**
      * Метод вычисления плозади теругольника
      *
-     * @return возвращает площать треугольника (-1 в случае некорректных координат)
+     * @return возвращает площать треугольника (0 в случае некорректных координат)
      */
     public double getArea() {
         double triangelHalfPerimetr;
@@ -63,7 +63,7 @@ public class Triangle {
             triangleArea = Math.sqrt(triangelHalfPerimetr * (triangelHalfPerimetr - this.lengthA) * (triangelHalfPerimetr - this.lengthB) * (triangelHalfPerimetr - this.lengthC));
             return triangleArea;
         } else {
-            return -1;
+            return 0;
         }
     }
 }

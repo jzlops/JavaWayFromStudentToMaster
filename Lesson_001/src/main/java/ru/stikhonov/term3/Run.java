@@ -5,8 +5,9 @@ package ru.stikhonov.term3;
  */
 public class Run {
     public static void main(String[] args) {
-        Triangle triangle = TriangleActions.initTriangle(1, 1, 3, 5, 6, 1);
+        TriangleActions triangleActions = new TriangleActions();
+        Triangle triangle = triangleActions.initTriangle(1, 1, 3, 5, 6, 1);
         System.out.println("Triangle area = " + triangle.getArea());
-        System.out.println("Triangle max leg length = " + TriangleActions.getMaxTriangleLeg(triangle));
+        System.out.println("Triangle max leg length = " + triangleActions.getMaxTriangleLeg(triangle));
     }
 }
