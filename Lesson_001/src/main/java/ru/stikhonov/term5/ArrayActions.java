@@ -111,11 +111,12 @@ public class ArrayActions {
 
         tempStrings = new String[strings.length - duplicateCount];
 
-        for (int i = 0; i < strings.length; i++)
-            if (!(strings[i].equals(EMPTY))) {
-                tempStrings[fillArrayCounter] = strings[i];
+        for (String s : strings)
+            if (!(s.equals(EMPTY))) {
+                tempStrings[fillArrayCounter] = s;
                 fillArrayCounter++;
             }
+
         System.out.println("Удаление дубликатов строкового массива выполнено");
         System.out.println();
         return tempStrings;
