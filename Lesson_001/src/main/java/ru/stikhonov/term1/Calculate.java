@@ -3,7 +3,8 @@ package ru.stikhonov.term1;
 import ru.stikhonov.term2.Calculator;
 
 /**
- * Created by Sergey Tikhonov on 05.09.2016.
+ *
+ * @author Sergey Tikhonov
  */
 public class Calculate {
     /**

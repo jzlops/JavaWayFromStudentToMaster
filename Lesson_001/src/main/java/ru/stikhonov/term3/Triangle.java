@@ -1,6 +1,8 @@
 package ru.stikhonov.term3;
 
 /**
+ * Класс для создания объекта Triangle
+ *
  * @author Sergey Tikhonov
  */
 public class Triangle {
@@ -13,6 +15,7 @@ public class Triangle {
 
     /**
      * Конструктор в качестве параметра принимает три объекта Point
+     *
      * @param a точка a
      * @param b точка b
      * @param c точка c
@@ -48,7 +51,9 @@ public class Triangle {
     }
 
     /**
-     * @return метод возвращает площать треугольника (-1 в случае некорректных координат)
+     * Метод вычисления плозади теругольника
+     *
+     * @return возвращает площать треугольника (-1 в случае некорректных координат)
      */
     public double getArea() {
         double triangelHalfPerimetr;

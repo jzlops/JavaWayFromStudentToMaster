@@ -1,11 +1,13 @@
 package ru.stikhonov.term3;
 
 /**
+ * Класс для оперирования объектом Triangle
+ *
  * @author Sergey Tikhonov
  */
 public class TriangleActions {
     /**
-     * Метод инициализирует объект треугольник (Triangle)
+     * Метод инициализирует (создает) объект треугольник (Triangle)
      * В качетве параметров метод принимает координаты 3-х точек по оси X и Y соотвественно
      */
     public static Triangle initTriangle(double x1, double y1, double x2, double y2, double x3, double y3) {
@@ -14,9 +16,12 @@ public class TriangleActions {
         Point pointC = new Point(x3, y3);
         return new Triangle(pointA, pointB, pointC);
     }
+
     /**
-     * @return Метод возвращает максимальную длинну стороны треугольника
+     * Метод вычисляет максимальную длинну ребра треугольника
+     *
      * @param triangle - в качестве параметра принимает объект Triangle
+     * @return возвращает максимальную длинну стороны треугольника
      */
     public static double getMaxTriangleLeg(Triangle triangle) {
         double maxLeg;
@@ -28,6 +33,6 @@ public class TriangleActions {
         if (triangle.getLengthC() > maxLeg) {
             maxLeg = triangle.getLengthC();
         }
-      return maxLeg;
+        return maxLeg;
     }
 }

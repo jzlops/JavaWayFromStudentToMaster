@@ -1,7 +1,7 @@
 package ru.stikhonov.term2;
 
 /**
- * Used for simplest math calculations
+ * Класс калькулятор, создает объект калькулятор с минимальным набором методов
  *
  * @author Sergey Tikhonov
  */
@@ -10,8 +10,10 @@ public class Calculator {
     private double result;
 
     /**
-     * @param first  first value for addition
-     * @param second second value for addition
+     * Метод выполняющий простое сложение чисел
+     *
+     * @param first  первое значение
+     * @param second второе значение
      */
 
     public void add(double first, double second) {
@@ -19,8 +21,10 @@ public class Calculator {
     }
 
     /**
-     * @param first  first value for subtract
-     * @param second second value for subtract
+     * Метод выполняющий простое вычитание чисел
+     *
+     * @param first  первое значение
+     * @param second второе значение
      */
 
     public void subtract(double first, double second) {
@@ -28,8 +32,10 @@ public class Calculator {
     }
 
     /**
-     * @param first  first value for division
-     * @param second second value for division
+     * Метод выполняющий простое деление чисел
+     *
+     * @param first  первое значение
+     * @param second второе значение
      */
 
     public void div(double first, double second) {
@@ -41,8 +47,10 @@ public class Calculator {
     }
 
     /**
-     * @param first  first value for multiple
-     * @param second second value for multiple
+     * Метод выполняющий простое умножение чисел
+     *
+     * @param first  первое значение
+     * @param second второе значение
      */
 
     public void multiple(double first, double second) {
@@ -50,7 +58,9 @@ public class Calculator {
     }
 
     /**
-     * @return Return the last computational result
+     * Метод возращающий последнее вычесленное значение
+     *
+     * @return возвращаемое значение
      */
 
     public double getResult() {

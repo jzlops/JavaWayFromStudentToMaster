@@ -1,12 +1,16 @@
 package ru.stikhonov.term4;
 
 /**
+ * Класс создания объекта Square для вычисления функции y = a*x2 + b * x + c
+ *
  * @author Sergey Tikhonov
  */
 public class Square {
     private float a, b, c;
 
     /**
+     * Конструктор объета функции y = a*x2 + b * x + c
+     *
      * @param a a параметр в функции  y = a*x2 + b * x + c
      * @param b b параметр в функции  y = a*x2 + b * x + c
      * @param c c параметр в функции  y = a*x2 + b * x + c
@@ -18,6 +22,8 @@ public class Square {
     }
 
     /**
+     * Метод вычисления значения y функции y = a*x2 + b * x + c
+     *
      * @param x x параметр в функции  y = a*x2 + b * x + c
      * @return возращает значение y функции y = a*x2 + b * x + c
      */

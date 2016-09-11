@@ -1,12 +1,16 @@
 package ru.stikhonov.term4;
 
 /**
- * Created by Sergey Tikhonov on 10.09.2016.
+ * Класс создания объекта факториал
+ *
+ * @author Sergey Tikhonov
  */
 public class Factorial {
     /**
-     * @param index факториал требуемого значения
-     * @return фаториал значения index
+     * Метод вычисления факториала числа
+     *
+     * @param index факториал какого числа требуется вычислить
+     * @return возвращает фактроиал
      */
     public float calculate(int index) {
         long result = 1;

@@ -1,7 +1,9 @@
 package ru.stikhonov.term2;
 
 /**
- * Created by Sergey Tikhonov on 07.09.2016.
+ * Класс для тестирования оболочных типов
+ *
+ * @author Sergey Tikhonov
  */
 public class RefTask {
     public static void main(String[] args) {
