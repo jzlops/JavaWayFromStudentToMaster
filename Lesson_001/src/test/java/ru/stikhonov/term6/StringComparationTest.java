@@ -10,22 +10,22 @@ import org.junit.Test;
 public class StringComparationTest {
 
     @Test
-    public void EqualsStrings() throws Exception {
+    public void whenEqualsStrings() throws Exception {
         Assert.assertTrue(new StringComparation().contains("QweRty","QweRty"));
     }
 
     @Test
-    public void OriginalContainSubstring() throws Exception {
+    public void whenOriginalContainSubstring() throws Exception {
         Assert.assertTrue(new StringComparation().contains("----QweRty---","QweRty"));
     }
 
     @Test
-    public void SubstringLagerThanOriginal() throws Exception {
+    public void whenSubstringLagerThanOriginal() throws Exception {
         Assert.assertFalse(new StringComparation().contains("QweRty","QweRty..TaramParamPam !"));
     }
 
     @Test
-    public void OriginalNotContainSubstring() throws Exception {
+    public void whenOriginalNotContainSubstring() throws Exception {
         Assert.assertFalse(new StringComparation().contains("----Qwe-Rty---","QweRty"));
     }
 }
