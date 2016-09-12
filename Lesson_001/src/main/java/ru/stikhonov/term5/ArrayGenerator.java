@@ -6,7 +6,7 @@ package ru.stikhonov.term5;
  * @author Sergey Tikhonov
  */
 public class ArrayGenerator {
-    private static final String[] STRINGS = {"Hello", "Buy", "Welcome", "WTF", "Dude", "Kenny", "etc", "Collaboration", "TV", "Traverse"};
+    private  final String[] STRINGS = {"Hello", "Buy", "Welcome", "WTF", "Dude", "Kenny", "etc", "Collaboration", "TV", "Traverse"};
 
     /**
      * Метод генерации одномерного массива int[]
@@ -14,7 +14,7 @@ public class ArrayGenerator {
      * @param size размер массива
      * @return возвращает ссылку на объект массива типа int[size]
      */
-    public static int[] intGenerate1X(int size) {
+    public int[] intGenerate1X(int size) {
         int[] array = new int[size];
         for (int i = 0; i < size; i++)
             array[i] = (int) (Math.random() * 10 - 1);
@@ -27,7 +27,7 @@ public class ArrayGenerator {
      * @param size размер массива
      * @return возвращает ссылку на объект массива типа int[size][size]
      */
-    public static int[][] intGenerate2X(int size) {
+    public  int[][] intGenerate2X(int size) {
         int[][] array = new int[size][size];
         for (int i = 0; i < size; i++)
             for (int j = 0; j < size; j++)
@@ -40,7 +40,7 @@ public class ArrayGenerator {
      *
      * @return возращает ссылку на объект массива String[10]
      */
-    public static String[] stringGenerate() {
+    public  String[] stringGenerate() {
         String[] array = new String[STRINGS.length];
         for (int i = 0; i < STRINGS.length; i++)
             array[i] = STRINGS[(int) (Math.random() * 10 - 1)];

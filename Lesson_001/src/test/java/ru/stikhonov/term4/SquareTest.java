@@ -10,9 +10,8 @@ import static org.junit.Assert.assertEquals;
 public class SquareTest {
 
     @Test
-    public void testCalculate() throws Exception {
+    public void calculateSquare() throws Exception {
         Square square=new Square(1,2,3);
-        square.calculate(5);
         assertEquals(square.calculate(5),38,00.1);
     }
 }

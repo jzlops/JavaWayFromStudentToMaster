@@ -10,10 +10,20 @@ import static org.junit.Assert.assertEquals;
 public class FactorialTest {
 
     @Test
-    public void testCalculate() throws Exception {
-        Factorial factorial=new Factorial();
-        assertEquals(factorial.calculate(1),1,0);
-        assertEquals(factorial.calculate(4),24,0);
-        assertEquals(factorial.calculate(-4),1,0);
+    public void FactorialNormalArgument() throws Exception {
+        Factorial factorial = new Factorial();
+        assertEquals(factorial.calculate(4), 24, 0);
+    }
+
+    @Test
+    public void FactorialZeroArgument() throws Exception {
+        Factorial factorial = new Factorial();
+        assertEquals(factorial.calculate(1), 1, 0);
+    }
+
+    @Test
+    public void FactorialNegativeArgument() throws Exception {
+        Factorial factorial = new Factorial();
+        assertEquals(factorial.calculate(-4), 1, 0);
     }
 }

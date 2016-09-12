@@ -12,7 +12,7 @@ public class Factorial {
      * @param index факториал какого числа требуется вычислить
      * @return возвращает фактроиал
      */
-    public float calculate(int index) {
+    public long calculate(int index) {
         long result = 1;
         if (index <= 0) {
             return 1;

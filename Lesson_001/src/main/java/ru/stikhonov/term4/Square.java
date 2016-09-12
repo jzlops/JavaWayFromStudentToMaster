@@ -34,16 +34,15 @@ public class Square {
     }
 
     /**
-     * Метод выводит на экран значение y в уравнении y = a*x2 + b * x + c при изменении x
+     * Метод выводит на консоль значение y в уравнении y = a*x2 + b * x + c при изменении x
      *
      * @param start  начальное значение x в уравнении y = a*x2 + b * x + c
      * @param finish конечное значение x в уравнении y = a*x2 + b * x + c
      * @param step   шаг с которым изменяется x в уравнении y = a*x2 + b * x + c
      */
     public void show(int start, int finish, int step) {
-        for (int i = start; i <= finish; i = i + step) {
-            System.out.println("x=" + i + " y=" + calculate(i));
-        }
+        for (int i = start; i <= finish; i = i + step)
+            System.out.printf("x=%1$d y= %2$.3f %n", i, calculate(i));
     }
 
 }

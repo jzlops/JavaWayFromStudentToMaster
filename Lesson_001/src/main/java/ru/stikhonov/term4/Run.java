@@ -9,7 +9,6 @@ public class Run {
         square.show(5, 20, 2);
 
         Factorial factorial = new Factorial();
-        System.out.println("Factorial = "+factorial.calculate(5));
-
+        System.out.printf("Factorial = %1$d", factorial.calculate(5));
     }
 }
