@@ -10,7 +10,7 @@ import static org.junit.Assert.assertEquals;
 public class ArrayActionsTest {
 
     @Test
-    public void BubbleSort() throws Exception {
+    public void bubbleSort() throws Exception {
         int[] testInt = {0,7,3,11,99,4,4};
         new ArrayBubbleSort().bubbleSort(testInt);
         assertEquals(testInt[0], 0, 0);
@@ -23,7 +23,7 @@ public class ArrayActionsTest {
     }
 
     @Test
-    public void Rotate() throws Exception {
+    public void rotate() throws Exception {
         int[][] testInt;
         testInt=new int[3][3];
 
@@ -39,7 +39,7 @@ public class ArrayActionsTest {
 
 
     @Test
-    public void DuplicateStringTruncate() throws Exception {
+    public void duplicateStringTruncate() throws Exception {
         String[] testString={"1","2","2","5","1","5","6","1","2","5"};
         testString=new ArrayStringDuplicateTruncate().duplicateStringKill(testString);
 
