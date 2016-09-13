@@ -15,7 +15,6 @@ public class ArrayStringDuplicateTruncate {
 
     public String[] duplicateStringKill(String[] strings) {
         int fitCount = 0;
-        int lengthArray = strings.length - 1;
 
         for (int i = 0; i <= strings.length - 1; i++) {
             for (int k = i + 1; k <= strings.length - 1; k++) {
