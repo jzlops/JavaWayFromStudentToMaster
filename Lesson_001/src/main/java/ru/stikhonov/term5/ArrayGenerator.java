@@ -16,8 +16,9 @@ public class ArrayGenerator {
      */
     public int[] intGenerate1X(int size) {
         int[] array = new int[size];
-        for (int i = 0; i < size; i++)
+        for (int i = 0; i < size; i++) {
             array[i] = (int) (Math.random() * 10 - 1);
+        }
         return array;
     }
 
@@ -29,9 +30,10 @@ public class ArrayGenerator {
      */
     public  int[][] intGenerate2X(int size) {
         int[][] array = new int[size][size];
-        for (int i = 0; i < size; i++)
+        for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++)
                 array[i][j] = (int) (Math.random() * 10 - 1);
+        }
         return array;
     }
 
@@ -42,8 +44,9 @@ public class ArrayGenerator {
      */
     public  String[] stringGenerate() {
         String[] array = new String[STRINGS.length];
-        for (int i = 0; i < STRINGS.length; i++)
+        for (int i = 0; i < STRINGS.length; i++) {
             array[i] = STRINGS[(int) (Math.random() * 10 - 1)];
+        }
         return array;
     }
 }

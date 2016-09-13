@@ -11,8 +11,9 @@ public class ArrayShow {
      */
     public void show(int[] array) {
         System.out.printf("Одномерный массив из - %1$d элементов: %n %n", array.length);
-        for (int i : array)
+        for (int i : array) {
             System.out.printf("%1$d ", i);
+        }
         System.out.printf("%n %n");
     }
 
@@ -39,8 +40,9 @@ public class ArrayShow {
      */
     public void show(String[] array) {
         System.out.printf("Строковый массив из - %1$s элементов %n%n",array.length);
-        for (String s : array)
-            System.out.printf(" %1$s  ",s);
+        for (String s : array) {
+            System.out.printf(" %1$s  ", s);
+        }
         System.out.printf("%n%n");
     }
 
