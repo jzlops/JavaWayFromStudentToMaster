@@ -3,7 +3,7 @@ package ru.stikhonov.term5;
 import java.util.Arrays;
 
 /**
- * Created by Sergey Tikhonov on 12.09.2016.
+ * @author Sergey Tikhonov
  */
 public class ArrayStringDuplicateTruncate {
     /**
@@ -35,3 +35,4 @@ public class ArrayStringDuplicateTruncate {
         return Arrays.copyOf(strings, strings.length - fitCount);
     }
 }
+
