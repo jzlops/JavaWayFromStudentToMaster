@@ -28,24 +28,7 @@ class ConsoleInput {
      * Класс отрисовывает основное консольное меню
      */
     void showMainMenu() {
-        // Рисуем IU с диалогом основного действия
+        // Рисуем UI
     }
-    void showSubMenu(MainMenuChoice mainMenuChoice) {
-        if (mainMenuChoice==MainMenuChoice.ADD){
-            // Рисуем IU с диалогом дополнительного действия - добавить элемент
-        }
-        if (mainMenuChoice==MainMenuChoice.DELETE){
-            // Рисуем IU с диалогом дополнительного действия - удалить элемент
-        }
-        if (mainMenuChoice==MainMenuChoice.EDIT){
-            // Рисуем IU с диалогом дополнительного действия - редактировать элемент
-        }
-        if (mainMenuChoice==MainMenuChoice.SHOW){
-            // Рисуем IU с диалогом дополнительного действия - показать элемент
-        }
-        if (mainMenuChoice==MainMenuChoice.SHOWF){
-            // Рисуем IU с диалогом дополнительного действия - показать элемент с применением фильтра
-        }
 
-    }
 }

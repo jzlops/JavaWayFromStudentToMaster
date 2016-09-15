@@ -2,12 +2,40 @@
 <Diagram>
   <ID>JAVA</ID>
   <OriginalElement />
-  <nodes />
+  <nodes>
+    <node x="66.0" y="-155.0">ru.stikhonov.term1.Tracker</node>
+    <node x="735.0" y="69.0">ru.stikhonov.term1.ConsoleInput</node>
+    <node x="800.0" y="-89.0">ru.stikhonov.term1.StartUI</node>
+    <node x="24.0" y="-439.0">ru.stikhonov.term1.Item</node>
+    <node x="403.0" y="-464.0">ru.stikhonov.term1.MainMenuChoice</node>
+  </nodes>
   <notes />
-  <edges />
-  <settings layout="Hierarchic Group" zoom="1.0" x="0.0" y="0.0" />
-  <SelectedNodes />
-  <Categories />
+  <edges>
+    <edge source="ru.stikhonov.term1.StartUI" target="ru.stikhonov.term1.ConsoleInput">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="ru.stikhonov.term1.Tracker" target="ru.stikhonov.term1.Item">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="ru.stikhonov.term1.StartUI" target="ru.stikhonov.term1.Tracker">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="1.0" x="778.5" y="-88.0" />
+  <SelectedNodes>
+    <node>ru.stikhonov.term1.StartUI</node>
+  </SelectedNodes>
+  <Categories>
+    <Category>Fields</Category>
+    <Category>Constructors</Category>
+    <Category>Methods</Category>
+    <Category>Inner Classes</Category>
+    <Category>Properties</Category>
+  </Categories>
   <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
 </Diagram>
 

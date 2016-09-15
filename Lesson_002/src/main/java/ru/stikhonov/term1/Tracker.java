@@ -6,7 +6,12 @@ import java.util.Date;
  * Класс для ведения трекера запявок
  *
  * @author Sergey Tikhonov
+ *
  */
+
+
+//TODO где реализовывать консольный ввод в методах? использовать для этого класс ConsoleInput? или же создать отдельный класс для диалога? Или же прям в методах трекера? (но это прям нехорошо).
+
 public class Tracker {
     private Item[] items;
     private int itemsCount = 0;
@@ -19,7 +24,7 @@ public class Tracker {
     }
 
     public void edit() {
-        // Процесс редкатирования элемента в массиве Items
+        // Процесс редактирования элемента в массиве Items
     }
 
     public void delete() {
