@@ -10,16 +10,12 @@ import java.util.Date;
  */
 
 
-//TODO где реализовывать консольный ввод в методах? использовать для этого класс ConsoleInput? или же создать отдельный класс для диалога? Или же прям в методах трекера? (но это прям нехорошо).
-
 public class Tracker {
     private Item[] items;
     private int itemsCount = 0;
 
     public void add() {
         // Процесс создания/добавления элементов к массиву Items
-        Date date = new Date(121212);
-        this.items[itemsCount] = new Item("Ivan", "Admin", date, "");
         itemsCount++;
     }
 
