@@ -6,7 +6,7 @@ package ru.stikhonov.term1;
  * @author Sergey Tikhonov
  */
 public class StartUI {
-    public static void main (String[] args) {
+    public static void main(String[] args) {
         MenuItem currentMainMenuItem;
         MenuItem currentSubMenuItem;
         //Создаем объект консольного хммм контролера что ли
@@ -15,54 +15,55 @@ public class StartUI {
         ConsoleUI consoleUI = new ConsoleUI();
         currentMainMenuItem = consoleUI.choiceMainMenuItem();
         //Цикл работы с меню
+        System.out.printf("Trololo");
 
-        while (currentMainMenuItem != MenuItem.EXIT) {
-            if (currentMainMenuItem == MenuItem.ADD) {
-                currentSubMenuItem = consoleUI.choiceSubMenuItem();
-                if (currentSubMenuItem == MenuItem.BACK) {
-                    currentMainMenuItem = consoleUI.choiceMainMenuItem();
-                }
-                if (currentSubMenuItem == MenuItem.DOIT) {
-                    consoleInput.addItems();
-                }
-            }
-            if (currentMainMenuItem == MenuItem.EDIT) {
-                currentSubMenuItem = consoleUI.choiceSubMenuItem();
-                if (currentSubMenuItem == MenuItem.BACK) {
-                    currentMainMenuItem = consoleUI.choiceMainMenuItem();
-                }
-                if (currentSubMenuItem == MenuItem.DOIT) {
-                    consoleInput.editItems();
-                }
-            }
-            if (currentMainMenuItem == MenuItem.DELETE) {
-                currentSubMenuItem = consoleUI.choiceSubMenuItem();
-                if (currentSubMenuItem == MenuItem.BACK) {
-                    currentMainMenuItem = consoleUI.choiceMainMenuItem();
-                }
-                if (currentSubMenuItem == MenuItem.DOIT) {
-                    consoleInput.deleteItems();
-                }
-            }
-            if (currentMainMenuItem == MenuItem.SHOW) {
-                currentSubMenuItem = consoleUI.choiceSubMenuItem();
-                if (currentSubMenuItem == MenuItem.BACK) {
-                    currentMainMenuItem = consoleUI.choiceMainMenuItem();
-                }
-                if (currentSubMenuItem == MenuItem.DOIT) {
-                    consoleInput.showItems();
-                }
-            }
-            if (currentMainMenuItem == MenuItem.SHOWF) {
-                currentSubMenuItem = consoleUI.choiceSubMenuItem();
-                if (currentSubMenuItem == MenuItem.BACK) {
-                    currentMainMenuItem = consoleUI.choiceMainMenuItem();
-                }
-                if (currentSubMenuItem == MenuItem.DOIT) {
-                    consoleInput.showFItems();
-                }
-            }
-        }
+//        while (currentMainMenuItem != MenuItem.EXIT) {
+//            if (currentMainMenuItem == MenuItem.ADD) {
+//                currentSubMenuItem = consoleUI.choiceSubMenuItem();
+//                if (currentSubMenuItem == MenuItem.BACK) {
+//                    currentMainMenuItem = consoleUI.choiceMainMenuItem();
+//                }
+//                if (currentSubMenuItem == MenuItem.DOIT) {
+//                    consoleInput.addItems();
+//                }
+//            }
+//            if (currentMainMenuItem == MenuItem.EDIT) {
+//                currentSubMenuItem = consoleUI.choiceSubMenuItem();
+//                if (currentSubMenuItem == MenuItem.BACK) {
+//                    currentMainMenuItem = consoleUI.choiceMainMenuItem();
+//                }
+//                if (currentSubMenuItem == MenuItem.DOIT) {
+//                    consoleInput.editItems();
+//                }
+//            }
+//            if (currentMainMenuItem == MenuItem.DELETE) {
+//                currentSubMenuItem = consoleUI.choiceSubMenuItem();
+//                if (currentSubMenuItem == MenuItem.BACK) {
+//                    currentMainMenuItem = consoleUI.choiceMainMenuItem();
+//                }
+//                if (currentSubMenuItem == MenuItem.DOIT) {
+//                    consoleInput.deleteItems();
+//                }
+//            }
+//            if (currentMainMenuItem == MenuItem.SHOW) {
+//                currentSubMenuItem = consoleUI.choiceSubMenuItem();
+//                if (currentSubMenuItem == MenuItem.BACK) {
+//                    currentMainMenuItem = consoleUI.choiceMainMenuItem();
+//                }
+//                if (currentSubMenuItem == MenuItem.DOIT) {
+//                    consoleInput.showItems();
+//                }
+//            }
+//            if (currentMainMenuItem == MenuItem.SHOWF) {
+//                currentSubMenuItem = consoleUI.choiceSubMenuItem();
+//                if (currentSubMenuItem == MenuItem.BACK) {
+//                    currentMainMenuItem = consoleUI.choiceMainMenuItem();
+//                }
+//                if (currentSubMenuItem == MenuItem.DOIT) {
+//                    consoleInput.showFItems();
+//                }
+//            }
+//        }
     }
 }
 
