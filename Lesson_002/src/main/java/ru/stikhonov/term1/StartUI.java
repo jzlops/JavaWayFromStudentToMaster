@@ -6,7 +6,7 @@ package ru.stikhonov.term1;
  * @author Sergey Tikhonov
  */
 public class StartUI {
-    public  void run (String[] args) {
+    public static void main (String[] args) {
         MenuItem currentMainMenuItem;
         MenuItem currentSubMenuItem;
         //Создаем объект консольного хммм контролера что ли
