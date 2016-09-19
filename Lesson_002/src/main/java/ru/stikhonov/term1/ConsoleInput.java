@@ -5,27 +5,29 @@ package ru.stikhonov.term1;
  */
 public class ConsoleInput {
     Tracker tracker;
-    ConsoleInput(Tracker tracker){
-        this.tracker=tracker;
+
+    ConsoleInput(Tracker tracker) {
+        this.tracker = tracker;
     }
+
     void showItems() {
-        this.tracker.show();
+        //   this.tracker.show();
     }
 
     void showFItems() {
-        this.tracker.showFiltered();
+        //   this.tracker.showFiltered();
     }
 
     void deleteItems() {
-        this.tracker.delete();
+        //   this.tracker.delete();
     }
 
     void addItems() {
-        this.tracker.add();
+        //  this.tracker.add();
     }
 
     void editItems() {
-        this.tracker.edit();
+        //  this.tracker.edit();
     }
 
 }

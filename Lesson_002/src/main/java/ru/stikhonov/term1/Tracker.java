@@ -1,5 +1,6 @@
 package ru.stikhonov.term1;
 
+import java.util.Arrays;
 import java.util.Date;
 
 /**
@@ -17,7 +18,7 @@ public class Tracker {
     Tracker(int itemsCount) {
         Item[] items = new Item[itemsCount];
         this.items = items;
-        this.itemsCount=itemsCount;
+        this.itemsCount = itemsCount;
     }
 
     public void add(String newName, String newDescription, Date newDate, String newComments) {
@@ -40,13 +41,14 @@ public class Tracker {
     }
 
     public Item[] show() {
-        Item[] tempItems = new Item[itemsCount];
-
+        Item[] tempItems = new Item[this.itemsCount];
+        for (int i = 0; i < this.itemsCount; i++) {
+            tempItems[i]=this.items[i];
+        }
         return tempItems;
     }
 
-    public void showFiltered() {
-        // Отображение по фильтру элементов массива Items
+    public Item showFiltered(int index) {
+        return this.items[index];
     }
-
 }
