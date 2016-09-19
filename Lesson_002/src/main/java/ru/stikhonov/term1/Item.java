@@ -6,7 +6,10 @@ import java.util.Date;
 /**
  * @author Sergey Tikhonov
  */
+
+
 public class Item {
+
     private String name;
     private String description;
     private Date date;

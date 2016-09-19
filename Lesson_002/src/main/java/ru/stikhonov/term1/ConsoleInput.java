@@ -6,6 +6,7 @@ package ru.stikhonov.term1;
 public class ConsoleInput {
     Tracker tracker;
 
+
     ConsoleInput(Tracker tracker) {
         this.tracker = tracker;
     }

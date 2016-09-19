@@ -8,6 +8,7 @@ package ru.stikhonov.term1;
  */
 class ConsoleUI {
 
+
     MenuItem choiceMainMenuItem() {
         this.showMainMenu();
 //      Ожидаем ввобда пользователя в консоли
