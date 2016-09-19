@@ -3,7 +3,7 @@
   <ID>JAVA</ID>
   <OriginalElement />
   <nodes>
-    <node x="226.0" y="-58.0">ru.stikhonov.term1.Tracker</node>
+    <node x="350.0" y="182.0">ru.stikhonov.term1.Tracker</node>
     <node x="-101.0" y="-48.5">ru.stikhonov.term1.ConsoleInput</node>
     <node x="-65.0" y="355.0">ru.stikhonov.term1.StartUI</node>
     <node x="-451.5" y="315.0">ru.stikhonov.term1.ConsoleUI</node>
@@ -28,15 +28,21 @@
       <point x="0.0" y="0.0" />
       <point x="0.0" y="0.0" />
     </edge>
+    <edge source="ru.stikhonov.term1.StartUI" target="ru.stikhonov.term1.Tracker">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
   </edges>
-  <settings layout="Hierarchic Group" zoom="1.0" x="263.0" y="243.0" />
-  <SelectedNodes />
+  <settings layout="Hierarchic Group" zoom="1.0" x="486.0" y="296.5" />
+  <SelectedNodes>
+    <node>ru.stikhonov.term1.Tracker</node>
+  </SelectedNodes>
   <Categories>
     <Category>Fields</Category>
-    <Category>Constructors</Category>
-    <Category>Methods</Category>
     <Category>Inner Classes</Category>
+    <Category>Constructors</Category>
     <Category>Properties</Category>
+    <Category>Methods</Category>
   </Categories>
   <SCOPE>All</SCOPE>
   <VISIBILITY>private</VISIBILITY>
