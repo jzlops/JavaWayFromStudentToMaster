@@ -6,30 +6,43 @@ import java.util.Date;
  * Класс для ведения трекера запявок
  *
  * @author Sergey Tikhonov
- *
  */
 
 
 public class Tracker {
+    private int index = 0;
     private Item[] items;
-    private int itemsCount = 0;
+    private int itemsCount;
 
-    public void add() {
-        // Процесс создания/добавления элементов к массиву Items
-        itemsCount++;
+    Tracker(int itemsCount) {
+        Item[] items = new Item[itemsCount];
+        this.items = items;
+        this.itemsCount=itemsCount;
     }
 
-    public void edit() {
-        // Процесс редактирования элемента в массиве Items
+    public void add(String newName, String newDescription, Date newDate, String newComments) {
+        this.items[index].setName(newName);
+        this.items[index].setDescription(newDescription);
+        this.items[index].setDate(newDate);
+        this.items[index].setComments(newComments);
+        this.index++;
     }
 
-    public void delete() {
-        // Процесс удаления элемента в массиве Items
-        itemsCount--;
+    public void edit(int index, String newName, String newDescription, Date newDate, String newComments) {
+        this.items[index].setName(newName);
+        this.items[index].setDescription(newDescription);
+        this.items[index].setDate(newDate);
+        this.items[index].setComments(newComments);
     }
 
-    public void show() {
-        // Отображение всех элементов Items
+    public void delete(int index) {
+        this.items[index] = null;
+    }
+
+    public Item[] show() {
+        Item[] tempItems = new Item[itemsCount];
+
+        return tempItems;
     }
 
     public void showFiltered() {

@@ -4,8 +4,10 @@ package ru.stikhonov.term1;
  * @author Sergey Tikhonov
  */
 public class ConsoleInput {
-    Tracker tracker = new Tracker();
-
+    Tracker tracker;
+    ConsoleInput(Tracker tracker){
+        this.tracker=tracker;
+    }
     void showItems() {
         this.tracker.show();
     }
