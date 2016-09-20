@@ -16,15 +16,15 @@ class ConsoleMainMenuUI {
     void choiceMainMenuItem() {
         int inputMenuNumber = 0;
       //  this.showMainMenu();
-        ConsoleSubMenuUI consoleSubMenuUI = new ConsoleSubMenuUI(this.tracker);
+        ConsoleInput consoleInput = new ConsoleInput(this.tracker);
         ConsoleMenuInput consoleMenuInput = new ConsoleMenuInput();
         do {
-            if (inputMenuNumber == 1) consoleSubMenuUI.choiceSubMenuItem(MenuItem.ADD);
-            if (inputMenuNumber == 2) consoleSubMenuUI.choiceSubMenuItem(MenuItem.EDIT);
-            if (inputMenuNumber == 3) consoleSubMenuUI.choiceSubMenuItem(MenuItem.DELETE);
-            if (inputMenuNumber == 4) consoleSubMenuUI.choiceSubMenuItem(MenuItem.SHOW);
-            if (inputMenuNumber == 5) consoleSubMenuUI.choiceSubMenuItem(MenuItem.SHOW_BY_ID);
-            if (inputMenuNumber == 6) consoleSubMenuUI.choiceSubMenuItem(MenuItem.SHOW_BY_FILTER);
+            if (inputMenuNumber == 1) consoleInput.choiceSubMenuItem(MenuItem.ADD);
+            if (inputMenuNumber == 2) consoleInput.choiceSubMenuItem(MenuItem.EDIT);
+            if (inputMenuNumber == 3) consoleInput.choiceSubMenuItem(MenuItem.DELETE);
+            if (inputMenuNumber == 4) consoleInput.choiceSubMenuItem(MenuItem.SHOW);
+            if (inputMenuNumber == 5) consoleInput.choiceSubMenuItem(MenuItem.SHOW_BY_ID);
+            if (inputMenuNumber == 6) consoleInput.choiceSubMenuItem(MenuItem.SHOW_BY_FILTER);
             this.showMainMenu();
             inputMenuNumber = consoleMenuInput.MenuChoice();
         } while (inputMenuNumber != 0);
