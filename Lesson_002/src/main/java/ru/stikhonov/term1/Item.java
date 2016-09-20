@@ -1,6 +1,5 @@
 package ru.stikhonov.term1;
 
-import java.sql.Time;
 import java.util.Date;
 
 /**
@@ -14,12 +13,14 @@ public class Item {
     private String description;
     private Date date;
     private String comments;
+    private String itemID;
 
     public Item(String name, String description, Date date, String comments) {
         this.name = name;
         this.description = description;
         this.date = date;
         this.comments = comments;
+        this.itemID = itemStringIDGenerator();
     }
 
     public String getName() {
@@ -38,6 +39,11 @@ public class Item {
         return comments;
     }
 
+    public String getItemID() {
+        return itemID;
+    }
+
+
     public void setName(String name) {
         this.name = name;
     }
@@ -52,5 +58,11 @@ public class Item {
 
     public void setComments(String comments) {
         this.comments = comments;
+    }
+
+    private String itemStringIDGenerator() {
+        StringBuilder randomString = new StringBuilder();
+        randomString.append("RQS").append((int) (Math.random() * 100000));
+        return randomString.toString();
     }
 }

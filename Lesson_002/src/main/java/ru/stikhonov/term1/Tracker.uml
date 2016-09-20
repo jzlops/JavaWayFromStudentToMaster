@@ -3,12 +3,13 @@
   <ID>JAVA</ID>
   <OriginalElement />
   <nodes>
-    <node x="350.0" y="182.0">ru.stikhonov.term1.Tracker</node>
-    <node x="-101.0" y="-48.5">ru.stikhonov.term1.ConsoleInput</node>
-    <node x="-65.0" y="355.0">ru.stikhonov.term1.StartUI</node>
-    <node x="-451.5" y="315.0">ru.stikhonov.term1.ConsoleUI</node>
-    <node x="-401.0" y="-49.0">ru.stikhonov.term1.MenuItem</node>
-    <node x="592.0" y="-35.0">ru.stikhonov.term1.Item</node>
+    <node x="276.17499999999995" y="362.5250000000001">ru.stikhonov.term1.Tracker</node>
+    <node x="658.96875" y="308.96875">ru.stikhonov.term1.ConsoleMainMenuUI</node>
+    <node x="267.0" y="0.0">ru.stikhonov.term1.ConsoleInput</node>
+    <node x="729.725" y="87.98125000000005">ru.stikhonov.term1.StartUI</node>
+    <node x="737.346875" y="533.1500000000001">ru.stikhonov.term1.ConsoleInputChecker</node>
+    <node x="453.95624999999984" y="576.43125">ru.stikhonov.term1.MenuItem</node>
+    <node x="-231.6375" y="202.775">ru.stikhonov.term1.Item</node>
   </nodes>
   <notes />
   <edges>
@@ -16,11 +17,19 @@
       <point x="0.0" y="0.0" />
       <point x="0.0" y="0.0" />
     </edge>
-    <edge source="ru.stikhonov.term1.Tracker" target="ru.stikhonov.term1.Item">
+    <edge source="ru.stikhonov.term1.StartUI" target="ru.stikhonov.term1.ConsoleMainMenuUI">
       <point x="0.0" y="0.0" />
       <point x="0.0" y="0.0" />
     </edge>
-    <edge source="ru.stikhonov.term1.StartUI" target="ru.stikhonov.term1.ConsoleUI">
+    <edge source="ru.stikhonov.term1.ConsoleInput" target="ru.stikhonov.term1.Item">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="ru.stikhonov.term1.ConsoleMainMenuUI" target="ru.stikhonov.term1.ConsoleInputChecker">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="ru.stikhonov.term1.Tracker" target="ru.stikhonov.term1.Item">
       <point x="0.0" y="0.0" />
       <point x="0.0" y="0.0" />
     </edge>
@@ -33,10 +42,8 @@
       <point x="0.0" y="0.0" />
     </edge>
   </edges>
-  <settings layout="Hierarchic Group" zoom="1.0" x="486.0" y="296.5" />
-  <SelectedNodes>
-    <node>ru.stikhonov.term1.Tracker</node>
-  </SelectedNodes>
+  <settings layout="Hierarchic Group" zoom="0.7511737089201878" x="320.0" y="432.640625" />
+  <SelectedNodes />
   <Categories>
     <Category>Fields</Category>
     <Category>Inner Classes</Category>

@@ -7,5 +7,5 @@ package ru.stikhonov.term1;
 
 
 enum MenuItem {
-    ADD, EDIT, DELETE, SHOW, SHOWF, EXIT, BACK, DOIT
+    ADD, EDIT, DELETE, SHOW, SHOW_BY_ID, EXIT, SHOW_BY_FILTER, BACK, DOIT
 }

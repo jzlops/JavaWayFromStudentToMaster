@@ -10,46 +10,64 @@ import java.util.Date;
  */
 
 
-
 public class Tracker {
-    private int index = 0;
     private Item[] items;
-    private int itemsCount;
+    private int itemsCount = 0;
 
-    Tracker(int itemsCount) {
-        Item[] items = new Item[itemsCount];
-        this.items = items;
-        this.itemsCount = itemsCount;
-    }
-
-    public void add(String newName, String newDescription, Date newDate, String newComments) {
-        this.items[index].setName(newName);
-        this.items[index].setDescription(newDescription);
-        this.items[index].setDate(newDate);
-        this.items[index].setComments(newComments);
-        this.index++;
-    }
-
-    public void edit(int index, String newName, String newDescription, Date newDate, String newComments) {
-        this.items[index].setName(newName);
-        this.items[index].setDescription(newDescription);
-        this.items[index].setDate(newDate);
-        this.items[index].setComments(newComments);
-    }
-
-    public void delete(int index) {
-        this.items[index] = null;
-    }
-
-    public Item[] show() {
-        Item[] tempItems = new Item[this.itemsCount];
+    public void addItem(Item item) {
+        Item[] tempItems = this.items;
+        this.items = new Item[this.itemsCount + 1];
         for (int i = 0; i < this.itemsCount; i++) {
-            tempItems[i]=this.items[i];
+            this.items[i] = tempItems[i];
         }
-        return tempItems;
+        this.itemsCount++;
+        this.items[itemsCount] = item;
     }
 
-    public Item showFiltered(int index) {
-        return this.items[index];
+    public void editItem(Item item) {
+        for (int i = 0; i < this.itemsCount; i++) {
+            if (this.items[i].getItemID() == item.getItemID()) {
+                this.items[i] = item;
+            }
+        }
+    }
+
+    public void deleteItem(String itemID) {
+        for (int i = 0; i < this.itemsCount; i++) {
+            if (this.items[i].getItemID() == itemID) {
+                for (int j = i; j < this.itemsCount - 1; j++) {
+                    this.items[j] = this.items[j + 1];
+                }
+            }
+        }
+        this.items[this.itemsCount] = null;
+        this.itemsCount--;
+        this.items = Arrays.copyOf(this.items, this.itemsCount);
+    }
+
+    public Item[] getAllItems() {
+         return this.items;
+    }
+
+    public Item getItemByID(String itemID) {
+        for (int i = 0; i < this.itemsCount; i++) {
+            if (this.items[i].getItemID() == itemID) {
+                return this.items[i];
+            }
+        }
+        return null;
+    }
+
+    public Item[] getItemsByDataRange(Date date1, Date date2) {
+        Item[] tempItems = new Item[this.itemsCount];
+        int fitCount = 0;
+        for (int i = 0; i < this.itemsCount; i++) {
+            if (this.items[i].getDate().after(date1) && this.items[i].getDate().before(date2)) {
+                tempItems[fitCount] = this.items[i];
+                fitCount++;
+            }
+        }
+        tempItems = Arrays.copyOf(tempItems, fitCount);
+        return tempItems;
     }
 }
