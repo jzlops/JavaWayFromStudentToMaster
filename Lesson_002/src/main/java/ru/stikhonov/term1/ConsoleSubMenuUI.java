@@ -12,9 +12,8 @@ public class ConsoleSubMenuUI {
 
     void choiceSubMenuItem(MenuItem menuItem) {
         ConsoleInput consoleInput = new ConsoleInput(this.tracker);
-        int inputMenuNumber=-1;
-        this.showSubMenu(menuItem);
-        ConsoleInputChecker inputCheck = new ConsoleInputChecker();
+        int inputMenuNumber=0;
+        ConsoleMenuInput inputCheck = new ConsoleMenuInput();
         do {
             if (inputMenuNumber == 1) System.out.println("Заглушка");
             this.showSubMenu(menuItem);

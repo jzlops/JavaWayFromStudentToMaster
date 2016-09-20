@@ -7,15 +7,17 @@ package ru.stikhonov.term1;
  * @author Sergey Tikhonov
  */
 class ConsoleMainMenuUI {
-    Tracker tracker;
-    public ConsoleMainMenuUI(Tracker tracker) {
+    private Tracker tracker;
+
+    ConsoleMainMenuUI(Tracker tracker) {
         this.tracker = tracker;
     }
+
     void choiceMainMenuItem() {
-        int inputMenuNumber=-1;
-        this.showMainMenu();
+        int inputMenuNumber = 0;
+      //  this.showMainMenu();
         ConsoleSubMenuUI consoleSubMenuUI = new ConsoleSubMenuUI(this.tracker);
-        ConsoleInputChecker inputCheck = new ConsoleInputChecker();
+        ConsoleMenuInput consoleMenuInput = new ConsoleMenuInput();
         do {
             if (inputMenuNumber == 1) consoleSubMenuUI.choiceSubMenuItem(MenuItem.ADD);
             if (inputMenuNumber == 2) consoleSubMenuUI.choiceSubMenuItem(MenuItem.EDIT);
@@ -24,7 +26,7 @@ class ConsoleMainMenuUI {
             if (inputMenuNumber == 5) consoleSubMenuUI.choiceSubMenuItem(MenuItem.SHOW_BY_ID);
             if (inputMenuNumber == 6) consoleSubMenuUI.choiceSubMenuItem(MenuItem.SHOW_BY_FILTER);
             this.showMainMenu();
-            inputMenuNumber = inputCheck.MenuChoice();
+            inputMenuNumber = consoleMenuInput.MenuChoice();
         } while (inputMenuNumber != 0);
     }
 

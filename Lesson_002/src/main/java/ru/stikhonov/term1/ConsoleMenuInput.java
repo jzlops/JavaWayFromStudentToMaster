@@ -5,7 +5,7 @@ import java.util.Scanner;
 /**
  * @author Sergey Tikhonov
  */
-public class ConsoleInputChecker {
+public class ConsoleMenuInput {
 
     int MenuChoice() {
         String s;
