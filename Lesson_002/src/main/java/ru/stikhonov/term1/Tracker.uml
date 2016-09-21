@@ -4,7 +4,7 @@
   <OriginalElement />
   <nodes>
     <node x="523.6523178807946" y="38.127483443708606">ru.stikhonov.term1.Tracker</node>
-    <node x="-131.36288372023688" y="174.3584432427598">ru.stikhonov.term1.ConsoleUserInput</node>
+    <node x="-120.72322887124045" y="163.71878839376336">ru.stikhonov.term1.ConsoleUserInput</node>
     <node x="-446.57675087983426" y="430.6014949421166">ru.stikhonov.term1.MenuElements</node>
     <node x="-665.5118704665081" y="-11.29802908391629">ru.stikhonov.term1.ConsoleMainMenuUI</node>
     <node x="-134.12166343056555" y="-54.86468531555385">ru.stikhonov.term1.StartUI</node>
