@@ -40,7 +40,7 @@ class ConsoleMainMenuUI {
         System.out.printf("3. Удалить заявку... %n");
         System.out.printf("4. Отобразить все заявки... %n");
         System.out.printf("5. Найти заявку по номеру ID... %n");
-        System.out.printf("6. Найти заявки по дате создания ID... %n");
+        System.out.printf("6. Найти заявки по дате создания... %n");
         System.out.printf("0. Выйти из программы %n");
         consoleInputHelper.borderGenerator("#");    }
 
