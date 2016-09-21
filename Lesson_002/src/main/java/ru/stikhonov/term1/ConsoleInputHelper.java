@@ -18,8 +18,7 @@ public class ConsoleInputHelper {
         Scanner scanner = new Scanner(System.in);
         s = scanner.nextLine();
         try {
-            return simpleDateFormat.parse(s.toString());
-
+            return simpleDateFormat.parse(s);
         } catch (ParseException e) {
             System.out.printf("Неверный формат данных %n");
             return null;

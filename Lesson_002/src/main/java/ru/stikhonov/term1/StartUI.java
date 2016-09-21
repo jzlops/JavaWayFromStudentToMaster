@@ -10,7 +10,6 @@ public class StartUI {
         Tracker tracker = new Tracker();
         ConsoleMainMenuUI consoleMainMenuUI = new ConsoleMainMenuUI(tracker);
         consoleMainMenuUI.navigateMainMenu();
-
     }
 }
 
