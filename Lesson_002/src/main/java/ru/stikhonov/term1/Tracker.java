@@ -12,47 +12,74 @@ import java.util.Date;
 
 public class Tracker {
     private Item[] items;
+
+    public int getItemsCount() {
+        return this.itemsCount;
+    }
+
     private int itemsCount = 0;
 
     public void addItem(Item item) {
-        Item[] tempItems = this.items;
-        this.items = new Item[this.itemsCount + 1];
-        for (int i = 0; i < this.itemsCount; i++) {
-            this.items[i] = tempItems[i];
-        }
-        this.itemsCount++;
-        this.items[itemsCount] = item;
-    }
-
-    public void editItem(Item item) {
-        for (int i = 0; i < this.itemsCount; i++) {
-            if (this.items[i].getItemID() == item.getItemID()) {
-                this.items[i] = item;
+        if (itemsCount > 0) {
+            Item[] tempItems = new Item[this.itemsCount + 1];
+            for (int i = 0; i < this.itemsCount; i++) {
+                tempItems[i] = this.items[i];
             }
+            tempItems[itemsCount] = item;
+            this.items = tempItems;
+            this.itemsCount++;
+        } else {
+            this.itemsCount++;
+            Item[] tempItems = new Item[itemsCount];
+            tempItems[0] = item;
+            this.items = tempItems;
         }
     }
 
-    public void deleteItem(String itemID) {
+
+    public boolean deleteItem(String itemID) {
+        boolean fit = false;
+        if (this.itemsCount == 0) {
+            return fit;
+        }
         for (int i = 0; i < this.itemsCount; i++) {
-            if (this.items[i].getItemID() == itemID) {
+            if (this.items[i].getItemID().equals(itemID)) {
+                fit = true;
                 for (int j = i; j < this.itemsCount - 1; j++) {
                     this.items[j] = this.items[j + 1];
                 }
             }
         }
-        this.items[this.itemsCount] = null;
-        this.itemsCount--;
-        this.items = Arrays.copyOf(this.items, this.itemsCount);
+        if (fit) {
+            this.itemsCount--;
+            this.items[this.itemsCount] = null;
+        }
+        if (itemsCount > 0) {
+            this.items = Arrays.copyOf(this.items, this.itemsCount);
+        }
+        return fit;
     }
 
     public Item[] getAllItems() {
-         return this.items;
+        return this.items;
     }
 
+    public Item editItem(String itemID) {
+        if (itemsCount > 0) {
+            for (int i = 0; i < this.itemsCount; i++) {
+                if (this.items[i].getItemID().equals(itemID)) {
+                    return this.items[i];
+                }
+            }
+        }
+        return null;
+    }
     public Item getItemByID(String itemID) {
-        for (int i = 0; i < this.itemsCount; i++) {
-            if (this.items[i].getItemID() == itemID) {
-                return this.items[i];
+        if (itemsCount > 0) {
+            for (int i = 0; i < this.itemsCount; i++) {
+                if (this.items[i].getItemID().equals(itemID)) {
+                    return this.items[i];
+                }
             }
         }
         return null;

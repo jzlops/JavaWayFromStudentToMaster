@@ -8,10 +8,8 @@ package ru.stikhonov.term1;
 public class StartUI {
     public static void main(String[] args) {
         Tracker tracker = new Tracker();
-//        ConsoleInput consoleInput = new ConsoleInput(tracker);
-
         ConsoleMainMenuUI consoleMainMenuUI = new ConsoleMainMenuUI(tracker);
-        consoleMainMenuUI.choiceMainMenuItem();
+        consoleMainMenuUI.navigateMainMenu();
 
     }
 }

@@ -3,29 +3,29 @@
   <ID>JAVA</ID>
   <OriginalElement />
   <nodes>
-    <node x="276.17499999999995" y="362.5250000000001">ru.stikhonov.term1.Tracker</node>
-    <node x="658.96875" y="308.96875">ru.stikhonov.term1.ConsoleMainMenuUI</node>
-    <node x="267.0" y="0.0">ru.stikhonov.term1.ConsoleInput</node>
-    <node x="729.725" y="87.98125000000005">ru.stikhonov.term1.StartUI</node>
-    <node x="737.346875" y="533.1500000000001">ru.stikhonov.term1.ConsoleInputChecker</node>
-    <node x="453.95624999999984" y="576.43125">ru.stikhonov.term1.MenuItem</node>
-    <node x="-231.6375" y="202.775">ru.stikhonov.term1.Item</node>
+    <node x="523.6523178807946" y="38.127483443708606">ru.stikhonov.term1.Tracker</node>
+    <node x="-130.0329268641123" y="194.30779608462808">ru.stikhonov.term1.ConsoleUserInput</node>
+    <node x="-446.57675087983426" y="430.6014949421166">ru.stikhonov.term1.MenuElements</node>
+    <node x="-665.5118704665081" y="-11.29802908391629">ru.stikhonov.term1.ConsoleMainMenuUI</node>
+    <node x="-134.12166343056555" y="-54.86468531555385">ru.stikhonov.term1.StartUI</node>
+    <node x="-672.0865694345582" y="257.03882234487526">ru.stikhonov.term1.ConsoleInputHelper</node>
+    <node x="493.28856612764775" y="393.2578918011729">ru.stikhonov.term1.Item</node>
   </nodes>
   <notes />
   <edges>
-    <edge source="ru.stikhonov.term1.StartUI" target="ru.stikhonov.term1.ConsoleInput">
-      <point x="0.0" y="0.0" />
-      <point x="0.0" y="0.0" />
-    </edge>
     <edge source="ru.stikhonov.term1.StartUI" target="ru.stikhonov.term1.ConsoleMainMenuUI">
       <point x="0.0" y="0.0" />
       <point x="0.0" y="0.0" />
     </edge>
-    <edge source="ru.stikhonov.term1.ConsoleInput" target="ru.stikhonov.term1.Item">
+    <edge source="ru.stikhonov.term1.ConsoleUserInput" target="ru.stikhonov.term1.MenuElements">
       <point x="0.0" y="0.0" />
       <point x="0.0" y="0.0" />
     </edge>
-    <edge source="ru.stikhonov.term1.ConsoleMainMenuUI" target="ru.stikhonov.term1.ConsoleInputChecker">
+    <edge source="ru.stikhonov.term1.ConsoleMainMenuUI" target="ru.stikhonov.term1.Tracker">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="ru.stikhonov.term1.ConsoleUserInput" target="ru.stikhonov.term1.ConsoleInputHelper">
       <point x="0.0" y="0.0" />
       <point x="0.0" y="0.0" />
     </edge>
@@ -33,7 +33,19 @@
       <point x="0.0" y="0.0" />
       <point x="0.0" y="0.0" />
     </edge>
-    <edge source="ru.stikhonov.term1.ConsoleInput" target="ru.stikhonov.term1.Tracker">
+    <edge source="ru.stikhonov.term1.ConsoleUserInput" target="ru.stikhonov.term1.Item">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="ru.stikhonov.term1.ConsoleUserInput" target="ru.stikhonov.term1.Tracker">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="ru.stikhonov.term1.ConsoleMainMenuUI" target="ru.stikhonov.term1.ConsoleInputHelper">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="ru.stikhonov.term1.ConsoleMainMenuUI" target="ru.stikhonov.term1.ConsoleUserInput">
       <point x="0.0" y="0.0" />
       <point x="0.0" y="0.0" />
     </edge>
@@ -42,8 +54,10 @@
       <point x="0.0" y="0.0" />
     </edge>
   </edges>
-  <settings layout="Hierarchic Group" zoom="0.7511737089201878" x="320.0" y="432.640625" />
-  <SelectedNodes />
+  <settings layout="Hierarchic Group" zoom="0.7519040902679831" x="204.12820147307832" y="314.6818828643161" />
+  <SelectedNodes>
+    <node>ru.stikhonov.term1.ConsoleUserInput</node>
+  </SelectedNodes>
   <Categories>
     <Category>Fields</Category>
     <Category>Inner Classes</Category>

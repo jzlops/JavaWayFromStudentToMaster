@@ -13,33 +13,27 @@ class ConsoleMainMenuUI {
         this.tracker = tracker;
     }
 
-    void choiceMainMenuItem() {
+    void navigateMainMenu() {
         int inputMenuNumber = 0;
-      //  this.showMainMenu();
-        ConsoleInput consoleInput = new ConsoleInput(this.tracker);
-        ConsoleMenuInput consoleMenuInput = new ConsoleMenuInput();
+        ConsoleUserInput consoleUserInput = new ConsoleUserInput(this.tracker);
+        ConsoleInputHelper consoleInputHelper = new ConsoleInputHelper();
         do {
-            if (inputMenuNumber == 1) consoleInput.choiceSubMenuItem(MenuItem.ADD);
-            if (inputMenuNumber == 2) consoleInput.choiceSubMenuItem(MenuItem.EDIT);
-            if (inputMenuNumber == 3) consoleInput.choiceSubMenuItem(MenuItem.DELETE);
-            if (inputMenuNumber == 4) consoleInput.choiceSubMenuItem(MenuItem.SHOW);
-            if (inputMenuNumber == 5) consoleInput.choiceSubMenuItem(MenuItem.SHOW_BY_ID);
-            if (inputMenuNumber == 6) consoleInput.choiceSubMenuItem(MenuItem.SHOW_BY_FILTER);
+            if (inputMenuNumber == 1) consoleUserInput.menuAction(MenuElements.ADD);
+            if (inputMenuNumber == 2) consoleUserInput.menuAction(MenuElements.EDIT);
+            if (inputMenuNumber == 3) consoleUserInput.menuAction(MenuElements.DELETE);
+            if (inputMenuNumber == 4) consoleUserInput.menuAction(MenuElements.SHOW);
+            if (inputMenuNumber == 5) consoleUserInput.menuAction(MenuElements.SHOW_BY_ID);
+            if (inputMenuNumber == 6) consoleUserInput.menuAction(MenuElements.SHOW_BY_FILTER);
             this.showMainMenu();
-            inputMenuNumber = consoleMenuInput.MenuChoice();
+            inputMenuNumber = consoleInputHelper.intEntry();
         } while (inputMenuNumber != 0);
     }
 
     private void showMainMenu() {
-        for (int i = 0; i < 50; i++) {
-            System.out.printf("*");
-        }
-        System.out.printf("%n");
+        ConsoleInputHelper consoleInputHelper = new ConsoleInputHelper();
+        consoleInputHelper.borderGenerator("*");
         System.out.printf("ДОБРО ПОЖАЛОВАТЬ В ТРЕКЕР ЗАЯВОК %n");
-        for (int i = 0; i < 50; i++) {
-            System.out.printf("#");
-        }
-        System.out.printf("%n");
+        consoleInputHelper.borderGenerator("#");
         System.out.printf("ВЫБЕРИТЕ ПУНКТ МЕНЮ: %n");
         System.out.printf("1. Создать заявку... %n");
         System.out.printf("2. Редактировать заявку... %n");
@@ -48,10 +42,6 @@ class ConsoleMainMenuUI {
         System.out.printf("5. Найти заявку по номеру ID... %n");
         System.out.printf("6. Найти заявки по дате создания ID... %n");
         System.out.printf("0. Выйти из программы %n");
-        for (int i = 0; i < 50; i++) {
-            System.out.printf("#");
-        }
-        System.out.printf("%n");
-    }
+        consoleInputHelper.borderGenerator("#");    }
 
 }

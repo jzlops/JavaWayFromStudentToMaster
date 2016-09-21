@@ -9,43 +9,43 @@ import java.util.Date;
 
 public class Item {
 
-    private String name;
+    private String userName;
     private String description;
     private Date date;
     private String comments;
     private String itemID;
 
-    public Item(String name, String description, Date date, String comments) {
-        this.name = name;
+    public Item(String userName, String description, Date date, String comments) {
+        this.userName = userName;
         this.description = description;
         this.date = date;
         this.comments = comments;
         this.itemID = itemStringIDGenerator();
     }
 
-    public String getName() {
-        return name;
+    public String getUserName() {
+        return this.userName;
     }
 
     public String getDescription() {
-        return description;
+        return this.description;
     }
 
     public Date getDate() {
-        return date;
+        return this.date;
     }
 
     public String getComments() {
-        return comments;
+        return this.comments;
     }
 
     public String getItemID() {
-        return itemID;
+        return this.itemID;
     }
 
 
-    public void setName(String name) {
-        this.name = name;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public void setDescription(String description) {
