@@ -40,7 +40,7 @@ public class Tracker {
     public boolean deleteItem(String itemID) {
         boolean fit = false;
         if (this.itemsCount == 0) {
-            return fit;
+            return false;
         }
         for (int i = 0; i < this.itemsCount; i++) {
             if (this.items[i].getItemID().equals(itemID)) {

@@ -6,8 +6,8 @@ import java.util.Date;
  * @author Sergey Tikhonov
  */
 class ConsoleUserInput {
-    Tracker tracker;
-    MenuElements menuElements;
+    private Tracker tracker;
+    private MenuElements menuElements;
 
     ConsoleUserInput(Tracker tracker) {
         this.tracker = tracker;
