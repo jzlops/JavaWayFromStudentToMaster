@@ -34,6 +34,7 @@ class ConsoleUserInput {
         }
     }
 
+
     private void showItemByFilterAction() {
         ConsoleInputHelper consoleInputHelper = new ConsoleInputHelper();
         Date beginDate, endDate;
