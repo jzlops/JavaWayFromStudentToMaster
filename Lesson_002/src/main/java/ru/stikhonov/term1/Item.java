@@ -21,7 +21,7 @@ public class Item {
         this.description = description;
         this.date = date;
         this.comments = comments;
-        this.itemID = itemStringIDGenerator();
+        this.itemID = null;
     }
 
     public String getUserName() {
@@ -45,29 +45,25 @@ public class Item {
     }
 
 
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
-    }
-
-    public void setComments(String comments) {
-        this.comments = comments;
-    }
+//    public void setUserName(String userName) {
+//        this.userName = userName;
+//    }
+//
+//    public void setDescription(String description) {
+//        this.description = description;
+//    }
+//
+//    public void setDate(Date date) {
+//        this.date = date;
+//    }
+//
+//    public void setComments(String comments) {
+//        this.comments = comments;
+//    }
 
     public void setItemID(String itemID) {
         this.itemID = itemID;
     }
-
-    private String itemStringIDGenerator() {
-        StringBuilder randomString = new StringBuilder();
-        randomString.append("RQS").append((int) (Math.random() * 100000));
-        return randomString.toString();
-    }
 }
+
+

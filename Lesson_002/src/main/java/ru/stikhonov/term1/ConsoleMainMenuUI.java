@@ -9,11 +9,8 @@ package ru.stikhonov.term1;
 class ConsoleMainMenuUI {
     private Tracker tracker;
 
-    ConsoleMainMenuUI(Tracker tracker) {
+    void start(Tracker tracker) {
         this.tracker = tracker;
-    }
-
-    void navigateMainMenu() {
         int inputMenuNumber = 0;
         ConsoleUserInput consoleUserInput = new ConsoleUserInput(this.tracker);
         ConsoleInputHelper consoleInputHelper = new ConsoleInputHelper();

@@ -67,7 +67,5 @@ public class ConsoleInputHelper {
             anyKeyEntry();
             return false;
         }
-
     }
-
 }

@@ -15,6 +15,8 @@ public class Tracker {
     private Item[] items;
     private int itemsCount = 0;
     private int capacity;
+    private int markedItemIndex = -1;
+    private String markedItemID =null;
 
     Tracker(int capacity) {
         this.items = new Item[capacity];
@@ -32,6 +34,13 @@ public class Tracker {
         }
     }
 
+    private String itemIDGenerator() {
+        StringBuilder randomString = new StringBuilder();
+        randomString.append("RQS").append((int) (Math.random() * 100000));
+        return randomString.toString();
+    }
+
+
     public int getItemsCount() {
         return this.itemsCount;
     }
@@ -39,6 +48,7 @@ public class Tracker {
     public void addItem(Item item) {
         increaseCapacity();
         this.items[this.itemsCount] = item;
+        this.items[this.itemsCount].setItemID(this.itemIDGenerator());
         this.itemsCount++;
     }
 
@@ -62,19 +72,30 @@ public class Tracker {
         return fit;
     }
 
-    public void editItem(String itemID, Item item) {
+    public void editItem(Item item) {
         if (itemsCount > 0) {
-            for (int i = 0; i < this.itemsCount; i++) {
-                if (this.items[i].getItemID().equals(itemID)) {
-                    this.items[i] = item;
-                    this.items[i].setItemID(itemID);
-                }
-            }
+            item.setItemID(this.markedItemID);
+            this.items[this.markedItemIndex] = item;
+            this.markedItemIndex =-1;
+            this.markedItemID =null;
         }
     }
 
     public Item[] getAllItems() {
-        return Arrays.copyOf(this.items,this.itemsCount);
+        return Arrays.copyOf(this.items, this.itemsCount);
+    }
+
+    public boolean itemMarkByID(String itemID) {
+        if (itemsCount > 0) {
+            for (int i = 0; i < this.itemsCount; i++) {
+                if (this.items[i].getItemID().equals(itemID)) {
+                    this.markedItemIndex = i;
+                    this.markedItemID = this.items[i].getItemID();
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     public Item getItemByID(String itemID) {
