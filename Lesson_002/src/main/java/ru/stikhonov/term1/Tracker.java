@@ -11,30 +11,55 @@ import java.util.Date;
 
 
 public class Tracker {
+
     private Item[] items;
+    private int itemsCount = 0;
+    private int capacity;
+
+    Tracker(int capacity) {
+        this.items = new Item[capacity];
+        this.capacity = capacity;
+    }
 
     public int getItemsCount() {
         return this.itemsCount;
     }
 
-    private int itemsCount = 0;
-
     public void addItem(Item item) {
-        if (itemsCount > 0) {
-            Item[] tempItems = new Item[this.itemsCount + 1];
+        increaseCapacity();
+        this.items[this.itemsCount] = item;
+        this.itemsCount++;
+    }
+
+
+    private void increaseCapacity() {
+        if (this.itemsCount == this.capacity) {
+            this.capacity = this.capacity * 2;
+            Item[] tempItems = new Item[this.capacity];
             for (int i = 0; i < this.itemsCount; i++) {
                 tempItems[i] = this.items[i];
             }
-            tempItems[itemsCount] = item;
-            this.items = tempItems;
-            this.itemsCount++;
-        } else {
-            this.itemsCount++;
-            Item[] tempItems = new Item[itemsCount];
-            tempItems[0] = item;
             this.items = tempItems;
         }
+
     }
+
+//    public void addItem(Item item) {
+//        if (itemsCount > 0) {
+//            Item[] tempItems = new Item[this.itemsCount + 1];
+//            for (int i = 0; i < this.itemsCount; i++) {
+//                tempItems[i] = this.items[i];
+//            }
+//            tempItems[itemsCount] = item;
+//            this.items = tempItems;
+//            this.itemsCount++;
+//        } else {
+//            this.itemsCount++;
+//            Item[] tempItems = new Item[itemsCount];
+//            tempItems[0] = item;
+//            this.items = tempItems;
+//        }
+//    }
 
 
     public boolean deleteItem(String itemID) {
@@ -54,9 +79,9 @@ public class Tracker {
             this.itemsCount--;
             this.items[this.itemsCount] = null;
         }
-        if (itemsCount > 0) {
-            this.items = Arrays.copyOf(this.items, this.itemsCount);
-        }
+//        if (itemsCount > 0) {
+//            this.items = Arrays.copyOf(this.items, this.itemsCount);
+//        }
         return fit;
     }
 
@@ -74,6 +99,7 @@ public class Tracker {
         }
         return null;
     }
+
     public Item getItemByID(String itemID) {
         if (itemsCount > 0) {
             for (int i = 0; i < this.itemsCount; i++) {

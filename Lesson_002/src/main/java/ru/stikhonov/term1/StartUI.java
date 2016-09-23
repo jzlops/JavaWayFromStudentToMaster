@@ -7,7 +7,7 @@ package ru.stikhonov.term1;
  */
 public class StartUI {
     public static void main(String[] args) {
-        Tracker tracker = new Tracker();
+        Tracker tracker = new Tracker(1);
         ConsoleMainMenuUI consoleMainMenuUI = new ConsoleMainMenuUI(tracker);
         consoleMainMenuUI.navigateMainMenu();
     }

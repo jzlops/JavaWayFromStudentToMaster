@@ -14,22 +14,22 @@ class ConsoleUserInput {
     }
 
     void menuAction(MenuElements menuElements) {
-        if (menuElements.name() == "ADD") {
+        if (menuElements.equals(menuElements.ADD)) {
             addMenuAction();
         }
-        if (menuElements.name() == "EDIT") {
+        if (menuElements.equals(menuElements.EDIT)) {
             editMenuAction();
         }
-        if (menuElements.name() == "DELETE") {
+        if (menuElements.equals(menuElements.DELETE)) {
             deleteMenuAction();
         }
-        if (menuElements.name() == "SHOW") {
+        if (menuElements.equals(menuElements.SHOW)) {
             showMenuAction();
         }
-        if (menuElements.name() == "SHOW_BY_ID") {
+        if (menuElements.equals(menuElements.SHOW_BY_ID)) {
             showItemByIDAction();
         }
-        if (menuElements.name() == "SHOW_BY_FILTER") {
+        if (menuElements.equals(menuElements.SHOW_BY_FILTER)) {
             showItemByFilterAction();
         }
     }
