@@ -15,6 +15,7 @@ public class Item {
     private String comments;
     private String itemID;
 
+
     public Item(String userName, String description, Date date, String comments) {
         this.userName = userName;
         this.description = description;
@@ -58,6 +59,10 @@ public class Item {
 
     public void setComments(String comments) {
         this.comments = comments;
+    }
+
+    public void setItemID(String itemID) {
+        this.itemID = itemID;
     }
 
     private String itemStringIDGenerator() {

@@ -57,5 +57,17 @@ public class ConsoleInputHelper {
         System.out.printf("%n");
     }
 
+    boolean itemCountChecker(int itemCount) {
+        if (itemCount > 0) {
+            return true;
+        } else {
+            borderGenerator("!");
+            System.out.printf("В ТРЕКЕРЕ НЕТ ЗАЯВОК %n");
+            borderGenerator("!");
+            anyKeyEntry();
+            return false;
+        }
+
+    }
 
 }
