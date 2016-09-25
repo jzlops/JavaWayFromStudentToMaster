@@ -45,22 +45,6 @@ public class Item {
     }
 
 
-//    public void setUserName(String userName) {
-//        this.userName = userName;
-//    }
-//
-//    public void setDescription(String description) {
-//        this.description = description;
-//    }
-//
-//    public void setDate(Date date) {
-//        this.date = date;
-//    }
-//
-//    public void setComments(String comments) {
-//        this.comments = comments;
-//    }
-
     public void setItemID(String itemID) {
         this.itemID = itemID;
     }

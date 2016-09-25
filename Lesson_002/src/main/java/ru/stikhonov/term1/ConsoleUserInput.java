@@ -157,11 +157,7 @@ class ConsoleUserInput {
 
         System.out.printf("Введите новый комментарий:%n");
         comment = consoleInputHelper.stringEntry();
-
-        if (this.tracker.itemMarkByID(itemID)) {
-            this.tracker.editItem(new Item(username, description, new Date(), comment));
-        }
-
+        this.tracker.editItem(itemID, new Item(username, description, new Date(), comment));
         consoleInputHelper.borderGenerator("-");
         System.out.printf("Заявка с номером %1$s отредактирована %n", itemID);
         consoleInputHelper.anyKeyEntry();
