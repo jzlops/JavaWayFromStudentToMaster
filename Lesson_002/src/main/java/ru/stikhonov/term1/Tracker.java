@@ -69,12 +69,11 @@ public class Tracker {
         return fit;
     }
 
-    public void editItem(String itemID, Item item) {
+    public void editItem(Item item) {
         if (itemsCount > 0) {
             for (int i = 0; i < this.itemsCount; i++) {
-                if (this.items[i].getItemID().equals(itemID)) {
+                if (this.items[i].getItemID().equals(item.getItemID())) {
                     this.items[i] = item;
-                    this.items[i].setItemID(itemID);
                 }
             }
         }

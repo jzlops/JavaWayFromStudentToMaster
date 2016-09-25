@@ -137,6 +137,7 @@ class ConsoleUserInput {
     private void editMenuAction() {
         ConsoleInputHelper consoleInputHelper = new ConsoleInputHelper();
         String username, description, comment, itemID;
+        Item item;
 
         if (!consoleInputHelper.itemCountChecker(this.tracker.getItemsCount())) return;
         consoleInputHelper.borderGenerator("+");
@@ -157,7 +158,9 @@ class ConsoleUserInput {
 
         System.out.printf("Введите новый комментарий:%n");
         comment = consoleInputHelper.stringEntry();
-        this.tracker.editItem(itemID, new Item(username, description, new Date(), comment));
+        item=new Item(username, description, new Date(), comment);
+        item.setItemID(itemID);
+        this.tracker.editItem(item);
         consoleInputHelper.borderGenerator("-");
         System.out.printf("Заявка с номером %1$s отредактирована %n", itemID);
         consoleInputHelper.anyKeyEntry();
