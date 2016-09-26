@@ -1,16 +1,7 @@
 package ru.stikhonov.term1;
 
-import org.junit.Before;
-import ru.stikhonov.term1.Tracker;
-
 import java.util.Date;
-import java.util.logging.StreamHandler;
-
 import org.junit.Test;
-
-import static org.mockito.Mockito.mock;
-
-import static org.mockito.Mockito.spy;
 
 /**
  * @author Sergey Tikhonov
