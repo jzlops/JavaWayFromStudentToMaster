@@ -3,6 +3,8 @@ package ru.stikhonov.term1;
 import java.util.Date;
 
 /**
+ * Класс реализующий ввод данных польователя с консоли, а так же отбражение вызодных данных, запрашиваемых у трекера
+ *
  * @author Sergey Tikhonov
  */
 class ConsoleUserInput {
@@ -10,11 +12,28 @@ class ConsoleUserInput {
     private Input consoleInputHelper;
     private ConsoleGuiDrawer consoleGuiDrawer = new ConsoleGuiDrawer();
 
+    /**
+     * Конструктор принимате на вход 2 параметра
+     *
+     * @param tracker объект типа Tracker
+     * @param input   объет реализующий интерфейс Input
+     */
     ConsoleUserInput(Tracker tracker, Input input) {
         this.tracker = tracker;
         this.consoleInputHelper = input;
     }
 
+    /**
+     * Метод анализирующий выбор меню пользователем и запускающий тот или иной метод (логичесикй блок):
+     * Создать заявку
+     * Удалить заявку
+     * Редактировать заявку
+     * Показать все заявки в трекере
+     * Показать заявку по ее ID
+     * Показать заявки в промежутке дат
+     *
+     * @param menuElements принимает в качество входного параметра элемент множетва MenuElements
+     */
     void menuAction(MenuElements menuElements) {
 
         if (menuElements.name().equals("ADD")) {
@@ -38,6 +57,9 @@ class ConsoleUserInput {
     }
 
 
+    /**
+     * Метод отображает на экран (в консоль) набор элементов типа Item из трекера в промежутке требуемых дат
+     */
     private void showItemByFilterAction() {
         ConsoleInputHelper consoleInputHelper = new ConsoleInputHelper();
         Date beginDate, endDate;
@@ -79,6 +101,9 @@ class ConsoleUserInput {
         consoleInputHelper.anyKeyEntry();
     }
 
+    /**
+     * Метод отображает на экран элемент типа Item из трекера, в зависимости от выбраннеого ID
+     */
     private void showItemByIDAction() {
         Item item;
         String itemID;
@@ -108,6 +133,9 @@ class ConsoleUserInput {
         consoleInputHelper.anyKeyEntry();
     }
 
+    /**
+     * Метод отображает список всех элементов Item в трекере
+     */
     private void showMenuAction() {
         ConsoleInputHelper consoleInputHelper = new ConsoleInputHelper();
         if (!itemCountChecker(this.tracker.getItemsCount())) return;
@@ -126,6 +154,9 @@ class ConsoleUserInput {
         consoleInputHelper.anyKeyEntry();
     }
 
+    /**
+     * Удалить заявку Item  из трекера
+     */
     private void deleteMenuAction() {
         ConsoleInputHelper consoleInputHelper = new ConsoleInputHelper();
         if (!itemCountChecker(this.tracker.getItemsCount())) return;
@@ -144,6 +175,9 @@ class ConsoleUserInput {
         consoleInputHelper.anyKeyEntry();
     }
 
+    /**
+     * Редактировать заявку Item в трекере
+     */
     private void editMenuAction() {
         ConsoleInputHelper consoleInputHelper = new ConsoleInputHelper();
         String username, description, comment, itemID;
@@ -178,6 +212,9 @@ class ConsoleUserInput {
         consoleInputHelper.anyKeyEntry();
     }
 
+    /**
+     * Добавить заявку Item в трекер
+     */
     private void addMenuAction() {
 
         ConsoleInputHelper consoleInputHelper = new ConsoleInputHelper();
@@ -204,6 +241,12 @@ class ConsoleUserInput {
         consoleInputHelper.anyKeyEntry();
     }
 
+    /**
+     * Вспомогатльеный метод реагирующий на наличие заявок в трекере
+     *
+     * @param itemCount количество заявок в трекере
+     * @return true если трекер не пуст, иначе false
+     */
     private boolean itemCountChecker(int itemCount) {
         if (itemCount > 0) {
             return true;

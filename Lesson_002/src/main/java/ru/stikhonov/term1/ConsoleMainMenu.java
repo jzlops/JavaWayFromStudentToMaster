@@ -2,7 +2,7 @@ package ru.stikhonov.term1;
 
 
 /**
- * Класс отвечает за отрисовку консольгного UI
+ * Класс отвечает за оснвной цикл диалога консольногот приложания
  *
  * @author Sergey Tikhonov
  */
@@ -11,15 +11,24 @@ class ConsoleMainMenu {
     private Input consoleInputHelper;
 
 
+    /**
+     * Конструкор принимает в себя объект Tracker и объект реализующий интерфейс ввода Input
+     *
+     * @param tracker  объект класса Tracker
+     * @param consoleInputHelper объект реализующий интерйес ввода @Input
+     */
     ConsoleMainMenu(Tracker tracker, Input consoleInputHelper) {
         this.consoleInputHelper = consoleInputHelper;
         this.tracker = tracker;
     }
 
+    /**
+     * Основной и единственный метод запуска консольного UI и основного цикла диалога
+     */
     void start() {
         int inputMenuNumber = 0;
         ConsoleGuiDrawer consoleGuiDrawer = new ConsoleGuiDrawer();
-        ConsoleUserInput consoleUserInput = new ConsoleUserInput(this.tracker,this.consoleInputHelper);
+        ConsoleUserInput consoleUserInput = new ConsoleUserInput(this.tracker, this.consoleInputHelper);
 
         do {
             if (inputMenuNumber == 1) consoleUserInput.menuAction(MenuElements.ADD);

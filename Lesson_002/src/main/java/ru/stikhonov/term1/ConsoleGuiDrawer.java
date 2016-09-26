@@ -8,7 +8,7 @@ package ru.stikhonov.term1;
 class ConsoleGuiDrawer {
 
     /**
-     * Метод рисует основное меню
+     * Метод рисует основное меню программы
      */
     void showMainMenu() {
         borderGenerator("*");
@@ -28,7 +28,7 @@ class ConsoleGuiDrawer {
     /**
      * Метод чертит границы
      *
-     * @param s любой симовол которым будет рисоваться меню
+     * @param s любой симовол которым будет рисоваться границы меню
      */
     void borderGenerator(String s) {
         for (int i = 0; i < 50; i++) {

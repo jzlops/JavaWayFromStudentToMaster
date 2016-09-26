@@ -1,7 +1,8 @@
 package ru.stikhonov.term1;
 
 /**
- * Перечисление содержит значения меню пользователя
+ * Перечисление содержит значения меню пользователя, использвется в классах ConsoleMainMenu и ConsoleUserInput
+ *
  * @author Sergey Tikhonov
  */
 
