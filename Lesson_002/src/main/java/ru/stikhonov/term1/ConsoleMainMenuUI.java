@@ -8,12 +8,19 @@ package ru.stikhonov.term1;
  */
 class ConsoleMainMenuUI {
     private Tracker tracker;
+    private Input input;
 
-    void start(Tracker tracker) {
+
+    ConsoleMainMenuUI(Tracker tracker, Input input) {
+        this.input = input;
         this.tracker = tracker;
+    }
+
+    void start() {
         int inputMenuNumber = 0;
-        ConsoleUserInput consoleUserInput = new ConsoleUserInput(this.tracker);
-        ConsoleInputHelper consoleInputHelper = new ConsoleInputHelper();
+        GuiDrawer guiDrawer = new GuiDrawer();
+        ConsoleUserInput consoleUserInput = new ConsoleUserInput(this.tracker,this.input);
+
         do {
             if (inputMenuNumber == 1) consoleUserInput.menuAction(MenuElements.ADD);
             if (inputMenuNumber == 2) consoleUserInput.menuAction(MenuElements.EDIT);
@@ -21,24 +28,10 @@ class ConsoleMainMenuUI {
             if (inputMenuNumber == 4) consoleUserInput.menuAction(MenuElements.SHOW);
             if (inputMenuNumber == 5) consoleUserInput.menuAction(MenuElements.SHOW_BY_ID);
             if (inputMenuNumber == 6) consoleUserInput.menuAction(MenuElements.SHOW_BY_FILTER);
-            this.showMainMenu();
-            inputMenuNumber = consoleInputHelper.intEntry();
+            guiDrawer.showMainMenu();
+            inputMenuNumber = this.input.intEntry();
         } while (inputMenuNumber != 0);
     }
 
-    private void showMainMenu() {
-        ConsoleInputHelper consoleInputHelper = new ConsoleInputHelper();
-        consoleInputHelper.borderGenerator("*");
-        System.out.printf("ДОБРО ПОЖАЛОВАТЬ В ТРЕКЕР ЗАЯВОК %n");
-        consoleInputHelper.borderGenerator("#");
-        System.out.printf("ВЫБЕРИТЕ ПУНКТ МЕНЮ: %n");
-        System.out.printf("1. Создать заявку... %n");
-        System.out.printf("2. Редактировать заявку... %n");
-        System.out.printf("3. Удалить заявку... %n");
-        System.out.printf("4. Отобразить все заявки... %n");
-        System.out.printf("5. Найти заявку по номеру ID... %n");
-        System.out.printf("6. Найти заявки по дате создания... %n");
-        System.out.printf("0. Выйти из программы %n");
-        consoleInputHelper.borderGenerator("#");    }
 
 }

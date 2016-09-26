@@ -10,7 +10,7 @@ import java.util.Date;
  */
 
 
-public class Tracker {
+ class Tracker {
 
     private Item[] items;
     private int itemsCount = 0;
@@ -38,18 +38,18 @@ public class Tracker {
         return randomString.toString();
     }
 
-    public int getItemsCount() {
+     int getItemsCount() {
         return this.itemsCount;
     }
 
-    public void addItem(Item item) {
+     void addItem(Item item) {
         increaseCapacity();
         this.items[this.itemsCount] = item;
         this.items[this.itemsCount].setItemID(this.itemIDGenerator());
         this.itemsCount++;
     }
 
-    public boolean deleteItem(String itemID) {
+     boolean deleteItem(String itemID) {
         boolean fit = false;
         if (this.itemsCount == 0) {
             return false;
@@ -69,7 +69,7 @@ public class Tracker {
         return fit;
     }
 
-    public void editItem(Item item) {
+     void editItem(Item item) {
         if (itemsCount > 0) {
             for (int i = 0; i < this.itemsCount; i++) {
                 if (this.items[i].getItemID().equals(item.getItemID())) {
@@ -79,12 +79,12 @@ public class Tracker {
         }
     }
 
-    public Item[] getAllItems() {
+     Item[] getAllItems() {
         return Arrays.copyOf(this.items, this.itemsCount);
     }
 
 
-    public Item getItemByID(String itemID) {
+     Item getItemByID(String itemID) {
         if (itemsCount > 0) {
             for (int i = 0; i < this.itemsCount; i++) {
                 if (this.items[i].getItemID().equals(itemID)) {
@@ -95,7 +95,7 @@ public class Tracker {
         return null;
     }
 
-    public boolean itemExistence(String itemID) {
+     boolean itemExistence(String itemID) {
         if (this.itemsCount > 0) {
             for (int i = 0; i < this.itemsCount; i++) {
                 if (this.items[i].getItemID().equals(itemID)) {
@@ -106,7 +106,7 @@ public class Tracker {
         return false;
     }
 
-    public Item[] getItemsByDataRange(Date date1, Date date2) {
+     Item[] getItemsByDataRange(Date date1, Date date2) {
         if (this.itemsCount == 0) return null;
         Item[] tempItems = new Item[this.itemsCount];
         int fitCount = 0;

@@ -7,29 +7,32 @@ import java.util.Date;
  */
 class ConsoleUserInput {
     private Tracker tracker;
-    private MenuElements menuElements;
+    private Input consoleInputHelper;
+    private GuiDrawer guiDrawer = new GuiDrawer();
 
-    ConsoleUserInput(Tracker tracker) {
+    ConsoleUserInput(Tracker tracker, Input input) {
         this.tracker = tracker;
+        this.consoleInputHelper = input;
     }
 
     void menuAction(MenuElements menuElements) {
-        if (menuElements.equals(menuElements.ADD)) {
+
+        if (menuElements.name().equals("ADD")) {
             addMenuAction();
         }
-        if (menuElements.equals(menuElements.EDIT)) {
+        if (menuElements.name().equals("EDIT")) {
             editMenuAction();
         }
-        if (menuElements.equals(menuElements.DELETE)) {
+        if (menuElements.name().equals("DELETE")) {
             deleteMenuAction();
         }
-        if (menuElements.equals(menuElements.SHOW)) {
+        if (menuElements.name().equals("SHOW")) {
             showMenuAction();
         }
-        if (menuElements.equals(menuElements.SHOW_BY_ID)) {
+        if (menuElements.name().equals("SHOW_BY_ID")) {
             showItemByIDAction();
         }
-        if (menuElements.equals(menuElements.SHOW_BY_FILTER)) {
+        if (menuElements.name().equals("SHOW_BY_FILTER")) {
             showItemByFilterAction();
         }
     }
@@ -39,11 +42,11 @@ class ConsoleUserInput {
         ConsoleInputHelper consoleInputHelper = new ConsoleInputHelper();
         Date beginDate, endDate;
 
-        if (!consoleInputHelper.itemCountChecker(this.tracker.getItemsCount())) return;
+        if (!itemCountChecker(this.tracker.getItemsCount())) return;
 
-        consoleInputHelper.borderGenerator("+");
+        guiDrawer.borderGenerator("+");
         System.out.printf("СПИСОК ЗАЯВОК ОТСОРТИРОВАННЫЙ ПО ДАТАМ %n");
-        consoleInputHelper.borderGenerator("+");
+        guiDrawer.borderGenerator("+");
         System.out.printf("Введите начальное время в формате yyyy.MM.dd HH:mm:ss %n");
         beginDate = consoleInputHelper.dateEntry();
         if (beginDate == null) {
@@ -56,7 +59,7 @@ class ConsoleUserInput {
             consoleInputHelper.anyKeyEntry();
             return;
         }
-        consoleInputHelper.borderGenerator("+");
+        guiDrawer.borderGenerator("+");
         if (this.tracker.getItemsByDataRange(beginDate, endDate) != null) {
             System.out.printf("СПИСОК ЗАЯВОК ЗА УКАЗАННЫЙ ПЕРИОД ЗАЯВОК %n");
             for (Item item : this.tracker.getItemsByDataRange(beginDate, endDate)) {
@@ -65,7 +68,7 @@ class ConsoleUserInput {
                 System.out.printf("Описание:  %1$s %n", item.getDescription());
                 System.out.printf("Комментарий:  %1$s %n", item.getComments());
                 System.out.printf("Дата  последнего изменения: %1$s %n", item.getDate().toString());
-                consoleInputHelper.borderGenerator("+");
+                guiDrawer.borderGenerator("+");
             }
         } else {
             System.out.printf("Заявок с указанными критериями не найдено %n");
@@ -77,10 +80,10 @@ class ConsoleUserInput {
         Item item;
         String itemID;
         ConsoleInputHelper consoleInputHelper = new ConsoleInputHelper();
-        if (!consoleInputHelper.itemCountChecker(this.tracker.getItemsCount())) return;
-        consoleInputHelper.borderGenerator("+");
+        if (!itemCountChecker(this.tracker.getItemsCount())) return;
+        guiDrawer.borderGenerator("+");
         System.out.printf("ЗАЯВКА %n");
-        consoleInputHelper.borderGenerator("+");
+        guiDrawer.borderGenerator("+");
         System.out.printf("Введите номер заявки: %n");
         itemID = consoleInputHelper.stringEntry();
 
@@ -90,40 +93,40 @@ class ConsoleUserInput {
             return;
         }
         item = this.tracker.getItemByID(itemID);
-        consoleInputHelper.borderGenerator("+");
+        guiDrawer.borderGenerator("+");
         System.out.printf("ID заявки: %1$s %n", item.getItemID());
         System.out.printf("Имя составителя:  %1$s %n", item.getUserName());
         System.out.printf("Описание:  %1$s %n", item.getDescription());
         System.out.printf("Комментарий:  %1$s %n", item.getComments());
         System.out.printf("Дата создания:  %1$s %n", item.getDate().toString());
-        consoleInputHelper.borderGenerator("+");
+        guiDrawer.borderGenerator("+");
         consoleInputHelper.anyKeyEntry();
     }
 
     private void showMenuAction() {
         ConsoleInputHelper consoleInputHelper = new ConsoleInputHelper();
-        if (!consoleInputHelper.itemCountChecker(this.tracker.getItemsCount())) return;
-        consoleInputHelper.borderGenerator("+");
+        if (!itemCountChecker(this.tracker.getItemsCount())) return;
+        guiDrawer.borderGenerator("+");
         System.out.printf("СПИСОК ВСЕХ ЗАЯВОК %n");
-        consoleInputHelper.borderGenerator("+");
+        guiDrawer.borderGenerator("+");
         for (Item item : tracker.getAllItems()) {
             System.out.printf("ID заявки: %1$s %n", item.getItemID());
             System.out.printf("Имя составителя:  %1$s %n", item.getUserName());
             System.out.printf("Описание:  %1$s %n", item.getDescription());
             System.out.printf("Комментарий:  %1$s %n", item.getComments());
             System.out.printf("Дата последнего изменения:  %1$s %n", item.getDate().toString());
-            consoleInputHelper.borderGenerator("+");
+            guiDrawer.borderGenerator("+");
         }
         consoleInputHelper.anyKeyEntry();
     }
 
     private void deleteMenuAction() {
         ConsoleInputHelper consoleInputHelper = new ConsoleInputHelper();
-        if (!consoleInputHelper.itemCountChecker(this.tracker.getItemsCount())) return;
+        if (!itemCountChecker(this.tracker.getItemsCount())) return;
         String itemID;
-        consoleInputHelper.borderGenerator("+");
+        guiDrawer.borderGenerator("+");
         System.out.printf("УДАЛЕНИЕ ЗАЯВКИ %n");
-        consoleInputHelper.borderGenerator("+");
+        guiDrawer.borderGenerator("+");
         System.out.printf("Введите номер заявки: %n");
         itemID = consoleInputHelper.stringEntry();
         if (tracker.deleteItem(itemID)) {
@@ -139,10 +142,10 @@ class ConsoleUserInput {
         String username, description, comment, itemID;
         Item item;
 
-        if (!consoleInputHelper.itemCountChecker(this.tracker.getItemsCount())) return;
-        consoleInputHelper.borderGenerator("+");
+        if (!itemCountChecker(this.tracker.getItemsCount())) return;
+        guiDrawer.borderGenerator("+");
         System.out.printf("РЕДАКТИРОВАНИЕ ЗАЯВКИ %n");
-        consoleInputHelper.borderGenerator("+");
+        guiDrawer.borderGenerator("+");
         System.out.printf("Введите номер заявки: %n");
         itemID = consoleInputHelper.stringEntry();
         if (!this.tracker.itemExistence(itemID)) {
@@ -158,10 +161,10 @@ class ConsoleUserInput {
 
         System.out.printf("Введите новый комментарий:%n");
         comment = consoleInputHelper.stringEntry();
-        item=new Item(username, description, new Date(), comment);
+        item = new Item(username, description, new Date(), comment);
         item.setItemID(itemID);
         this.tracker.editItem(item);
-        consoleInputHelper.borderGenerator("-");
+        guiDrawer.borderGenerator("-");
         System.out.printf("Заявка с номером %1$s отредактирована %n", itemID);
         consoleInputHelper.anyKeyEntry();
     }
@@ -171,9 +174,9 @@ class ConsoleUserInput {
         ConsoleInputHelper consoleInputHelper = new ConsoleInputHelper();
         String username, description, comment;
         Item item;
-        consoleInputHelper.borderGenerator("+");
+        guiDrawer.borderGenerator("+");
         System.out.printf("ДОБАВЛЕНИЕ НОВОЙ ЗАЯВКИ %n");
-        consoleInputHelper.borderGenerator("+");
+        guiDrawer.borderGenerator("+");
 
         System.out.printf("Введите ваше имя:%n");
         username = consoleInputHelper.stringEntry();
@@ -185,10 +188,22 @@ class ConsoleUserInput {
         comment = consoleInputHelper.stringEntry();
         item = new Item(username, description, new Date(), comment);
         this.tracker.addItem(item);
-        consoleInputHelper.borderGenerator("-");
+        guiDrawer.borderGenerator("-");
         System.out.printf("Заявка создана %n");
         System.out.printf("Номер заявки %1$s %n", item.getItemID());
         consoleInputHelper.anyKeyEntry();
+    }
+
+    private boolean itemCountChecker(int itemCount) {
+        if (itemCount > 0) {
+            return true;
+        } else {
+            guiDrawer.borderGenerator("!");
+            System.out.printf("В ТРЕКЕРЕ НЕТ ЗАЯВОК %n");
+            guiDrawer.borderGenerator("!");
+            this.consoleInputHelper.anyKeyEntry();
+            return false;
+        }
     }
 }
 

@@ -10,9 +10,9 @@ import java.util.Scanner;
 /**
  * @author Sergey Tikhonov
  */
-public class ConsoleInputHelper {
-
-    Date dateEntry() {
+public class ConsoleInputHelper implements Input {
+    @Override
+    public Date dateEntry() {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss");
         String s;
         Scanner scanner = new Scanner(System.in);
@@ -25,7 +25,8 @@ public class ConsoleInputHelper {
         }
     }
 
-    int intEntry() {
+    @Override
+    public int intEntry() {
         String s;
         Scanner scanner = new Scanner(System.in);
         s = scanner.nextLine();
@@ -36,36 +37,21 @@ public class ConsoleInputHelper {
         }
     }
 
-    String stringEntry() {
+    @Override
+    public String stringEntry() {
         String s;
         Scanner scanner = new Scanner(System.in);
         s = scanner.nextLine();
         return s;
     }
 
-    void anyKeyEntry() {
+    @Override
+    public void anyKeyEntry() {
         String s;
         System.out.printf("Для продолжения - нажмите Enter %n");
         Scanner scanner = new Scanner(System.in);
         s = scanner.nextLine();
     }
 
-    void borderGenerator(String s) {
-        for (int i = 0; i < 50; i++) {
-            System.out.printf(s);
-        }
-        System.out.printf("%n");
-    }
 
-    boolean itemCountChecker(int itemCount) {
-        if (itemCount > 0) {
-            return true;
-        } else {
-            borderGenerator("!");
-            System.out.printf("В ТРЕКЕРЕ НЕТ ЗАЯВОК %n");
-            borderGenerator("!");
-            anyKeyEntry();
-            return false;
-        }
-    }
 }
