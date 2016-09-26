@@ -4,23 +4,29 @@ import java.util.Arrays;
 import java.util.Date;
 
 /**
- * Класс для ведения трекера запявок
+ * Класс для ведения трекера заявок
  *
  * @author Sergey Tikhonov
  */
 
 
- class Tracker {
+class Tracker {
 
     private Item[] items;
     private int itemsCount = 0;
     private int capacity;
 
+    /**
+     * @param capacity начальная "емкость" трекера (увеличивается автоматически в два раза при нехватке места)
+     */
     Tracker(int capacity) {
         this.items = new Item[capacity];
         this.capacity = capacity;
     }
 
+    /**
+     * Внутренний метод, служит для увеличения емкости трекера х2 при большом количестве заявок
+     */
     private void increaseCapacity() {
         if (this.itemsCount == this.capacity) {
             this.capacity = this.capacity * 2;
@@ -32,24 +38,43 @@ import java.util.Date;
         }
     }
 
+    /**
+     * Внутренний метод
+     *
+     * @return случайно сгенерированный ID для вновь созданной заявки
+     */
     private String itemIDGenerator() {
         StringBuilder randomString = new StringBuilder();
         randomString.append("RQS").append((int) (Math.random() * 100000));
         return randomString.toString();
     }
 
-     int getItemsCount() {
+    /**
+     * @return общее количество заявок в трекере
+     */
+    int getItemsCount() {
         return this.itemsCount;
     }
 
-     void addItem(Item item) {
+    /**
+     * Метод отвечающий за добаление заявок в трекер
+     *
+     * @param item принимает в качестве параметра объект класса трекер
+     */
+    void addItem(Item item) {
         increaseCapacity();
         this.items[this.itemsCount] = item;
         this.items[this.itemsCount].setItemID(this.itemIDGenerator());
         this.itemsCount++;
     }
 
-     boolean deleteItem(String itemID) {
+    /**
+     * Метод удаляющий заявку из трекера по ее ID
+     *
+     * @param itemID строковое поле ID заявки
+     * @return true в случае успешной операции, иначе false
+     */
+    boolean deleteItem(String itemID) {
         boolean fit = false;
         if (this.itemsCount == 0) {
             return false;
@@ -69,7 +94,12 @@ import java.util.Date;
         return fit;
     }
 
-     void editItem(Item item) {
+    /**
+     * Метод служит для редактирования заявки
+     *
+     * @param item объект тива Item с выбранным пользователем ID, находит в трекере по даному ID заявку и менает ее на новый объект Item
+     */
+    void editItem(Item item) {
         if (itemsCount > 0) {
             for (int i = 0; i < this.itemsCount; i++) {
                 if (this.items[i].getItemID().equals(item.getItemID())) {
@@ -79,12 +109,23 @@ import java.util.Date;
         }
     }
 
-     Item[] getAllItems() {
+    /**
+     * Метод служит для возвращения всех заявок в трекере
+     *
+     * @return указатель на массив заявок
+     */
+    Item[] getAllItems() {
         return Arrays.copyOf(this.items, this.itemsCount);
     }
 
 
-     Item getItemByID(String itemID) {
+    /**
+     * Метод служит для поиска и возвращения заявки по ее ID
+     *
+     * @param itemID строковый ID заявки
+     * @return указатель на найденную заявку
+     */
+    Item getItemByID(String itemID) {
         if (itemsCount > 0) {
             for (int i = 0; i < this.itemsCount; i++) {
                 if (this.items[i].getItemID().equals(itemID)) {
@@ -95,7 +136,13 @@ import java.util.Date;
         return null;
     }
 
-     boolean itemExistence(String itemID) {
+    /**
+     * Метод проверяет существование заявки в трекере по ее ID
+     *
+     * @param itemID строковый ID заявки
+     * @return true - если заявка найдена в трекере, иначе false
+     */
+    boolean itemExistence(String itemID) {
         if (this.itemsCount > 0) {
             for (int i = 0; i < this.itemsCount; i++) {
                 if (this.items[i].getItemID().equals(itemID)) {
@@ -106,7 +153,14 @@ import java.util.Date;
         return false;
     }
 
-     Item[] getItemsByDataRange(Date date1, Date date2) {
+    /**
+     * Метод ищет и возвращает набор заявко из трекера по диапазону дат создания(редактирования)
+     *
+     * @param date1 начальная дата (объект тива Date)
+     * @param date2 конечная дата (объект тива Date)
+     * @return указатель на массив найденых заявок
+     */
+    Item[] getItemsByDataRange(Date date1, Date date2) {
         if (this.itemsCount == 0) return null;
         Item[] tempItems = new Item[this.itemsCount];
         int fitCount = 0;

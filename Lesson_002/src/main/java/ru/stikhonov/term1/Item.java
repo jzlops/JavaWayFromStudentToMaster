@@ -3,11 +3,13 @@ package ru.stikhonov.term1;
 import java.util.Date;
 
 /**
+ * Класс для реализации объекта типа - заявка
+ *
  * @author Sergey Tikhonov
  */
 
 
-public class Item {
+class Item {
 
     private String userName;
     private String description;
@@ -16,7 +18,15 @@ public class Item {
     private String itemID;
 
 
-    public Item(String userName, String description, Date date, String comments) {
+    /**
+     * Конструктор объекта - заявка, принимает в качестве параметров ряд обазательных полей
+     *
+     * @param userName    Имя составителя заявки
+     * @param description Описание заявки
+     * @param date        дата создания заявки
+     * @param comments    комментарий к заяке
+     */
+    Item(String userName, String description, Date date, String comments) {
         this.userName = userName;
         this.description = description;
         this.date = date;
@@ -24,28 +34,58 @@ public class Item {
         this.itemID = null;
     }
 
-    public String getUserName() {
+    /**
+     * Метод для возвращения имени составителя заявки
+     *
+     * @return Имя заявителя
+     */
+    String getUserName() {
         return this.userName;
     }
 
-    public String getDescription() {
+    /**
+     * Метод для возвращения описания заявки
+     *
+     * @return поле с описанием заявки
+     */
+    String getDescription() {
         return this.description;
     }
 
-    public Date getDate() {
+    /**
+     * Метод для возвращения даты создания/редактирования заявки
+     *
+     * @return объект типа Date
+     */
+    Date getDate() {
         return this.date;
     }
 
-    public String getComments() {
+    /**
+     * Метод для возвращения комментария к заявке
+     *
+     * @return поле с комметаррием к заявке
+     */
+    String getComments() {
         return this.comments;
     }
 
-    public String getItemID() {
+    /**
+     * Методе получения ID заявки
+     *
+     * @return ID заявки
+     */
+    String getItemID() {
         return this.itemID;
     }
 
 
-    public void setItemID(String itemID) {
+    /**
+     * Мето для установки строкового ID заявки
+     *
+     * @param itemID ID заявки
+     */
+    void setItemID(String itemID) {
         this.itemID = itemID;
     }
 }

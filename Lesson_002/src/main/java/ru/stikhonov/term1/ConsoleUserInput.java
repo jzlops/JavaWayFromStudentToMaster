@@ -50,12 +50,14 @@ class ConsoleUserInput {
         System.out.printf("Введите начальное время в формате yyyy.MM.dd HH:mm:ss %n");
         beginDate = consoleInputHelper.dateEntry();
         if (beginDate == null) {
+            System.out.printf("Для продолжения - нажмите Enter %n");
             consoleInputHelper.anyKeyEntry();
             return;
         }
         System.out.printf("Введите конечное время в формате yyyy.MM.dd HH:mm:ss %n");
         endDate = consoleInputHelper.dateEntry();
         if (endDate == null) {
+            System.out.printf("Для продолжения - нажмите Enter %n");
             consoleInputHelper.anyKeyEntry();
             return;
         }

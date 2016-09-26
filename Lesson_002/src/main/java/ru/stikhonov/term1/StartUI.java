@@ -1,7 +1,7 @@
 package ru.stikhonov.term1;
 
 /**
- * Класс реализующий пользовательский интерфейс
+ * Основной класс Трекера заявок
  *
  * @author Sergey Tikhonov
  */

@@ -1,6 +1,5 @@
 package ru.stikhonov.term1;
 
-import javafx.scene.chart.PieChart;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -8,9 +7,14 @@ import java.util.Date;
 import java.util.Scanner;
 
 /**
+ * Класс реализует ввод данных с консоли, а так же проверяет корркетность введеных данных
+ *
  * @author Sergey Tikhonov
  */
 public class ConsoleInputHelper implements Input {
+    /** Метод для ввода даты
+     * @return если дата введена корректно, возрващает обхект типа Date, иначе null
+     */
     @Override
     public Date dateEntry() {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss");
@@ -25,6 +29,9 @@ public class ConsoleInputHelper implements Input {
         }
     }
 
+    /** Метод для ввода числового значения int
+     * @return возвращает числовое значение типа int, если данные введены корректно, иначе (-1)
+     */
     @Override
     public int intEntry() {
         String s;
@@ -37,6 +44,9 @@ public class ConsoleInputHelper implements Input {
         }
     }
 
+    /** Метод для ввода строкового значения
+     * @return возвращает строковое значени
+     */
     @Override
     public String stringEntry() {
         String s;
@@ -45,12 +55,18 @@ public class ConsoleInputHelper implements Input {
         return s;
     }
 
+    /**
+     * Метод служит для риостановки выполнения программы до нажатия клавиши Enter
+     */
     @Override
     public void anyKeyEntry() {
         String s;
-        System.out.printf("Для продолжения - нажмите Enter %n");
+
         Scanner scanner = new Scanner(System.in);
         s = scanner.nextLine();
+        do {
+
+        } while (s.toString()=="/n");
     }
 
 
