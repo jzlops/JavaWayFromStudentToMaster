@@ -6,20 +6,20 @@ package ru.stikhonov.term1;
  *
  * @author Sergey Tikhonov
  */
-class ConsoleMainMenuUI {
+class ConsoleMainMenu {
     private Tracker tracker;
-    private Input input;
+    private Input condoleInputHelper;
 
 
-    ConsoleMainMenuUI(Tracker tracker, Input input) {
-        this.input = input;
+    ConsoleMainMenu(Tracker tracker, Input condoleInputHelper) {
+        this.condoleInputHelper = condoleInputHelper;
         this.tracker = tracker;
     }
 
     void start() {
         int inputMenuNumber = 0;
-        GuiDrawer guiDrawer = new GuiDrawer();
-        ConsoleUserInput consoleUserInput = new ConsoleUserInput(this.tracker,this.input);
+        ConsoleGuiDrawer consoleGuiDrawer = new ConsoleGuiDrawer();
+        ConsoleUserInput consoleUserInput = new ConsoleUserInput(this.tracker,this.condoleInputHelper);
 
         do {
             if (inputMenuNumber == 1) consoleUserInput.menuAction(MenuElements.ADD);
@@ -28,8 +28,8 @@ class ConsoleMainMenuUI {
             if (inputMenuNumber == 4) consoleUserInput.menuAction(MenuElements.SHOW);
             if (inputMenuNumber == 5) consoleUserInput.menuAction(MenuElements.SHOW_BY_ID);
             if (inputMenuNumber == 6) consoleUserInput.menuAction(MenuElements.SHOW_BY_FILTER);
-            guiDrawer.showMainMenu();
-            inputMenuNumber = this.input.intEntry();
+            consoleGuiDrawer.showMainMenu();
+            inputMenuNumber = this.condoleInputHelper.intEntry();
         } while (inputMenuNumber != 0);
     }
 

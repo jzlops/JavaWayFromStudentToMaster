@@ -3,7 +3,7 @@ package ru.stikhonov.term1;
 /**
  * @author Sergey Tikhonov
  */
-class GuiDrawer {
+class ConsoleGuiDrawer {
 
      void showMainMenu() {
         borderGenerator("*");
