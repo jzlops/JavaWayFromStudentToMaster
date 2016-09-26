@@ -8,18 +8,18 @@ package ru.stikhonov.term1;
  */
 class ConsoleMainMenu {
     private Tracker tracker;
-    private Input condoleInputHelper;
+    private Input consoleInputHelper;
 
 
-    ConsoleMainMenu(Tracker tracker, Input condoleInputHelper) {
-        this.condoleInputHelper = condoleInputHelper;
+    ConsoleMainMenu(Tracker tracker, Input consoleInputHelper) {
+        this.consoleInputHelper = consoleInputHelper;
         this.tracker = tracker;
     }
 
     void start() {
         int inputMenuNumber = 0;
         ConsoleGuiDrawer consoleGuiDrawer = new ConsoleGuiDrawer();
-        ConsoleUserInput consoleUserInput = new ConsoleUserInput(this.tracker,this.condoleInputHelper);
+        ConsoleUserInput consoleUserInput = new ConsoleUserInput(this.tracker,this.consoleInputHelper);
 
         do {
             if (inputMenuNumber == 1) consoleUserInput.menuAction(MenuElements.ADD);
@@ -29,7 +29,7 @@ class ConsoleMainMenu {
             if (inputMenuNumber == 5) consoleUserInput.menuAction(MenuElements.SHOW_BY_ID);
             if (inputMenuNumber == 6) consoleUserInput.menuAction(MenuElements.SHOW_BY_FILTER);
             consoleGuiDrawer.showMainMenu();
-            inputMenuNumber = this.condoleInputHelper.intEntry();
+            inputMenuNumber = this.consoleInputHelper.intEntry();
         } while (inputMenuNumber != 0);
     }
 
