@@ -75,6 +75,7 @@ class ConsoleUserInput {
         } else {
             System.out.printf("Заявок с указанными критериями не найдено %n");
         }
+        System.out.printf("Для продолжения - нажмите Enter %n");
         consoleInputHelper.anyKeyEntry();
     }
 
@@ -91,6 +92,7 @@ class ConsoleUserInput {
 
         if (!this.tracker.itemExistence(itemID)) {
             System.out.printf("Заявка с номером %1$s ненайдена %n", itemID);
+            System.out.printf("Для продолжения - нажмите Enter %n");
             consoleInputHelper.anyKeyEntry();
             return;
         }
@@ -102,6 +104,7 @@ class ConsoleUserInput {
         System.out.printf("Комментарий:  %1$s %n", item.getComments());
         System.out.printf("Дата создания:  %1$s %n", item.getDate().toString());
         consoleGuiDrawer.borderGenerator("+");
+        System.out.printf("Для продолжения - нажмите Enter %n");
         consoleInputHelper.anyKeyEntry();
     }
 
@@ -119,6 +122,7 @@ class ConsoleUserInput {
             System.out.printf("Дата последнего изменения:  %1$s %n", item.getDate().toString());
             consoleGuiDrawer.borderGenerator("+");
         }
+        System.out.printf("Для продолжения - нажмите Enter %n");
         consoleInputHelper.anyKeyEntry();
     }
 
@@ -136,6 +140,7 @@ class ConsoleUserInput {
         } else {
             System.out.printf("Заявка с номером %1$s не найдена %n", itemID);
         }
+        System.out.printf("Для продолжения - нажмите Enter %n");
         consoleInputHelper.anyKeyEntry();
     }
 
@@ -152,6 +157,7 @@ class ConsoleUserInput {
         itemID = consoleInputHelper.stringEntry();
         if (!this.tracker.itemExistence(itemID)) {
             System.out.printf("Заявка с номером %1$s ненайдена %n", itemID);
+            System.out.printf("Для продолжения -  нажмите Enter %n");
             consoleInputHelper.anyKeyEntry();
             return;
         }
@@ -168,6 +174,7 @@ class ConsoleUserInput {
         this.tracker.editItem(item);
         consoleGuiDrawer.borderGenerator("-");
         System.out.printf("Заявка с номером %1$s отредактирована %n", itemID);
+        System.out.printf("Для продолжения - нажмите Enter %n");
         consoleInputHelper.anyKeyEntry();
     }
 
@@ -193,6 +200,7 @@ class ConsoleUserInput {
         consoleGuiDrawer.borderGenerator("-");
         System.out.printf("Заявка создана %n");
         System.out.printf("Номер заявки %1$s %n", item.getItemID());
+        System.out.printf("Для продолжения - нажмите Enter %n");
         consoleInputHelper.anyKeyEntry();
     }
 
@@ -203,6 +211,7 @@ class ConsoleUserInput {
             consoleGuiDrawer.borderGenerator("!");
             System.out.printf("В ТРЕКЕРЕ НЕТ ЗАЯВОК %n");
             consoleGuiDrawer.borderGenerator("!");
+            System.out.printf("Для продолжения - нажмите Enter %n");
             this.consoleInputHelper.anyKeyEntry();
             return false;
         }
