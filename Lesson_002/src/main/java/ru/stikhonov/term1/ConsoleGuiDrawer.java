@@ -1,11 +1,16 @@
 package ru.stikhonov.term1;
 
 /**
+ * Вспомогательный класс для отрисовки основного меню и границ
+ *
  * @author Sergey Tikhonov
  */
 class ConsoleGuiDrawer {
 
-     void showMainMenu() {
+    /**
+     * Метод рисует основное меню
+     */
+    void showMainMenu() {
         borderGenerator("*");
         System.out.printf("ДОБРО ПОЖАЛОВАТЬ В ТРЕКЕР ЗАЯВОК %n");
         borderGenerator("#");
@@ -20,13 +25,17 @@ class ConsoleGuiDrawer {
         borderGenerator("#");
     }
 
+    /**
+     * Метод чертит границы
+     *
+     * @param s любой симовол которым будет рисоваться меню
+     */
     void borderGenerator(String s) {
         for (int i = 0; i < 50; i++) {
             System.out.printf(s);
         }
         System.out.printf("%n");
     }
-
 
 
 }

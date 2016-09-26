@@ -12,7 +12,9 @@ import java.util.Scanner;
  * @author Sergey Tikhonov
  */
 public class ConsoleInputHelper implements Input {
-    /** Метод для ввода даты
+    /**
+     * Метод для ввода даты
+     *
      * @return если дата введена корректно, возрващает обхект типа Date, иначе null
      */
     @Override
@@ -29,7 +31,9 @@ public class ConsoleInputHelper implements Input {
         }
     }
 
-    /** Метод для ввода числового значения int
+    /**
+     * Метод для ввода числового значения int
+     *
      * @return возвращает числовое значение типа int, если данные введены корректно, иначе (-1)
      */
     @Override
@@ -44,7 +48,9 @@ public class ConsoleInputHelper implements Input {
         }
     }
 
-    /** Метод для ввода строкового значения
+    /**
+     * Метод для ввода строкового значения
+     *
      * @return возвращает строковое значени
      */
     @Override
@@ -66,7 +72,7 @@ public class ConsoleInputHelper implements Input {
         s = scanner.nextLine();
         do {
 
-        } while (s.toString()=="/n");
+        } while (s == "/n");
     }
 
 
