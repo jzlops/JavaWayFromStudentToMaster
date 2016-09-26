@@ -15,7 +15,7 @@ public interface Input {
      * @return возвращает объект типа Date
      * @throws ParseException
      */
-    Date dateEntry() throws ParseException;
+    Date dateEntry();
 
     /**
      * Метод должен возвратить значение типа int при вводе данных в консоль

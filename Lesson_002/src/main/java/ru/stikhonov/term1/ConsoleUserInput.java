@@ -61,7 +61,6 @@ class ConsoleUserInput {
      * Метод отображает на экран (в консоль) набор элементов типа Item из трекера в промежутке требуемых дат
      */
     private void showItemByFilterAction() {
-        ConsoleInputHelper consoleInputHelper = new ConsoleInputHelper();
         Date beginDate, endDate;
 
         if (!itemCountChecker(this.tracker.getItemsCount())) return;
@@ -107,7 +106,7 @@ class ConsoleUserInput {
     private void showItemByIDAction() {
         Item item;
         String itemID;
-        ConsoleInputHelper consoleInputHelper = new ConsoleInputHelper();
+//        ConsoleInputHelper consoleInputHelper = new ConsoleInputHelper();
         if (!itemCountChecker(this.tracker.getItemsCount())) return;
         consoleGuiDrawer.borderGenerator("+");
         System.out.printf("ЗАЯВКА %n");
@@ -137,7 +136,7 @@ class ConsoleUserInput {
      * Метод отображает список всех элементов Item в трекере
      */
     private void showMenuAction() {
-        ConsoleInputHelper consoleInputHelper = new ConsoleInputHelper();
+//        ConsoleInputHelper consoleInputHelper = new ConsoleInputHelper();
         if (!itemCountChecker(this.tracker.getItemsCount())) return;
         consoleGuiDrawer.borderGenerator("+");
         System.out.printf("СПИСОК ВСЕХ ЗАЯВОК %n");
@@ -158,7 +157,7 @@ class ConsoleUserInput {
      * Удалить заявку Item  из трекера
      */
     private void deleteMenuAction() {
-        ConsoleInputHelper consoleInputHelper = new ConsoleInputHelper();
+ //       ConsoleInputHelper consoleInputHelper = new ConsoleInputHelper();
         if (!itemCountChecker(this.tracker.getItemsCount())) return;
         String itemID;
         consoleGuiDrawer.borderGenerator("+");
@@ -179,7 +178,7 @@ class ConsoleUserInput {
      * Редактировать заявку Item в трекере
      */
     private void editMenuAction() {
-        ConsoleInputHelper consoleInputHelper = new ConsoleInputHelper();
+//        ConsoleInputHelper consoleInputHelper = new ConsoleInputHelper();
         String username, description, comment, itemID;
         Item item;
 
@@ -217,7 +216,7 @@ class ConsoleUserInput {
      */
     private void addMenuAction() {
 
-        ConsoleInputHelper consoleInputHelper = new ConsoleInputHelper();
+//        ConsoleInputHelper consoleInputHelper = new ConsoleInputHelper();
         String username, description, comment;
         Item item;
         consoleGuiDrawer.borderGenerator("+");

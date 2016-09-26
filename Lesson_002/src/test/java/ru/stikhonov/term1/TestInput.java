@@ -9,27 +9,34 @@ import java.util.Date;
  */
 public class TestInput implements Input {
     private String[] answers;
-    private int index;
+    private int index = -1;
 
     TestInput(String[] answers) {
         this.answers = answers;
     }
 
     @Override
-    public Date dateEntry() throws ParseException {
+    public Date dateEntry() {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss");
 
-        return simpleDateFormat.parse(answers[index++]);
+        try {
+            return simpleDateFormat.parse(answers[index++]);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     @Override
     public int intEntry() {
-        return Integer.parseInt(answers[index++]);
+        this.index++;
+        return Integer.parseInt(this.answers[this.index]);
     }
 
     @Override
     public String stringEntry() {
-        return answers[index++];
+        this.index++;
+        return answers[this.index];
     }
 
     @Override

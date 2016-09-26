@@ -15,12 +15,11 @@ import static org.mockito.Mockito.spy;
  * @author Sergey Tikhonov
  */
 public class StubInput {
-    ConsoleMainMenu consoleMainMenu;
-    ConsoleUserInput consoleUserInput;
-
     @Test
-    public void someTest() {
-        TestInput testInput = new TestInput(new String[]{"zmyak", "zmyak opyat", "eshe ras zmyak"});
-
+    public void addItemTest() {
+        Input testInput = new TestInput(new String[]{"1", "Jack", "Adding Item", "It is working", "0",});
+        Tracker tracker = new Tracker(1);
+        ConsoleMainMenu consoleMainMenu = new ConsoleMainMenu(tracker, testInput);
+        consoleMainMenu.start();
     }
 }
