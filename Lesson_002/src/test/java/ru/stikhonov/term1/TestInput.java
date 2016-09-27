@@ -18,9 +18,9 @@ public class TestInput implements Input {
     @Override
     public Date dateEntry() {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss");
-
         try {
-            return simpleDateFormat.parse(answers[index++]);
+            this.index++;
+            return simpleDateFormat.parse(answers[index]);
         } catch (ParseException e) {
             e.printStackTrace();
         }
