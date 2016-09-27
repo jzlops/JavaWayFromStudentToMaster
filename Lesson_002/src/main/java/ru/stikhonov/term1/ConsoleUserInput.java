@@ -231,10 +231,10 @@ class ConsoleUserInput {
         System.out.printf("Введите комментарий:%n");
         comment = consoleInputHelper.stringEntry();
         item = new Item(username, description, new Date(), comment);
-        this.tracker.addItem(item);
+        //this.tracker.addItem(item);
         consoleGuiDrawer.borderGenerator("-");
         System.out.printf("Заявка создана %n");
-        System.out.printf("Номер заявки %1$s %n", item.getItemID());
+        System.out.printf("Номер заявки %1$s %n", this.tracker.addItem(item).getItemID());
         System.out.printf("Для продолжения - нажмите Enter %n");
         consoleInputHelper.anyKeyEntry();
     }

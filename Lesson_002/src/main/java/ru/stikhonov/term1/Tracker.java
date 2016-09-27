@@ -61,11 +61,12 @@ class Tracker {
      *
      * @param item принимает в качестве параметра объект класса трекер
      */
-    void addItem(Item item) {
+    Item addItem(Item item) {
         increaseCapacity();
         this.items[this.itemsCount] = item;
         this.items[this.itemsCount].setItemID(this.itemIDGenerator());
         this.itemsCount++;
+        return item;
     }
 
     /**

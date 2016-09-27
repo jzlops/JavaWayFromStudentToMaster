@@ -157,9 +157,7 @@ public class StubInput {
     public void showItemByID() {
         Input testInput = new TestInput(new String[]{"5", "RQS123123", "0"});
         Tracker tracker = new Tracker(1);
-        Item item = new Item("Zora", "Showing Item By ID", new Date(), "Ololo");
-        tracker.addItem(item);
-        item.setItemID("RQS123123");
+        tracker.addItem(new Item("Zora", "Showing Item By ID", new Date(), "Ololo")).setItemID("RQS123123");
         ConsoleMainMenu consoleMainMenu = new ConsoleMainMenu(tracker, testInput);
         consoleMainMenu.start();
     }

@@ -41,8 +41,7 @@ public class TrackerTest {
         String itemIDBefore, itemIDAfter;
         Item item1 = new Item("John Doe 1", "Test", new Date(), "No Comment");
         itemIDBefore = item1.getItemID();
-        tracker.addItem(item1);
-        itemIDAfter = item1.getItemID();
+        itemIDAfter = tracker.addItem(item1).getItemID();
         Assert.assertNotEquals(itemIDBefore, itemIDAfter);
     }
 
@@ -54,11 +53,7 @@ public class TrackerTest {
     @Test
     public void itemIDGenerateInTrackerIsUnique() throws Exception {
         Tracker tracker = new Tracker(1);
-        Item item1 = new Item("John Doe 1", "Test", new Date(), "No Comment");
-        Item item2 = new Item("John Doe 1", "Test", new Date(), "No Comment");
-        tracker.addItem(item1);
-        tracker.addItem(item2);
-        Assert.assertNotEquals(item1.getItemID(), item2.getItemID());
+        Assert.assertNotEquals(tracker.addItem(new Item("John Doe 1", "Test", new Date(), "No Comment")).getItemID(), tracker.addItem(new Item("John Doe 2", "Test", new Date(), "No Comment")).getItemID());
     }
 
 
