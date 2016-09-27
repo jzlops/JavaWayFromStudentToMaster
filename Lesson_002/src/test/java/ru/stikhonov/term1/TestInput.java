@@ -5,6 +5,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
+ * Класс реализующий (эмулирующий) сновные методы ввода данных с консоли, спроэктирован для тестирования пользовательского интерйеса классом StubInput
+ *
  * @author Sergey Tikhonov
  */
 public class TestInput implements Input {
@@ -30,7 +32,11 @@ public class TestInput implements Input {
     @Override
     public int intEntry() {
         this.index++;
-        return Integer.parseInt(this.answers[this.index]);
+        try {
+            return Integer.parseInt(this.answers[this.index]);
+        } catch (NumberFormatException e) {
+            return -1;
+        }
     }
 
     @Override

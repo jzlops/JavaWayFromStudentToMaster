@@ -93,20 +93,6 @@ class Item {
     void setItemID(String itemID) {
         this.itemID = itemID;
     }
-
-
-    public boolean equals(Item item) {
-        if (this.userName == item.getUserName()) {
-            if (this.description == item.getDescription()) {
-                if (this.comments == item.getComments()) {
-//                    if (this.date.equals(item.getDate())) {
-                        return true;
-//                    }
-                }
-            }
-        }
-        return false;
-    }
 }
 
 
