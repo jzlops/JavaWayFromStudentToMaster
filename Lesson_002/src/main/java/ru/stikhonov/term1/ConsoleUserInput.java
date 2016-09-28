@@ -9,18 +9,21 @@ import java.util.Date;
  */
 class ConsoleUserInput {
     private Tracker tracker;
-    private Input consoleInputHelper;
-    private ConsoleGuiDrawer consoleGuiDrawer = new ConsoleGuiDrawer();
+    private Input cin;
+    private Output cout;
+    private ConsoleGuiDrawer consoleGuiDrawer;
 
     /**
      * Конструктор принимате на вход 2 параметра
      *
      * @param tracker объект типа Tracker
-     * @param input   объет реализующий интерфейс Input
+     * @param consoleInputHelper   объет реализующий интерфейс Input
      */
-    ConsoleUserInput(Tracker tracker, Input input) {
+    ConsoleUserInput(Tracker tracker, Input consoleInputHelper, Output consoleOutputHelper) {
         this.tracker = tracker;
-        this.consoleInputHelper = input;
+        this.cin = consoleInputHelper;
+        this.cout = consoleOutputHelper;
+        this.consoleGuiDrawer = new ConsoleGuiDrawer(this.cout);
     }
 
     /**
@@ -66,38 +69,38 @@ class ConsoleUserInput {
         if (!itemCountChecker(this.tracker.getItemsCount())) return;
 
         consoleGuiDrawer.borderGenerator("+");
-        System.out.printf("СПИСОК ЗАЯВОК ОТСОРТИРОВАННЫЙ ПО ДАТАМ %n");
+        cout.out("СПИСОК ЗАЯВОК ОТСОРТИРОВАННЫЙ ПО ДАТАМ \n");
         consoleGuiDrawer.borderGenerator("+");
-        System.out.printf("Введите начальное время в формате yyyy.MM.dd HH:mm:ss %n");
-        beginDate = consoleInputHelper.dateEntry();
+        cout.out("Введите начальное время в формате yyyy.MM.dd HH:mm:ss \n");
+        beginDate = cin.dateEntry();
         if (beginDate == null) {
-            System.out.printf("Для продолжения - нажмите Enter %n");
-            consoleInputHelper.anyKeyEntry();
+            cout.out("Для продолжения - нажмите Enter \n");
+            cin.anyKeyEntry();
             return;
         }
-        System.out.printf("Введите конечное время в формате yyyy.MM.dd HH:mm:ss %n");
-        endDate = consoleInputHelper.dateEntry();
+        cout.out("Введите конечное время в формате yyyy.MM.dd HH:mm:ss \n");
+        endDate = cin.dateEntry();
         if (endDate == null) {
-            System.out.printf("Для продолжения - нажмите Enter %n");
-            consoleInputHelper.anyKeyEntry();
+            cout.out("Для продолжения - нажмите Enter \n");
+            cin.anyKeyEntry();
             return;
         }
         consoleGuiDrawer.borderGenerator("+");
         if (this.tracker.getItemsByDataRange(beginDate, endDate) != null) {
-            System.out.printf("СПИСОК ЗАЯВОК ЗА УКАЗАННЫЙ ПЕРИОД ЗАЯВОК %n");
+            cout.out("СПИСОК ЗАЯВОК ЗА УКАЗАННЫЙ ПЕРИОД ЗАЯВОК \n");
             for (Item item : this.tracker.getItemsByDataRange(beginDate, endDate)) {
-                System.out.printf("ID заявки: %1$s %n", item.getItemID());
-                System.out.printf("Имя составителя:  %1$s %n", item.getUserName());
-                System.out.printf("Описание:  %1$s %n", item.getDescription());
-                System.out.printf("Комментарий:  %1$s %n", item.getComments());
-                System.out.printf("Дата  последнего изменения: %1$s %n", item.getDate().toString());
+                cout.out("ID заявки: " + item.getItemID()+"\n");
+                cout.out("Имя составителя: " + item.getUserName()+"\n");
+                cout.out("Описание: " + item.getDescription()+"\n");
+                cout.out("Комментарий: " + item.getComments()+"\n");
+                cout.out("Дата последнего изменения: " + item.getDate().toString()+"\n");
                 consoleGuiDrawer.borderGenerator("+");
             }
         } else {
-            System.out.printf("Заявок с указанными критериями не найдено %n");
+            cout.out("Заявок с указанными критериями не найдено \n");
         }
-        System.out.printf("Для продолжения - нажмите Enter %n");
-        consoleInputHelper.anyKeyEntry();
+        cout.out("Для продолжения - нажмите Enter \n");
+        cin.anyKeyEntry();
     }
 
     /**
@@ -109,27 +112,27 @@ class ConsoleUserInput {
 
         if (!itemCountChecker(this.tracker.getItemsCount())) return;
         consoleGuiDrawer.borderGenerator("+");
-        System.out.printf("ЗАЯВКА %n");
+        cout.out("ЗАЯВКА \n");
         consoleGuiDrawer.borderGenerator("+");
-        System.out.printf("Введите номер заявки: %n");
-        itemID = consoleInputHelper.stringEntry();
+        cout.out("Введите номер заявки: \n");
+        itemID = cin.stringEntry();
 
         if (!this.tracker.itemExistence(itemID)) {
-            System.out.printf("Заявка с номером %1$s ненайдена %n", itemID);
-            System.out.printf("Для продолжения - нажмите Enter %n");
-            consoleInputHelper.anyKeyEntry();
+            cout.out("Заявка с номером " + itemID +  " ненайдена \n");
+            cout.out("Для продолжения - нажмите Enter \n");
+            cin.anyKeyEntry();
             return;
         }
         item = this.tracker.getItemByID(itemID);
         consoleGuiDrawer.borderGenerator("+");
-        System.out.printf("ID заявки: %1$s %n", item.getItemID());
-        System.out.printf("Имя составителя:  %1$s %n", item.getUserName());
-        System.out.printf("Описание:  %1$s %n", item.getDescription());
-        System.out.printf("Комментарий:  %1$s %n", item.getComments());
-        System.out.printf("Дата создания:  %1$s %n", item.getDate().toString());
+        cout.out("ID заявки: " + item.getItemID()+"\n");
+        cout.out("Имя составителя: " + item.getUserName()+"\n");
+        cout.out("Описание: " + item.getDescription()+"\n");
+        cout.out("Комментарий: " + item.getComments()+"\n");
+        cout.out("Дата последнего изменения: " + item.getDate().toString()+"\n");
         consoleGuiDrawer.borderGenerator("+");
-        System.out.printf("Для продолжения - нажмите Enter %n");
-        consoleInputHelper.anyKeyEntry();
+        cout.out("Для продолжения - нажмите Enter \n");
+        cin.anyKeyEntry();
     }
 
     /**
@@ -139,18 +142,18 @@ class ConsoleUserInput {
 
         if (!itemCountChecker(this.tracker.getItemsCount())) return;
         consoleGuiDrawer.borderGenerator("+");
-        System.out.printf("СПИСОК ВСЕХ ЗАЯВОК %n");
+        cout.out("СПИСОК ВСЕХ ЗАЯВОК \n");
         consoleGuiDrawer.borderGenerator("+");
         for (Item item : tracker.getAllItems()) {
-            System.out.printf("ID заявки: %1$s %n", item.getItemID());
-            System.out.printf("Имя составителя:  %1$s %n", item.getUserName());
-            System.out.printf("Описание:  %1$s %n", item.getDescription());
-            System.out.printf("Комментарий:  %1$s %n", item.getComments());
-            System.out.printf("Дата последнего изменения:  %1$s %n", item.getDate().toString());
+            cout.out("ID заявки: " + item.getItemID()+"\n");
+            cout.out("Имя составителя: " + item.getUserName()+"\n");
+            cout.out("Описание: " + item.getDescription()+"\n");
+            cout.out("Комментарий: " + item.getComments()+"\n");
+            cout.out("Дата  последнего изменения: " + item.getDate().toString()+"\n");
             consoleGuiDrawer.borderGenerator("+");
         }
-        System.out.printf("Для продолжения - нажмите Enter %n");
-        consoleInputHelper.anyKeyEntry();
+        cout.out("Для продолжения - нажмите Enter \n");
+        cin.anyKeyEntry();
     }
 
     /**
@@ -161,17 +164,17 @@ class ConsoleUserInput {
         if (!itemCountChecker(this.tracker.getItemsCount())) return;
         String itemID;
         consoleGuiDrawer.borderGenerator("+");
-        System.out.printf("УДАЛЕНИЕ ЗАЯВКИ %n");
+        cout.out("УДАЛЕНИЕ ЗАЯВКИ \n");
         consoleGuiDrawer.borderGenerator("+");
-        System.out.printf("Введите номер заявки: %n");
-        itemID = consoleInputHelper.stringEntry();
+        cout.out("Введите номер заявки: \n");
+        itemID = cin.stringEntry();
         if (tracker.deleteItem(itemID)) {
-            System.out.printf("Заявка с номером %1$s удалена %n", itemID);
+            cout.out("Заявка с номером " + itemID + " удалена \n");
         } else {
-            System.out.printf("Заявка с номером %1$s не найдена %n", itemID);
+            cout.out("Заявка с номером " + itemID + " ненайдена \n");
         }
-        System.out.printf("Для продолжения - нажмите Enter %n");
-        consoleInputHelper.anyKeyEntry();
+        cout.out("Для продолжения - нажмите Enter \n");
+        cin.anyKeyEntry();
     }
 
     /**
@@ -184,31 +187,31 @@ class ConsoleUserInput {
 
         if (!itemCountChecker(this.tracker.getItemsCount())) return;
         consoleGuiDrawer.borderGenerator("+");
-        System.out.printf("РЕДАКТИРОВАНИЕ ЗАЯВКИ %n");
+        cout.out("РЕДАКТИРОВАНИЕ ЗАЯВКИ \n");
         consoleGuiDrawer.borderGenerator("+");
-        System.out.printf("Введите номер заявки: %n");
-        itemID = consoleInputHelper.stringEntry();
+        cout.out("Введите номер заявки: \n");
+        itemID = cin.stringEntry();
         if (!this.tracker.itemExistence(itemID)) {
-            System.out.printf("Заявка с номером %1$s ненайдена %n", itemID);
-            System.out.printf("Для продолжения -  нажмите Enter %n");
-            consoleInputHelper.anyKeyEntry();
+            cout.out("Заявка с номером " + itemID + " ненайдена \n");
+            cout.out("Для продолжения -  нажмите Enter \n");
+            cin.anyKeyEntry();
             return;
         }
-        System.out.printf("Введите ваше имя: %n");
-        username = consoleInputHelper.stringEntry();
+        cout.out("Введите ваше имя: \n");
+        username = cin.stringEntry();
 
-        System.out.printf("Введите новое описание заявки:%n");
-        description = consoleInputHelper.stringEntry();
+        cout.out("Введите новое описание заявки:\n");
+        description = cin.stringEntry();
 
-        System.out.printf("Введите новый комментарий:%n");
-        comment = consoleInputHelper.stringEntry();
+        cout.out("Введите новый комментарий:\n");
+        comment = cin.stringEntry();
         item = new Item(username, description, new Date(), comment);
         item.setItemID(itemID);
         this.tracker.editItem(item);
         consoleGuiDrawer.borderGenerator("-");
-        System.out.printf("Заявка с номером %1$s отредактирована %n", itemID);
-        System.out.printf("Для продолжения - нажмите Enter %n");
-        consoleInputHelper.anyKeyEntry();
+        cout.out("Заявка с номером " + itemID + " отредактирована \n");
+        cout.out("Для продолжения - нажмите Enter \n");
+        cin.anyKeyEntry();
     }
 
     /**
@@ -218,25 +221,25 @@ class ConsoleUserInput {
 
         String username, description, comment;
         Item item;
-        consoleGuiDrawer.borderGenerator("+");
-        System.out.printf("ДОБАВЛЕНИЕ НОВОЙ ЗАЯВКИ %n");
-        consoleGuiDrawer.borderGenerator("+");
+        this.consoleGuiDrawer.borderGenerator("+");
+        this.cout.out("ДОБАВЛЕНИЕ НОВОЙ ЗАЯВКИ \n");
+        this.consoleGuiDrawer.borderGenerator("+");
 
-        System.out.printf("Введите ваше имя:%n");
-        username = consoleInputHelper.stringEntry();
+        this.cout.out("Введите ваше имя: \n");
+        username = this.cin.stringEntry();
 
-        System.out.printf("Введите описание заявки:%n");
-        description = consoleInputHelper.stringEntry();
+        cout.out("Введите описание заявки: \n");
+        description = cin.stringEntry();
 
-        System.out.printf("Введите комментарий:%n");
-        comment = consoleInputHelper.stringEntry();
+        cout.out("Введите комментарий: \n");
+        comment = cin.stringEntry();
         item = new Item(username, description, new Date(), comment);
-        //this.tracker.addItem(item);
-        consoleGuiDrawer.borderGenerator("-");
-        System.out.printf("Заявка создана %n");
-        System.out.printf("Номер заявки %1$s %n", this.tracker.addItem(item).getItemID());
-        System.out.printf("Для продолжения - нажмите Enter %n");
-        consoleInputHelper.anyKeyEntry();
+        this.tracker.addItem(item);
+        consoleGuiDrawer.borderGenerator("o");
+        cout.out("Заявка создана \n");
+        cout.out("Номер заявки " + item.getItemID() +"\n");
+        cout.out("Для продолжения - нажмите Enter \n");
+        cin.anyKeyEntry();
     }
 
     /**
@@ -250,10 +253,10 @@ class ConsoleUserInput {
             return true;
         } else {
             consoleGuiDrawer.borderGenerator("!");
-            System.out.printf("В ТРЕКЕРЕ НЕТ ЗАЯВОК %n");
+            cout.out("В ТРЕКЕРЕ НЕТ ЗАЯВОК \n");
             consoleGuiDrawer.borderGenerator("!");
-            System.out.printf("Для продолжения - нажмите Enter %n");
-            this.consoleInputHelper.anyKeyEntry();
+            cout.out("Для продолжения - нажмите Enter \n");
+            this.cin.anyKeyEntry();
             return false;
         }
     }

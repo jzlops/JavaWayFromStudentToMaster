@@ -9,16 +9,18 @@ package ru.stikhonov.term1;
 class ConsoleMainMenu {
     private Tracker tracker;
     private Input consoleInputHelper;
-
+    private Output consoleOutputHelper;
 
     /**
      * Конструкор принимает в себя объект Tracker и объект реализующий интерфейс ввода Input
      *
-     * @param tracker  объект класса Tracker
-     * @param consoleInputHelper объект реализующий интерйес ввода @Input
+     * @param tracker             объект класса Tracker
+     * @param consoleInputHelper  объект реализующий интерйес ввода Input
+     * @param consoleOutputHelper объект реализующий интерйес ввода Output
      */
-    ConsoleMainMenu(Tracker tracker, Input consoleInputHelper) {
+    ConsoleMainMenu(Tracker tracker, Input consoleInputHelper, Output consoleOutputHelper) {
         this.consoleInputHelper = consoleInputHelper;
+        this.consoleOutputHelper = consoleOutputHelper;
         this.tracker = tracker;
     }
 
@@ -27,8 +29,8 @@ class ConsoleMainMenu {
      */
     void start() {
         int inputMenuNumber = 0;
-        ConsoleGuiDrawer consoleGuiDrawer = new ConsoleGuiDrawer();
-        ConsoleUserInput consoleUserInput = new ConsoleUserInput(this.tracker, this.consoleInputHelper);
+        ConsoleGuiDrawer consoleGuiDrawer = new ConsoleGuiDrawer(this.consoleOutputHelper);
+        ConsoleUserInput consoleUserInput = new ConsoleUserInput(this.tracker, this.consoleInputHelper, this.consoleOutputHelper);
 
         do {
             if (inputMenuNumber == 1) consoleUserInput.menuAction(MenuElements.ADD);
@@ -38,9 +40,7 @@ class ConsoleMainMenu {
             if (inputMenuNumber == 5) consoleUserInput.menuAction(MenuElements.SHOW_BY_ID);
             if (inputMenuNumber == 6) consoleUserInput.menuAction(MenuElements.SHOW_BY_FILTER);
             consoleGuiDrawer.showMainMenu();
-            inputMenuNumber = this.consoleInputHelper.intEntry();
+            inputMenuNumber = consoleInputHelper.intEntry();
         } while (inputMenuNumber != 0);
     }
-
-
 }

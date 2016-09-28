@@ -6,22 +6,27 @@ package ru.stikhonov.term1;
  * @author Sergey Tikhonov
  */
 class ConsoleGuiDrawer {
+    private Output cout;
+
+    ConsoleGuiDrawer(Output output) {
+        this.cout = output;
+    }
 
     /**
      * Метод рисует основное меню программы
      */
     void showMainMenu() {
         borderGenerator("*");
-        System.out.printf("ДОБРО ПОЖАЛОВАТЬ В ТРЕКЕР ЗАЯВОК %n");
+        cout.out("ДОБРО ПОЖАЛОВАТЬ В ТРЕКЕР ЗАЯВОК \n");
         borderGenerator("#");
-        System.out.printf("ВЫБЕРИТЕ ПУНКТ МЕНЮ: %n");
-        System.out.printf("1. Создать заявку... %n");
-        System.out.printf("2. Редактировать заявку... %n");
-        System.out.printf("3. Удалить заявку... %n");
-        System.out.printf("4. Отобразить все заявки... %n");
-        System.out.printf("5. Найти заявку по номеру ID... %n");
-        System.out.printf("6. Найти заявки по дате создания... %n");
-        System.out.printf("0. Выйти из программы %n");
+        cout.out("ВЫБЕРИТЕ ПУНКТ МЕНЮ: \n");
+        cout.out("1. Создать заявку...\n");
+        cout.out("2. Редактировать заявку...\n");
+        cout.out("3. Удалить заявку...\n");
+        cout.out("4. Отобразить все заявки...\n");
+        cout.out("5. Найти заявку по номеру ID...\n");
+        cout.out("6. Найти заявки по дате создания...\n");
+        cout.out("0. Выйти из программы\n");
         borderGenerator("#");
     }
 
@@ -32,10 +37,8 @@ class ConsoleGuiDrawer {
      */
     void borderGenerator(String s) {
         for (int i = 0; i < 50; i++) {
-            System.out.printf(s);
+            cout.out(s);
         }
-        System.out.printf("%n");
+        cout.out("\n");
     }
-
-
 }

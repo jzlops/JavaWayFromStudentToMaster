@@ -24,7 +24,7 @@ public class TestInput implements Input {
             this.index++;
             return simpleDateFormat.parse(answers[index]);
         } catch (ParseException e) {
-            e.printStackTrace();
+           // e.printStackTrace();
         }
         return null;
     }

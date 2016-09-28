@@ -9,7 +9,8 @@ public class StartUI {
     public static void main(String[] args) {
         Tracker tracker = new Tracker(1);
         Input consoleInputHelper = new ConsoleInputHelper();
-        ConsoleMainMenu consoleMainMenu = new ConsoleMainMenu(tracker, consoleInputHelper);
+        Output consoleOutputHelper = new ConsoleOutputHelper();
+        ConsoleMainMenu consoleMainMenu = new ConsoleMainMenu(tracker, consoleInputHelper, consoleOutputHelper);
         consoleMainMenu.start();
     }
 }
