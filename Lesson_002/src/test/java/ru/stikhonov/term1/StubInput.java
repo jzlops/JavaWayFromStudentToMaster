@@ -4,6 +4,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 /**
@@ -18,13 +19,15 @@ public class StubInput {
      * Добавления 2-х заявок в трекер и попытка поиска зявки по несущестующей дате ID
      */
     @Test
-    public void addItemsAndTryToFindItemByWrongDateRange() {
+    public void addItemsAndTryToFindItemByWrongDateRange() throws ParseException {
         Input testInput = new TestInput(new String[]{"1", "Jack", "Adding Item", "It is working", "1"
                 , "Serg", "Adding Item again", "It is working again", "6", "1111.11.11 11:11:11", "1212.11.11 11:11:11", "0"});
         Output testOutput = new TestOutput();
         Tracker tracker = new Tracker(1);
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss");
         ConsoleMainMenu consoleMainMenu = new ConsoleMainMenu(tracker, testInput, testOutput);
         consoleMainMenu.start();
+        Assert.assertEquals(tracker.getItemsByDataRange(simpleDateFormat.parse("1111.11.11 11:11:11"), simpleDateFormat.parse("1212.11.11 11:11:11")), null);
     }
 
     /**
@@ -51,6 +54,7 @@ public class StubInput {
         Tracker tracker = new Tracker(1);
         ConsoleMainMenu consoleMainMenu = new ConsoleMainMenu(tracker, testInput, testOutput);
         consoleMainMenu.start();
+        Assert.assertEquals(tracker.getItemByID("fake"),null);
     }
 
     /**
@@ -64,6 +68,7 @@ public class StubInput {
         Tracker tracker = new Tracker(1);
         ConsoleMainMenu consoleMainMenu = new ConsoleMainMenu(tracker, testInput, testOutput);
         consoleMainMenu.start();
+        Assert.assertEquals(tracker.deleteItem("Fake"),false);
     }
 
     /**
@@ -71,12 +76,15 @@ public class StubInput {
      */
     @Test
     public void addItemsAndTryToEditItemByWrongID() {
+        Item item;
         Input testInput = new TestInput(new String[]{"1", "Jack", "Adding Item", "It is working", "1"
                 , "Serg", "Adding Item again", "It is working again", "2", "Fake", "0"});
         Output testOutput = new TestOutput();
         Tracker tracker = new Tracker(1);
         ConsoleMainMenu consoleMainMenu = new ConsoleMainMenu(tracker, testInput, testOutput);
         consoleMainMenu.start();
+        item=new Item("Fake","Fake",new Date(),"fake");
+        Assert.assertFalse(tracker.editItem(item));
     }
 
     /**
@@ -115,7 +123,7 @@ public class StubInput {
         Tracker tracker = new Tracker(1);
         ConsoleMainMenu consoleMainMenu = new ConsoleMainMenu(tracker, testInput, testOutput);
         consoleMainMenu.start();
-
+        Assert.assertEquals(tracker.getItemsCount(),2);
     }
 
     /**
@@ -129,6 +137,7 @@ public class StubInput {
         Tracker tracker = new Tracker(1);
         ConsoleMainMenu consoleMainMenu = new ConsoleMainMenu(tracker, testInput, testOutput);
         consoleMainMenu.start();
+        Assert.assertEquals(tracker.getItemsCount(),2);
     }
 
     /**
@@ -142,8 +151,11 @@ public class StubInput {
         Item item = new Item("Lena", "Deleting Item", new Date(), "no comment");
         tracker.addItem(item);
         item.setItemID("RQS888888");
+        Assert.assertEquals(tracker.getItemsCount(),1);
         ConsoleMainMenu consoleMainMenu = new ConsoleMainMenu(tracker, testInput, testOutput);
         consoleMainMenu.start();
+        Assert.assertEquals(tracker.getItemsCount(),0);
+
     }
 
     /**
@@ -157,8 +169,14 @@ public class StubInput {
         Item item = new Item("Serg", "Editing Item", new Date(), "no comment");
         tracker.addItem(item);
         item.setItemID("RQS111111");
+        Assert.assertEquals(tracker.getItemByID("RQS111111").getComments(),"no comment");
+        Assert.assertEquals(tracker.getItemByID("RQS111111").getDescription(),"Editing Item");
+        Assert.assertEquals(tracker.getItemByID("RQS111111").getUserName(),"Serg");
         ConsoleMainMenu consoleMainMenu = new ConsoleMainMenu(tracker, testInput, testOutput);
         consoleMainMenu.start();
+        Assert.assertEquals(tracker.getItemByID("RQS111111").getComments(),"no comment again");
+        Assert.assertEquals(tracker.getItemByID("RQS111111").getDescription(),"New Edit Entry");
+        Assert.assertEquals(tracker.getItemByID("RQS111111").getUserName(),"Mr Serg");
     }
 
     /**
@@ -181,9 +199,9 @@ public class StubInput {
      * удовлетворяющая условию поиска
      */
     @Test
-    public void showItemByDataRange() {
+    public void showItemByDataRange() throws ParseException {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss");
-
+        Item[] item;
         Input testInput = new TestInput(new String[]{"6", "2222.22.22 22:22:21", "2222.22.22 22:22:23", "0"});
         Output testOutput = new TestOutput();
         Tracker tracker = new Tracker(1);
@@ -203,6 +221,11 @@ public class StubInput {
         tracker.addItem(item2);
         ConsoleMainMenu consoleMainMenu = new ConsoleMainMenu(tracker, testInput, testOutput);
         consoleMainMenu.start();
+        item=tracker.getItemsByDataRange(simpleDateFormat.parse("2222.22.22 22:22:21"), simpleDateFormat.parse("2222.22.22 22:22:23"));
+        Assert.assertEquals(item[0].getDescription(),"ShowByData");
+        Assert.assertEquals(item[0].getUserName(),"Lena1");
+        Assert.assertEquals(item[0].getComments(),"Data1");
+
     }
 
 }

@@ -62,7 +62,7 @@ public class ConsoleInputHelper implements Input {
     }
 
     /**
-     * Метод служит для риостановки выполнения программы до нажатия клавиши Enter
+     * Метод служит для приостановки выполнения программы до нажатия клавиши Enter
      */
     @Override
     public void anyKeyEntry() {

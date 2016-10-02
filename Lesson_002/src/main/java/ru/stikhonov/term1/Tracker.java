@@ -14,7 +14,7 @@ class Tracker {
 
     private Item[] items;
     private int itemsCount = 0;
-    private int capacity;
+    private int capacity=0;
 
     /**
      * @param capacity начальная "емкость" трекера (увеличивается автоматически в два раза при нехватке места)
@@ -77,9 +77,6 @@ class Tracker {
      */
     boolean deleteItem(String itemID) {
         boolean fit = false;
-        if (this.itemsCount == 0) {
-            return false;
-        }
         for (int i = 0; i < this.itemsCount; i++) {
             if (this.items[i].getItemID().equals(itemID)) {
                 fit = true;
@@ -100,14 +97,16 @@ class Tracker {
      *
      * @param item объект тива Item с выбранным пользователем ID, находит в трекере по даному ID заявку и менает ее на новый объект Item
      */
-    void editItem(Item item) {
+    boolean editItem(Item item) {
         if (itemsCount > 0) {
             for (int i = 0; i < this.itemsCount; i++) {
                 if (this.items[i].getItemID().equals(item.getItemID())) {
                     this.items[i] = item;
+                    return true;
                 }
             }
         }
+        return false;
     }
 
     /**
@@ -171,6 +170,7 @@ class Tracker {
                 fitCount++;
             }
         }
+        if (fitCount==0) return null;
         tempItems = Arrays.copyOf(tempItems, fitCount);
         return tempItems;
     }
