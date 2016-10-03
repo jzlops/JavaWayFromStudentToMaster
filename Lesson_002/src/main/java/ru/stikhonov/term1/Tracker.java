@@ -14,7 +14,7 @@ class Tracker {
 
     private Item[] items;
     private int itemsCount = 0;
-    private int capacity=0;
+    private int capacity = 0;
 
     /**
      * @param capacity начальная "емкость" трекера (увеличивается автоматически в два раза при нехватке места)
@@ -115,7 +115,11 @@ class Tracker {
      * @return указатель на массив заявок
      */
     Item[] getAllItems() {
-        return Arrays.copyOf(this.items, this.itemsCount);
+        if (this.itemsCount == 0) {
+            return null;
+        } else {
+            return Arrays.copyOf(this.items, this.itemsCount);
+        }
     }
 
 
@@ -170,7 +174,7 @@ class Tracker {
                 fitCount++;
             }
         }
-        if (fitCount==0) return null;
+        if (fitCount == 0) return null;
         tempItems = Arrays.copyOf(tempItems, fitCount);
         return tempItems;
     }

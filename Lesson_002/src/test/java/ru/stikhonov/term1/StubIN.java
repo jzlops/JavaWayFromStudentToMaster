@@ -5,15 +5,15 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- * Класс реализующий (эмулирующий) сновные методы ввода данных с консоли, спроэктирован для тестирования пользовательского интерйеса классом StubInput
+ * Класс реализующий (эмулирующий) сновные методы ввода данных с консоли, спроэктирован для тестирования пользовательского интерйеса классом StubMainOperations
  *
  * @author Sergey Tikhonov
  */
-public class TestInput implements Input {
+public class StubIN implements Input {
     private String[] answers;
     private int index = -1;
 
-    TestInput(String[] answers) {
+    StubIN(String[] answers) {
         this.answers = answers;
     }
 
