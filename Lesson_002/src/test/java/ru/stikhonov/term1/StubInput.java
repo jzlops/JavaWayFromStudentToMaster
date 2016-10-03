@@ -27,7 +27,7 @@ public class StubInput {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss");
         ConsoleMainMenu consoleMainMenu = new ConsoleMainMenu(tracker, testInput, testOutput);
         consoleMainMenu.start();
-        Assert.assertEquals(tracker.getItemsByDataRange(simpleDateFormat.parse("1111.11.11 11:11:11"), simpleDateFormat.parse("1212.11.11 11:11:11")), null);
+        Assert.assertNull(tracker.getItemsByDataRange(simpleDateFormat.parse("1111.11.11 11:11:11"), simpleDateFormat.parse("1212.11.11 11:11:11")));
     }
 
     /**
@@ -195,7 +195,7 @@ public class StubInput {
     }
 
     /**
-     * Предварительно создаем 2 заявки с разными датами, далее выводи список заявок из диапазона дат, по факту выведится только одна заявка
+     * Предварительно создаем 2 заявки с разными датами, далее выводим список заявок из диапазона дат, по факту выведится только одна заявка
      * удовлетворяющая условию поиска
      */
     @Test
@@ -207,7 +207,7 @@ public class StubInput {
         Tracker tracker = new Tracker(1);
         Item item1 = null;
         try {
-            item1 = new Item("Lena1", "ShowByData", simpleDateFormat.parse("2222.22.22 22:22:22"), "Data1");
+            item1 = new Item("Lena1", "ShowByDate", simpleDateFormat.parse("2222.22.22 22:22:22"), "Data1");
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -222,7 +222,7 @@ public class StubInput {
         ConsoleMainMenu consoleMainMenu = new ConsoleMainMenu(tracker, testInput, testOutput);
         consoleMainMenu.start();
         item=tracker.getItemsByDataRange(simpleDateFormat.parse("2222.22.22 22:22:21"), simpleDateFormat.parse("2222.22.22 22:22:23"));
-        Assert.assertEquals(item[0].getDescription(),"ShowByData");
+        Assert.assertEquals(item[0].getDescription(),"ShowByDate");
         Assert.assertEquals(item[0].getUserName(),"Lena1");
         Assert.assertEquals(item[0].getComments(),"Data1");
 
