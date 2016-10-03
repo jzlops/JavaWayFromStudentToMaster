@@ -26,7 +26,7 @@ public class ConsoleInputHelper implements Input {
         try {
             return simpleDateFormat.parse(s);
         } catch (ParseException e) {
-            System.out.printf("Неверный формат данных %n");
+            //System.out.printf("Неверный формат данных %n");
             return null;
         }
     }

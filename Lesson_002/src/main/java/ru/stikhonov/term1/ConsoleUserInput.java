@@ -74,6 +74,7 @@ class ConsoleUserInput {
         cout.out("Введите начальное время в формате yyyy.MM.dd HH:mm:ss \n");
         beginDate = cin.dateEntry();
         if (beginDate == null) {
+            cout.out("Неверный формат данных \n");
             cout.out("Для продолжения - нажмите Enter \n");
             cin.anyKeyEntry();
             return;
@@ -81,7 +82,8 @@ class ConsoleUserInput {
         cout.out("Введите конечное время в формате yyyy.MM.dd HH:mm:ss \n");
         endDate = cin.dateEntry();
         if (endDate == null) {
-            cout.out("Для продолжения - нажмите Enter \n");
+            cout.out("Неверный формат данных \n");
+            cout.out("Для продолжения - нажмите Enter  \n");
             cin.anyKeyEntry();
             return;
         }
