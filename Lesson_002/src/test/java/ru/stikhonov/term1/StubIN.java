@@ -46,7 +46,8 @@ public class StubIN implements Input {
     }
 
     @Override
-    public void anyKeyEntry() {
+    public boolean anyKeyEntry() {
 
+        return true;
     }
 }

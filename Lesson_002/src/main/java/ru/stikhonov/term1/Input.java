@@ -34,6 +34,6 @@ public interface Input {
     /**
      * Метод должен ожидать нажатия клавиши "ввод"
      */
-    void anyKeyEntry();
+    boolean anyKeyEntry();
 
 }
