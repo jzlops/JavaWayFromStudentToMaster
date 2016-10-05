@@ -4,13 +4,13 @@ import java.text.ParseException;
 import java.util.Date;
 
 /**
- * Интерфейс воода данных
+ * Общий интерфейс ввода данных
  *
  * @author Sergey Tikhonov
  */
-public interface Input {
+ interface Input {
     /**
-     * Метод должен возвратить значение типа Date при вводе данных в консоль
+     * Метод должен возвратить значение типа Date при вводе данных
      *
      * @return возвращает объект типа Date
      * @throws ParseException
@@ -18,14 +18,14 @@ public interface Input {
     Date dateEntry();
 
     /**
-     * Метод должен возвратить значение типа int при вводе данных в консоль
+     * Метод должен возвратить значение типа int при вводе данных
      *
      * @return возвращает целое значение int
      */
     int intEntry();
 
     /**
-     * Метод должен возвратить значение типа String при вводе данных в консоль
+     * Метод должен возвратить значение типа String при вводе данных
      *
      * @return возвращает строку String
      */
