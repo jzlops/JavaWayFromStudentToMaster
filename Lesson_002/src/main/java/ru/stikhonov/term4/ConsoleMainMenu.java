@@ -29,7 +29,6 @@ class ConsoleMainMenu {
      */
     void start() {
         int inputMenuNumber = 0;
-        ConsoleMenuDrawer cdraw = new ConsoleMenuDrawer(this.cout);
         ConsoleMenuAction consoleMenuAction = new ConsoleMenuAction(this.tracker, this.cin, this.cout);
         consoleMenuAction.fillActions();
         do {
@@ -39,7 +38,7 @@ class ConsoleMainMenu {
             if (inputMenuNumber == 4) consoleMenuAction.menuAction(4);
             if (inputMenuNumber == 5) consoleMenuAction.menuAction(5);
             if (inputMenuNumber == 6) consoleMenuAction.menuAction(6);
-            cdraw.showMainMenu();
+            consoleMenuAction.showMainMenu();
             inputMenuNumber = cin.intEntry();
         } while (inputMenuNumber != 0);
     }

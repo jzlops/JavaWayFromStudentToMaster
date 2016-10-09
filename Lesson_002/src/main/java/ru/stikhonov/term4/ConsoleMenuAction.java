@@ -316,6 +316,24 @@ class ConsoleMenuAction {
             return false;
         }
     }
+    /**
+     * Метод рисует основное меню программы
+     */
+    void showMainMenu() {
+        ConsoleMenuDrawer cdraw = new ConsoleMenuDrawer(cout);
+        cdraw.borderGenerator("*");
+        cout.out("ДОБРО ПОЖАЛОВАТЬ  В ТРЕКЕР ЗАЯВОК \n");
+        cdraw.borderGenerator("#");
+        cout.out("ВЫБЕРИТЕ ПУНКТ МЕНЮ: \n");
+        cout.out("1. Создать заявку...\n");
+        cout.out("2. Редактировать заявку...\n");
+        cout.out("3. Удалить заявку...\n");
+        cout.out("4. Отобразить все заявки...\n");
+        cout.out("5. Найти заявку по номеру ID...\n");
+        cout.out("6. Найти заявки по дате создания...\n");
+        cout.out("0. Выйти из программы\n");
+        cdraw.borderGenerator("#");
+    }
 }
 
 
