@@ -5,6 +5,6 @@ package ru.stikhonov.term4;
  */
 public interface MenuAction {
     void execute(Tracker tracker, Input input, Output output);
-    String info ();
+
 }
 
