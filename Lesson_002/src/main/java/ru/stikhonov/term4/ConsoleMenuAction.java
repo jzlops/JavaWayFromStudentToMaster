@@ -12,7 +12,7 @@ class ConsoleMenuAction {
     private Input cin;
     private Output cout;
 
-    MenuAction[] consoleAction = new MenuAction[6 + 1];
+    MenuAction[] consoleAction = new MenuAction[6];
 
     /**
      * Конструктор принимате на вход 2 параметра
@@ -40,13 +40,12 @@ class ConsoleMenuAction {
      * Метод заполняет массив объектов реализующих интерфейс MenuAction
      */
     void fillActions() {
-        this.consoleAction[0] = null;
-        this.consoleAction[1] = this.new AddMenuAction();
-        this.consoleAction[2] = this.new EditMenuAction();
-        this.consoleAction[3] = this.new DeleteMenuAction();
-        this.consoleAction[4] = this.new ShowAllMenuAction();
-        this.consoleAction[5] = this.new ShowByIDMenuAction();
-        this.consoleAction[6] = this.new ShowByFilterMenuAction();
+        this.consoleAction[0] = this.new AddMenuAction();
+        this.consoleAction[1] = this.new EditMenuAction();
+        this.consoleAction[2] = this.new DeleteMenuAction();
+        this.consoleAction[3] = this.new ShowAllMenuAction();
+        this.consoleAction[4] = this.new ShowByIDMenuAction();
+        this.consoleAction[5] = this.new ShowByFilterMenuAction();
     }
 
 
