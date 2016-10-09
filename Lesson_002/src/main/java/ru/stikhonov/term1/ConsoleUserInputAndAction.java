@@ -7,7 +7,7 @@ import java.util.Date;
  *
  * @author Sergey Tikhonov
  */
-class ConsoleUserInput {
+class ConsoleUserInputAndAction {
     private Tracker tracker;
     private Input cin;
     private Output cout;
@@ -19,7 +19,7 @@ class ConsoleUserInput {
      * @param tracker объект типа Tracker
      * @param consoleInputHelper   объет реализующий интерфейс Input
      */
-    ConsoleUserInput(Tracker tracker, Input consoleInputHelper, Output consoleOutputHelper) {
+    ConsoleUserInputAndAction(Tracker tracker, Input consoleInputHelper, Output consoleOutputHelper) {
         this.tracker = tracker;
         this.cin = consoleInputHelper;
         this.cout = consoleOutputHelper;

@@ -30,15 +30,15 @@ class ConsoleMainMenu {
     void start() {
         int inputMenuNumber = 0;
         ConsoleGuiDrawer consoleGuiDrawer = new ConsoleGuiDrawer(this.consoleOutputHelper);
-        ConsoleUserInput consoleUserInput = new ConsoleUserInput(this.tracker, this.consoleInputHelper, this.consoleOutputHelper);
+        ConsoleUserInputAndAction consoleUserInputAndAction = new ConsoleUserInputAndAction(this.tracker, this.consoleInputHelper, this.consoleOutputHelper);
 
         do {
-            if (inputMenuNumber == 1) consoleUserInput.menuAction(MenuElements.ADD);
-            if (inputMenuNumber == 2) consoleUserInput.menuAction(MenuElements.EDIT);
-            if (inputMenuNumber == 3) consoleUserInput.menuAction(MenuElements.DELETE);
-            if (inputMenuNumber == 4) consoleUserInput.menuAction(MenuElements.SHOW);
-            if (inputMenuNumber == 5) consoleUserInput.menuAction(MenuElements.SHOW_BY_ID);
-            if (inputMenuNumber == 6) consoleUserInput.menuAction(MenuElements.SHOW_BY_FILTER);
+            if (inputMenuNumber == 1) consoleUserInputAndAction.menuAction(MenuElements.ADD);
+            if (inputMenuNumber == 2) consoleUserInputAndAction.menuAction(MenuElements.EDIT);
+            if (inputMenuNumber == 3) consoleUserInputAndAction.menuAction(MenuElements.DELETE);
+            if (inputMenuNumber == 4) consoleUserInputAndAction.menuAction(MenuElements.SHOW);
+            if (inputMenuNumber == 5) consoleUserInputAndAction.menuAction(MenuElements.SHOW_BY_ID);
+            if (inputMenuNumber == 6) consoleUserInputAndAction.menuAction(MenuElements.SHOW_BY_FILTER);
             consoleGuiDrawer.showMainMenu();
             inputMenuNumber = consoleInputHelper.intEntry();
         } while (inputMenuNumber != 0);
