@@ -33,7 +33,7 @@ class ConsoleMenuAction {
      * @param menuElement номер элемента меню
      */
     void menuAction(int menuElement) {
-        this.consoleAction[menuElement].execute(this.tracker, this.cin, this.cout);
+        this.consoleAction[menuElement-1].execute(this.tracker, this.cin, this.cout);
     }
 
     /**
