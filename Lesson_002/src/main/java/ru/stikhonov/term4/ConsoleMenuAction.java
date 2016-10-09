@@ -42,11 +42,28 @@ class ConsoleMenuAction {
     void fillActions() {
         this.consoleAction[0] = null;
         this.consoleAction[1] = this.new AddMenuAction();
+        this.consoleAction[1].info("1. Создать заявку...\n");
         this.consoleAction[2] = this.new EditMenuAction();
         this.consoleAction[3] = this.new DeleteMenuAction();
         this.consoleAction[4] = this.new ShowAllMenuAction();
         this.consoleAction[5] = this.new ShowByIDMenuAction();
         this.consoleAction[6] = this.new ShowByFilterMenuAction();
+    }
+
+    void showMainMenu() {
+        ConsoleMenuDrawer cdraw = new ConsoleMenuDrawer(cout);
+        cdraw.borderGenerator("*");
+        cout.out("ДОБРО ПОЖАЛОВАТЬ  В ТРЕКЕР ЗАЯВОК \n");
+        cdraw.borderGenerator("#");
+        cout.out("ВЫБЕРИТЕ ПУНКТ МЕНЮ: \n");
+        cout.out("1. Создать заявку...\n");
+        cout.out("2. Редактировать заявку...\n");
+        cout.out("3. Удалить заявку...\n");
+        cout.out("4. Отобразить все заявки...\n");
+        cout.out("5. Найти заявку по номеру ID...\n");
+        cout.out("6. Найти заявки по дате создания...\n");
+        cout.out("0. Выйти из программы\n");
+        cdraw.borderGenerator("#");
     }
 
     /**
@@ -85,6 +102,11 @@ class ConsoleMenuAction {
             cout.out("Номер заявки " + item.getItemID() + "\n");
             cout.out("Для продолжения - нажмите Enter \n");
             cin.anyKeyEntry();
+        }
+
+        @Override
+        public String info(String nameMenu) {
+            return nameMenu;
         }
     }
 
@@ -133,6 +155,10 @@ class ConsoleMenuAction {
             cout.out("Для продолжения - нажмите Enter \n");
             cin.anyKeyEntry();
         }
+        @Override
+        public String info(String nameMenu) {
+            return nameMenu;
+        }
     }
 
     /**
@@ -164,6 +190,10 @@ class ConsoleMenuAction {
             cout.out("Для продолжения - нажмите Enter \n");
             cin.anyKeyEntry();
         }
+        @Override
+        public String info(String nameMenu) {
+            return nameMenu;
+        }
     }
 
     /**
@@ -194,6 +224,10 @@ class ConsoleMenuAction {
             }
             cout.out("Для продолжения - нажмите Enter \n");
             cin.anyKeyEntry();
+        }
+        @Override
+        public String info(String nameMenu) {
+            return nameMenu;
         }
     }
 
@@ -237,6 +271,10 @@ class ConsoleMenuAction {
             cdraw.borderGenerator("+");
             cout.out("Для продолжения - нажмите Enter \n");
             cin.anyKeyEntry();
+        }
+        @Override
+        public String info(String nameMenu) {
+            return nameMenu;
         }
     }
 
@@ -292,6 +330,10 @@ class ConsoleMenuAction {
             }
             cout.out("Для продолжения - нажмите Enter \n");
             cin.anyKeyEntry();
+        }
+        @Override
+        public String info(String nameMenu) {
+            return nameMenu;
         }
     }
 
