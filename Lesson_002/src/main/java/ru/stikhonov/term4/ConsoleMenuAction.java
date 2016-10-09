@@ -12,7 +12,7 @@ class ConsoleMenuAction {
     private Input cin;
     private Output cout;
 
-    MenuAction[] consoleAction = new MenuAction[6 + 1];
+    private MenuAction[] consoleAction = new MenuAction[6 + 1];
 
     /**
      * Конструктор принимате на вход 2 параметра
