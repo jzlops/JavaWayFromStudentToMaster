@@ -18,8 +18,8 @@ class ConsoleMenuAction {
      * Конструктор принимате на вход 2 параметра
      *
      * @param tracker объект типа Tracker
-     * @param cin объет реализующий интерфейс Input
-     * @param cout объет реализующий интерфейс Output
+     * @param cin     объет реализующий интерфейс Input
+     * @param cout    объет реализующий интерфейс Output
      */
     ConsoleMenuAction(Tracker tracker, Input cin, Output cout) {
         this.tracker = tracker;
@@ -42,7 +42,6 @@ class ConsoleMenuAction {
     void fillActions() {
         this.consoleAction[0] = null;
         this.consoleAction[1] = this.new AddMenuAction();
-        this.consoleAction[1].info("1. Создать заявку...\n");
         this.consoleAction[2] = this.new EditMenuAction();
         this.consoleAction[3] = this.new DeleteMenuAction();
         this.consoleAction[4] = this.new ShowAllMenuAction();
@@ -50,21 +49,6 @@ class ConsoleMenuAction {
         this.consoleAction[6] = this.new ShowByFilterMenuAction();
     }
 
-    void showMainMenu() {
-        ConsoleMenuDrawer cdraw = new ConsoleMenuDrawer(cout);
-        cdraw.borderGenerator("*");
-        cout.out("ДОБРО ПОЖАЛОВАТЬ  В ТРЕКЕР ЗАЯВОК \n");
-        cdraw.borderGenerator("#");
-        cout.out("ВЫБЕРИТЕ ПУНКТ МЕНЮ: \n");
-        cout.out("1. Создать заявку...\n");
-        cout.out("2. Редактировать заявку...\n");
-        cout.out("3. Удалить заявку...\n");
-        cout.out("4. Отобразить все заявки...\n");
-        cout.out("5. Найти заявку по номеру ID...\n");
-        cout.out("6. Найти заявки по дате создания...\n");
-        cout.out("0. Выйти из программы\n");
-        cdraw.borderGenerator("#");
-    }
 
     /**
      * Внутренний класс реализующий интерфейс MenuAction и имеющий один метод - execute отвечающий за добавленрие елемента в трекер
@@ -75,8 +59,8 @@ class ConsoleMenuAction {
          * Метод добавляет элемент в трекер
          *
          * @param tracker объект типа Tracker
-         * @param cin объет реализующий интерфейс Input
-         * @param cout объет реализующий интерфейс Output
+         * @param cin     объет реализующий интерфейс Input
+         * @param cout    объет реализующий интерфейс Output
          */
         @Override
         public void execute(Tracker tracker, Input cin, Output cout) {
@@ -104,10 +88,6 @@ class ConsoleMenuAction {
             cin.anyKeyEntry();
         }
 
-        @Override
-        public String info(String nameMenu) {
-            return nameMenu;
-        }
     }
 
     /**
@@ -118,8 +98,8 @@ class ConsoleMenuAction {
          * Метод редактирует элемент в трекере
          *
          * @param tracker объект типа Tracker
-         * @param cin объет реализующий интерфейс Input
-         * @param cout объет реализующий интерфейс Output
+         * @param cin     объет реализующий интерфейс Input
+         * @param cout    объет реализующий интерфейс Output
          */
         @Override
         public void execute(Tracker tracker, Input cin, Output cout) {
@@ -155,10 +135,6 @@ class ConsoleMenuAction {
             cout.out("Для продолжения - нажмите Enter \n");
             cin.anyKeyEntry();
         }
-        @Override
-        public String info(String nameMenu) {
-            return nameMenu;
-        }
     }
 
     /**
@@ -169,9 +145,9 @@ class ConsoleMenuAction {
          * Метод удаляет элемент в трекере
          *
          * @param tracker объект типа Tracker
-         * @param cin объет реализующий интерфейс Input
-         * @param cout объет реализующий интерфейс Output
-        */
+         * @param cin     объет реализующий интерфейс Input
+         * @param cout    объет реализующий интерфейс Output
+         */
         @Override
         public void execute(Tracker tracker, Input cin, Output cout) {
             ConsoleMenuDrawer cdraw = new ConsoleMenuDrawer(cout);
@@ -190,10 +166,6 @@ class ConsoleMenuAction {
             cout.out("Для продолжения - нажмите Enter \n");
             cin.anyKeyEntry();
         }
-        @Override
-        public String info(String nameMenu) {
-            return nameMenu;
-        }
     }
 
     /**
@@ -204,8 +176,8 @@ class ConsoleMenuAction {
          * Метод отображает в консоль все элементы в трекере
          *
          * @param tracker объект типа Tracker
-         * @param сin объет реализующий интерфейс Input
-         * @param cout объет реализующий интерфейс Output
+         * @param сin     объет реализующий интерфейс Input
+         * @param cout    объет реализующий интерфейс Output
          */
         @Override
         public void execute(Tracker tracker, Input сin, Output cout) {
@@ -225,10 +197,6 @@ class ConsoleMenuAction {
             cout.out("Для продолжения - нажмите Enter \n");
             cin.anyKeyEntry();
         }
-        @Override
-        public String info(String nameMenu) {
-            return nameMenu;
-        }
     }
 
     /**
@@ -239,8 +207,8 @@ class ConsoleMenuAction {
          * Метод отображает в консоль элемент трекера по его ID
          *
          * @param tracker объект типа Tracker
-         * @param cin объет реализующий интерфейс Input
-         * @param cout объет реализующий интерфейс Output
+         * @param cin     объет реализующий интерфейс Input
+         * @param cout    объет реализующий интерфейс Output
          */
         @Override
         public void execute(Tracker tracker, Input cin, Output cout) {
@@ -272,10 +240,6 @@ class ConsoleMenuAction {
             cout.out("Для продолжения - нажмите Enter \n");
             cin.anyKeyEntry();
         }
-        @Override
-        public String info(String nameMenu) {
-            return nameMenu;
-        }
     }
 
     /**
@@ -286,8 +250,8 @@ class ConsoleMenuAction {
          * Метод отображает в консоль элементы трекера по фильтру дат
          *
          * @param tracker объект типа Tracker
-         * @param cin объет реализующий интерфейс Input
-         * @param cout объет реализующий интерфейс Output
+         * @param cin     объет реализующий интерфейс Input
+         * @param cout    объет реализующий интерфейс Output
          */
 
         @Override
@@ -330,10 +294,6 @@ class ConsoleMenuAction {
             }
             cout.out("Для продолжения - нажмите Enter \n");
             cin.anyKeyEntry();
-        }
-        @Override
-        public String info(String nameMenu) {
-            return nameMenu;
         }
     }
 
