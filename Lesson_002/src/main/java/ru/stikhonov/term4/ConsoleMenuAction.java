@@ -54,7 +54,7 @@ class ConsoleMenuAction {
      * Внутренний класс реализующий интерфейс MenuAction и имеющий один метод - execute отвечающий за добавленрие елемента в трекер
      */
     private class AddMenuAction implements MenuAction {
-
+        final String info = "1. Создать заявку...\n";
         /**
          * Метод добавляет элемент в трекер
          *
@@ -88,12 +88,18 @@ class ConsoleMenuAction {
             cin.anyKeyEntry();
         }
 
+        @Override
+        public String info() {
+            return info;
+        }
+
     }
 
     /**
      * Внутренний класс реализующий интерфейс MenuAction и имеющий один метод - execute отвечающий за редактирование елемента в трекере
      */
     private class EditMenuAction implements MenuAction {
+        final String info = "2. Редактировать заявку...\n";
         /**
          * Метод редактирует элемент в трекере
          *
@@ -135,12 +141,18 @@ class ConsoleMenuAction {
             cout.out("Для продолжения - нажмите Enter \n");
             cin.anyKeyEntry();
         }
+
+        @Override
+        public String info() {
+            return info;
+        }
     }
 
     /**
      * Внутренний класс реализующий интерфейс MenuAction и имеющий один метод - execute отвечающий за удаление елемента в трекере
      */
     private class DeleteMenuAction implements MenuAction {
+        final String info = "3. Удалить заявку...\n";
         /**
          * Метод удаляет элемент в трекере
          *
@@ -166,12 +178,18 @@ class ConsoleMenuAction {
             cout.out("Для продолжения - нажмите Enter \n");
             cin.anyKeyEntry();
         }
+
+        @Override
+        public String info() {
+            return info;
+        }
     }
 
     /**
      * Внутренний класс реализующий интерфейс MenuAction и имеющий один метод - execute отвечающий за отображение всех элементов в трекере
      */
     private class ShowAllMenuAction implements MenuAction {
+        final String info = "4. Отобразить все заявки...\n";
         /**
          * Метод отображает в консоль все элементы в трекере
          *
@@ -197,12 +215,19 @@ class ConsoleMenuAction {
             cout.out("Для продолжения - нажмите Enter \n");
             cin.anyKeyEntry();
         }
+
+        @Override
+        public String info() {
+            return info;
+        }
     }
 
     /**
      * Внутренний класс реализующий интерфейс MenuAction и имеющий один метод - execute отвечающий за отображение элемента по его ID
      */
     private class ShowByIDMenuAction implements MenuAction {
+        final String info = "5. Найти заявку по номеру ID...\n";
+
         /**
          * Метод отображает в консоль элемент трекера по его ID
          *
@@ -240,12 +265,18 @@ class ConsoleMenuAction {
             cout.out("Для продолжения - нажмите Enter \n");
             cin.anyKeyEntry();
         }
+
+        @Override
+        public String info() {
+            return info;
+        }
     }
 
     /**
      * Внутренний класс реализующий интерфейс MenuAction и имеющий один метод - execute отвечающий за отображение элементов по фильтру
      */
     private class ShowByFilterMenuAction implements MenuAction {
+        final String info = "6. Найти заявки по дате создания...\n";
         /**
          * Метод отображает в консоль элементы трекера по фильтру дат
          *
@@ -295,6 +326,11 @@ class ConsoleMenuAction {
             cout.out("Для продолжения - нажмите Enter \n");
             cin.anyKeyEntry();
         }
+
+        @Override
+        public String info() {
+            return info;
+        }
     }
 
     /**
@@ -325,12 +361,9 @@ class ConsoleMenuAction {
         cout.out("ДОБРО ПОЖАЛОВАТЬ  В ТРЕКЕР ЗАЯВОК \n");
         cdraw.borderGenerator("#");
         cout.out("ВЫБЕРИТЕ ПУНКТ МЕНЮ: \n");
-        cout.out("1. Создать заявку...\n");
-        cout.out("2. Редактировать заявку...\n");
-        cout.out("3. Удалить заявку...\n");
-        cout.out("4. Отобразить все заявки...\n");
-        cout.out("5. Найти заявку по номеру ID...\n");
-        cout.out("6. Найти заявки по дате создания...\n");
+        for (MenuAction menuAction : consoleAction) {
+            cout.out(menuAction.info());
+        }
         cout.out("0. Выйти из программы\n");
         cdraw.borderGenerator("#");
     }
