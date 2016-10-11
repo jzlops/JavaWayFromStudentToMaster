@@ -29,7 +29,7 @@ class Tracker {
      */
     private void increaseCapacity() {
         if (this.itemsCount == this.capacity) {
-            this.capacity = this.capacity * 2;
+            this.capacity = this.capacity * 3;
             Item[] tempItems = new Item[this.capacity];
             for (int i = 0; i < this.itemsCount; i++) {
                 tempItems[i] = this.items[i];
@@ -77,7 +77,7 @@ class Tracker {
      */
     boolean deleteItem(String itemID) {
         boolean fit = false;
-        for (int i = 0; i < this.itemsCount; i++) {
+        for (int i = 0; i < itemsCount; i++) {
             if (this.items[i].getItemID().equals(itemID)) {
                 fit = true;
                 for (int j = i; j < this.itemsCount - 1; j++) {
@@ -168,7 +168,7 @@ class Tracker {
         if (this.itemsCount == 0) return null;
         Item[] tempItems = new Item[this.itemsCount];
         int fitCount = 0;
-        for (int i = 0; i < this.itemsCount; i++) {
+        for (int i = 0; i < itemsCount; i++) {
             if (this.items[i].getDate().after(date1) && this.items[i].getDate().before(date2)) {
                 tempItems[fitCount] = this.items[i];
                 fitCount++;
