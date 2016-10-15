@@ -8,7 +8,7 @@ import java.util.Date;
  *
  * @author Sergey Tikhonov
  */
- interface Input {
+interface Input {
     /**
      * Метод должен возвратить значение типа Date при вводе данных
      *
@@ -21,6 +21,7 @@ import java.util.Date;
      * Метод должен возвратить значение типа int при вводе данных
      *
      * @return возвращает целое значение int
+     * @throws NumberFormatException
      */
     int intEntry();
 
