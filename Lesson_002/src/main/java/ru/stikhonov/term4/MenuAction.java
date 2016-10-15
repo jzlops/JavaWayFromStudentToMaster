@@ -11,7 +11,7 @@ public interface MenuAction {
      *
      * @param tracker объект Tracker
      * @param input   объект реализующий интрфейс ввода данных - Input
-     * @param output  объект реализующий интрфейс вывода данных = Output
+     * @param output  объект реализующий интрфейс вывода данных - Output
      */
     void execute(Tracker tracker, Input input, Output output);
 

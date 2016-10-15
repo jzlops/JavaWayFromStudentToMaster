@@ -20,9 +20,9 @@ public class TestTracker {
      */
     @Test
     public void getItemsCount() throws Exception {
-        Item item1 = new Item("John Doe 1", "Test", new Date(), "No Comment");
-        Item item2 = new Item("John Doe 2", "Test", new Date(), "No Comment");
-        Item item3 = new Item("John Doe 3", "Test", new Date(), "No Comment");
+        Item item1 = new Item("John Doe 11", "Test", new Date(), "No Comment");
+        Item item2 = new Item("John Doe 12", "Test", new Date(), "No Comment");
+        Item item3 = new Item("John Doe 13", "Test", new Date(), "No Comment");
         Tracker tracker = new Tracker(1);
         tracker.addItem(item1);
         tracker.addItem(item2);
@@ -39,7 +39,7 @@ public class TestTracker {
     public void itemIDGenerateInTracker() throws Exception {
         Tracker tracker = new Tracker(1);
         String itemIDBefore, itemIDAfter;
-        Item item1 = new Item("John Doe 1", "Test", new Date(), "No Comment");
+        Item item1 = new Item("John Doe 11", "Test", new Date(), "No Comment");
         itemIDBefore = item1.getItemID();
         itemIDAfter = tracker.addItem(item1).getItemID();
         Assert.assertNotEquals(itemIDBefore, itemIDAfter);
@@ -66,9 +66,9 @@ public class TestTracker {
     @Test
     public void deleteItemAndTryToFindItInTrackerByID() throws Exception {
         Item[] items;
-        Item item1 = new Item("John Doe 1", "Test", new Date(), "No Comment");
-        Item item2 = new Item("John Doe 2", "Test", new Date(), "No Comment");
-        Item item3 = new Item("John Doe 3", "Test", new Date(), "No Comment");
+        Item item1 = new Item("John Doe 11", "Test", new Date(), "No Comment");
+        Item item2 = new Item("John Doe 12", "Test", new Date(), "No Comment");
+        Item item3 = new Item("John Doe 13", "Test", new Date(), "No Comment");
         Tracker tracker = new Tracker(1);
         tracker.addItem(item1).setItemID("123");
         tracker.addItem(item2).setItemID("456");
@@ -89,9 +89,9 @@ public class TestTracker {
     @Test
     public void deleteItemAndCalculateCountItemsInTracker() throws Exception {
         int countBeforeDelete, countAfterDelete;
-        Item item1 = new Item("John Doe 4", "Test", new Date(), "No Comment");
-        Item item2 = new Item("John Doe 5", "Test", new Date(), "No Comment");
-        Item item3 = new Item("John Doe 6", "Test", new Date(), "No Comment");
+        Item item1 = new Item("John Doe 14", "Test", new Date(), "No Comment");
+        Item item2 = new Item("John Doe 15", "Test", new Date(), "No Comment");
+        Item item3 = new Item("John Doe 16", "Test", new Date(), "No Comment");
         Tracker tracker = new Tracker(1);
         tracker.addItem(item1).setItemID("123");
         tracker.addItem(item2).setItemID("456");
@@ -115,9 +115,9 @@ public class TestTracker {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss");
         Item[] items;
         Item tempItem;
-        Item item1 = new Item("John Doe 88", "Test", simpleDateFormat.parse("2222.22.22 11:11:10"), "No Comment");
-        Item item2 = new Item("John Doe 99", "Test", simpleDateFormat.parse("2222.22.22 11:11:20"), "No Comment");
-        Item item3 = new Item("John Doe 77", "Test", simpleDateFormat.parse("2222.22.22 11:11:30"), "No Comment");
+        Item item1 = new Item("John Doe 188", "Test", simpleDateFormat.parse("2222.22.22 11:11:10"), "No Comment");
+        Item item2 = new Item("John Doe 199", "Test", simpleDateFormat.parse("2222.22.22 11:11:20"), "No Comment");
+        Item item3 = new Item("John Doe 177", "Test", simpleDateFormat.parse("2222.22.22 11:11:30"), "No Comment");
         Tracker tracker = new Tracker(1);
         tracker.addItem(item1).setItemID("123");
         tracker.addItem(item2).setItemID("456");
@@ -136,9 +136,9 @@ public class TestTracker {
     @Test
     public void getItemByID() throws Exception {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss");
-        Item item1 = new Item("John Doe 88", "Test", simpleDateFormat.parse("2222.22.22 11:11:10"), "No Comment");
-        Item item2 = new Item("John Doe 99", "Test", simpleDateFormat.parse("2222.22.22 11:11:20"), "No Comment");
-        Item item3 = new Item("John Doe 77", "Test", simpleDateFormat.parse("2222.22.22 11:11:30"), "No Comment");
+        Item item1 = new Item("John Doe 188", "Test", simpleDateFormat.parse("2222.22.22 11:11:10"), "No Comment");
+        Item item2 = new Item("John Doe 199", "Test", simpleDateFormat.parse("2222.22.22 11:11:20"), "No Comment");
+        Item item3 = new Item("John Doe 177", "Test", simpleDateFormat.parse("2222.22.22 11:11:30"), "No Comment");
         Tracker tracker = new Tracker(1);
         tracker.addItem(item1).setItemID("123");
         tracker.addItem(item2).setItemID("456");
@@ -156,9 +156,9 @@ public class TestTracker {
     public void getAllItemsAndEqualsTheirByStartValue() throws Exception {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss");
         Item[] items;
-        Item item1 = new Item("John Doe 88", "Test", simpleDateFormat.parse("2222.22.22 11:11:10"), "No Comment");
-        Item item2 = new Item("John Doe 99", "Test", simpleDateFormat.parse("2222.22.22 11:11:20"), "No Comment");
-        Item item3 = new Item("John Doe 77", "Test", simpleDateFormat.parse("2222.22.22 11:11:30"), "No Comment");
+        Item item1 = new Item("John Doe 188", "Test", simpleDateFormat.parse("2222.22.22 11:11:10"), "No Comment");
+        Item item2 = new Item("John Doe 199", "Test", simpleDateFormat.parse("2222.22.22 11:11:20"), "No Comment");
+        Item item3 = new Item("John Doe 177", "Test", simpleDateFormat.parse("2222.22.22 11:11:30"), "No Comment");
         Tracker tracker = new Tracker(1);
         tracker.addItem(item1).setItemID("123");
         tracker.addItem(item2).setItemID("456");
@@ -179,9 +179,9 @@ public class TestTracker {
     @Test
     public void getAllItemsAndEqualsReturnedItemsCountWithInitialQuantityItems() throws Exception {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss");
-        Item item1 = new Item("John Doe 88", "Test", simpleDateFormat.parse("2222.22.22 11:11:10"), "No Comment");
-        Item item2 = new Item("John Doe 99", "Test", simpleDateFormat.parse("2222.22.22 11:11:20"), "No Comment");
-        Item item3 = new Item("John Doe 77", "Test", simpleDateFormat.parse("2222.22.22 11:11:30"), "No Comment");
+        Item item1 = new Item("John Doe 188", "Test", simpleDateFormat.parse("2222.22.22 11:11:10"), "No Comment");
+        Item item2 = new Item("John Doe 199", "Test", simpleDateFormat.parse("2222.22.22 11:11:20"), "No Comment");
+        Item item3 = new Item("John Doe 177", "Test", simpleDateFormat.parse("2222.22.22 11:11:30"), "No Comment");
         Tracker tracker = new Tracker(1);
         tracker.addItem(item1).setItemID("123");
         tracker.addItem(item2).setItemID("456");
@@ -199,9 +199,9 @@ public class TestTracker {
     public void getItemsByDataRangeAndCheckCountOfFilteredItems() throws Exception {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss");
         Item[] items;
-        Item item1 = new Item("John Doe 11", "Test", simpleDateFormat.parse("2222.22.22 11:11:10"), "No Comment");
-        Item item2 = new Item("John Doe 12", "Test", simpleDateFormat.parse("2222.22.22 11:11:20"), "No Comment");
-        Item item3 = new Item("John Doe 13", "Test", simpleDateFormat.parse("2222.22.22 11:11:30"), "No Comment");
+        Item item1 = new Item("John Doe 111", "Test", simpleDateFormat.parse("2222.22.22 11:11:10"), "No Comment");
+        Item item2 = new Item("John Doe 112", "Test", simpleDateFormat.parse("2222.22.22 11:11:20"), "No Comment");
+        Item item3 = new Item("John Doe 113", "Test", simpleDateFormat.parse("2222.22.22 11:11:30"), "No Comment");
         Tracker tracker = new Tracker(1);
         tracker.addItem(item1).setItemID("123");
         tracker.addItem(item2).setItemID("456");
@@ -220,9 +220,9 @@ public class TestTracker {
     public void getItemsByDataRangeAndCheckEqualsOfItems() throws Exception {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss");
         Item[] items;
-        Item item1 = new Item("John Doe 11", "Test", simpleDateFormat.parse("2222.22.22 11:11:10"), "No Comment");
-        Item item2 = new Item("John Doe 12", "Test", simpleDateFormat.parse("2222.22.22 11:11:20"), "No Comment");
-        Item item3 = new Item("John Doe 13", "Test", simpleDateFormat.parse("2222.22.22 11:11:30"), "No Comment");
+        Item item1 = new Item("John Doe 111", "Test", simpleDateFormat.parse("2222.22.22 11:11:10"), "No Comment");
+        Item item2 = new Item("John Doe 112", "Test", simpleDateFormat.parse("2222.22.22 11:11:20"), "No Comment");
+        Item item3 = new Item("John Doe 113", "Test", simpleDateFormat.parse("2222.22.22 11:11:30"), "No Comment");
         Tracker tracker = new Tracker(1);
         tracker.addItem(item1).setItemID("123");
         tracker.addItem(item2).setItemID("456");

@@ -13,100 +13,100 @@ import java.util.Scanner;
  */
 class ConsoleInput implements Input {
     /**
-     * Метод для ввода даты
+     * Метод для ввода даты c консоли
      *
      * @return если дата введена корректно, возрващает обхект типа Date, иначе null
      */
     @Override
     public Date dateEntry() {
         Scanner scanner = new Scanner(System.in);
-        return this.dateEntry(scanner.nextLine());
+        return this.dateParse(scanner.nextLine());
     }
 
     /**
-     * Метод для ввода числового значения int
+     * Метод для ввода числового значения int с консоли
      *
      * @return возвращает числовое значение типа int, если данные введены корректно, иначе (-1)
      */
     @Override
     public int intEntry() {
         Scanner scanner = new Scanner(System.in);
-        return this.intEntry(scanner.nextLine());
+        return this.intParse(scanner.nextLine());
     }
 
     /**
-     * Метод для ввода строкового значения
+     * Метод для ввода строкового значения с консоли
      *
      * @return возвращает строковое значени
      */
     @Override
     public String stringEntry() {
         Scanner scanner = new Scanner(System.in);
-        return this.stringEntry(scanner.nextLine());
+        return this.stringParse(scanner.nextLine());
     }
 
     /**
-     * Метод служит для приостановки выполнения программы до нажатия клавиши Enter
+     * Метод служит для приостановки выполнения программы до нажатия клавиши Enter (в консоли)
      */
     @Override
     public boolean anyKeyEntry() {
         Scanner scanner = new Scanner(System.in);
-        return this.anyKeyEntry(scanner.nextLine());
+        return this.anyKeyParse(scanner.nextLine());
     }
 
     /**
-     * Метод для ввода даты
+     * Метод парсинга даты из строки
      *
      * @param s строковый параметр для парсинга даты
      * @return если дата введена корректно, возрващает обхект типа Date, иначе null
      */
 
-    public Date dateEntry(String s) {
+     Date dateParse(String s) {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss");
         try {
             return simpleDateFormat.parse(s);
         } catch (ParseException e) {
-
+//TODO можно ввести логирование, вывод предупреждающей информации в консоль не делал, класс предназначен исключительно для возвращения требуемого значения
             return null;
         }
     }
 
     /**
-     * Метод для ввода строкового значения
+     * Метод парсинга строкового значения
      *
      * @param s строковый параметр для возможных дейстивй со строкоый и вывод ее в качестве значения return
      * @return возвращает строковое значение
      */
-    public String stringEntry(String s) {
+     String stringParse(String s) {
 
         return s;
     }
 
     /**
-     * Метод для ввода числового значения int
+     * Метод парсинга числового значения в значение типа int
      *
      * @param s строковый параметр для парсинга строки в числовое значение меню
      * @return возвращает числовое значение типа int, если данные введены корректно, иначе (-1)
      */
-    public int intEntry(String s) {
+     int intParse(String s) {
         try {
             return Integer.parseInt(s);
         } catch (NumberFormatException e) {
+//TODO можно ввести логирование, вывод предупреждающей информации в консоль не делал, класс предназначен исключительно для возвращения требуемого значения
             return -1;
         }
     }
 
     /**
-     * Метод служит для приостановки выполнения программы до нажатия клавиши Enter (перевода строки)
+     * Метод парсит стрововое значение и ищет в нем символ перевода строки в бесконечном цикле
      *
      * @param s строковый параметр содержащий символ перевода строки
      */
-    public boolean anyKeyEntry(String s) {
+     boolean anyKeyParse(String s) {
         do {
 
         } while (s == "/n");
         return true;
     }
-
 }
 

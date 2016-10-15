@@ -33,27 +33,30 @@ class ConsoleMenuAction {
      * @param menuElement номер элемента меню
      */
     void menuAction(int menuElement) {
-        this.consoleAction[menuElement-1].execute(this.tracker, this.cin, this.cout);
+        this.consoleAction[menuElement - 1].execute(this.tracker, this.cin, this.cout);
     }
 
     /**
      * Метод заполняет массив объектов реализующих интерфейс MenuAction
      */
     void fillActions() {
-        this.consoleAction[0] = this.new AddMenuAction();
-        this.consoleAction[1] = this.new EditMenuAction();
-        this.consoleAction[2] = this.new DeleteMenuAction();
-        this.consoleAction[3] = this.new ShowAllMenuAction();
-        this.consoleAction[4] = this.new ShowByIDMenuAction();
-        this.consoleAction[5] = this.new ShowByFilterMenuAction();
+        this.consoleAction[0] = this.new AddMenuAction("1. Создать заявку...\n");
+        this.consoleAction[1] = this.new EditMenuAction("2. Редактировать заявку...\n");
+        this.consoleAction[2] = this.new DeleteMenuAction("3. Удалить заявку...\n");
+        this.consoleAction[3] = this.new ShowAllMenuAction("4. Отобразить все заявки...\n");
+        this.consoleAction[4] = this.new ShowByIDMenuAction("5. Найти заявку по номеру ID...\n");
+        this.consoleAction[5] = this.new ShowByFilterMenuAction("6. Найти заявки по дате создания...\n");
     }
 
 
     /**
-     * Внутренний класс реализующий интерфейс MenuAction и имеющий один метод - execute отвечающий за добавленрие елемента в трекер
+     * Внутренний класс реализующий интерфейс MenuAction (расширяющий абстрактный класс BaseAction) и имеющий один метод - execute отвечающий за добавленрие елемента в трекер
      */
-    private class AddMenuAction implements MenuAction {
-        final String info = "1. Создать заявку...\n";
+    private class AddMenuAction extends BaseAction {
+        AddMenuAction(String name) {
+            super(name);
+        }
+
         /**
          * Метод добавляет элемент в трекер
          *
@@ -86,19 +89,16 @@ class ConsoleMenuAction {
             cout.out("Для продолжения - нажмите Enter \n");
             cin.anyKeyEntry();
         }
-
-        @Override
-        public String info() {
-            return info;
-        }
-
     }
 
     /**
-     * Внутренний класс реализующий интерфейс MenuAction и имеющий один метод - execute отвечающий за редактирование елемента в трекере
+     * Внутренний класс реализующий интерфейс MenuAction (расширяющий абстрактный класс BaseAction) и имеющий один метод - execute отвечающий за редактирование елемента в трекере
      */
-    private class EditMenuAction implements MenuAction {
-        final String info = "2. Редактировать заявку...\n";
+    private class EditMenuAction extends BaseAction {
+        EditMenuAction(String actionName) {
+            super(actionName);
+        }
+
         /**
          * Метод редактирует элемент в трекере
          *
@@ -140,18 +140,16 @@ class ConsoleMenuAction {
             cout.out("Для продолжения - нажмите Enter \n");
             cin.anyKeyEntry();
         }
-
-        @Override
-        public String info() {
-            return info;
-        }
     }
 
     /**
-     * Внутренний класс реализующий интерфейс MenuAction и имеющий один метод - execute отвечающий за удаление елемента в трекере
+     * Внутренний класс реализующий интерфейс MenuAction (расширяющий абстрактный класс BaseAction) и имеющий один метод - execute отвечающий за удаление елемента в трекере
      */
-    private class DeleteMenuAction implements MenuAction {
-        final String info = "3. Удалить заявку...\n";
+    private class DeleteMenuAction extends BaseAction {
+        DeleteMenuAction(String actionName) {
+            super(actionName);
+        }
+
         /**
          * Метод удаляет элемент в трекере
          *
@@ -177,18 +175,16 @@ class ConsoleMenuAction {
             cout.out("Для продолжения - нажмите Enter \n");
             cin.anyKeyEntry();
         }
-
-        @Override
-        public String info() {
-            return info;
-        }
     }
 
     /**
-     * Внутренний класс реализующий интерфейс MenuAction и имеющий один метод - execute отвечающий за отображение всех элементов в трекере
+     * Внутренний класс реализующий интерфейс MenuAction (расширяющий абстрактный класс BaseAction) и имеющий один метод - execute отвечающий за отображение всех элементов в трекере
      */
-    private class ShowAllMenuAction implements MenuAction {
-        final String info = "4. Отобразить все заявки...\n";
+    private class ShowAllMenuAction extends BaseAction {
+        ShowAllMenuAction(String actionName) {
+            super(actionName);
+        }
+
         /**
          * Метод отображает в консоль все элементы в трекере
          *
@@ -214,18 +210,15 @@ class ConsoleMenuAction {
             cout.out("Для продолжения - нажмите Enter \n");
             cin.anyKeyEntry();
         }
-
-        @Override
-        public String info() {
-            return info;
-        }
     }
 
     /**
-     * Внутренний класс реализующий интерфейс MenuAction и имеющий один метод - execute отвечающий за отображение элемента по его ID
+     * Внутренний класс реализующий интерфейс MenuAction (расширяющий абстрактный класс BaseAction) и имеющий один метод - execute отвечающий за отображение элемента по его ID
      */
-    private class ShowByIDMenuAction implements MenuAction {
-        final String info = "5. Найти заявку по номеру ID...\n";
+    private class ShowByIDMenuAction extends BaseAction {
+        ShowByIDMenuAction(String actionName) {
+            super(actionName);
+        }
 
         /**
          * Метод отображает в консоль элемент трекера по его ID
@@ -264,18 +257,16 @@ class ConsoleMenuAction {
             cout.out("Для продолжения - нажмите Enter \n");
             cin.anyKeyEntry();
         }
-
-        @Override
-        public String info() {
-            return info;
-        }
     }
 
     /**
-     * Внутренний класс реализующий интерфейс MenuAction и имеющий один метод - execute отвечающий за отображение элементов по фильтру
+     * Внутренний класс реализующий интерфейс MenuAction (расширяющий абстрактный класс BaseAction) и имеющий один метод - execute отвечающий за отображение элементов по фильтру
      */
-    private class ShowByFilterMenuAction implements MenuAction {
-        final String info = "6. Найти заявки по дате создания...\n";
+    private class ShowByFilterMenuAction extends BaseAction {
+        ShowByFilterMenuAction(String actionName) {
+            super(actionName);
+        }
+
         /**
          * Метод отображает в консоль элементы трекера по фильтру дат
          *
@@ -325,11 +316,6 @@ class ConsoleMenuAction {
             cout.out("Для продолжения - нажмите Enter \n");
             cin.anyKeyEntry();
         }
-
-        @Override
-        public String info() {
-            return info;
-        }
     }
 
     /**
@@ -351,6 +337,7 @@ class ConsoleMenuAction {
             return false;
         }
     }
+
     /**
      * Метод рисует основное меню программы
      */

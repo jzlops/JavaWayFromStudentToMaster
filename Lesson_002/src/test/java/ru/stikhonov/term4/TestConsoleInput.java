@@ -24,7 +24,7 @@ public class TestConsoleInput {
     public void dateEntryCorrect() throws Exception {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss");
         ConsoleInput cInput = new ConsoleInput();
-        Assert.assertEquals(cInput.dateEntry("2222.22.22 22:22:22"), simpleDateFormat.parse("2222.22.22 22:22:22"));
+        Assert.assertEquals(cInput.dateParse("2222.22.22 22:22:22"), simpleDateFormat.parse("2222.22.22 22:22:22"));
     }
 
     /**
@@ -35,7 +35,7 @@ public class TestConsoleInput {
     @Test
     public void dateEntryIncorrect() throws Exception {
         ConsoleInput cInput = new ConsoleInput();
-        Assert.assertNull(cInput.dateEntry("Fake"));
+        Assert.assertNull(cInput.dateParse("Fake"));
     }
 
     /**
@@ -46,7 +46,7 @@ public class TestConsoleInput {
     @Test
     public void intEntryCorrect() throws Exception {
         ConsoleInput cInput = new ConsoleInput();
-        Assert.assertEquals(cInput.intEntry("3"), 3);
+        Assert.assertEquals(cInput.intParse("3"), 3);
     }
 
     /**
@@ -57,7 +57,7 @@ public class TestConsoleInput {
     @Test
     public void intEntryIncorrect() throws Exception {
         ConsoleInput cInput = new ConsoleInput();
-        Assert.assertEquals(cInput.intEntry("Vasya"), -1);
+        Assert.assertEquals(cInput.intParse("Vasya"), -1);
     }
 
     /**
@@ -68,6 +68,6 @@ public class TestConsoleInput {
     @Test
     public void anyKeyEntry() throws Exception {
         ConsoleInput cInput = new ConsoleInput();
-        Assert.assertTrue(cInput.anyKeyEntry("\n"));
+        Assert.assertTrue(cInput.anyKeyParse("\n"));
     }
 }
