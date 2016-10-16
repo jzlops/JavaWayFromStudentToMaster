@@ -12,6 +12,8 @@ import java.util.Scanner;
  * @author Sergey Tikhonov
  */
 class ConsoleInput implements Input {
+    private Scanner scanner = new Scanner(System.in);
+
     /**
      * Метод для ввода даты c консоли
      *
@@ -19,8 +21,7 @@ class ConsoleInput implements Input {
      */
     @Override
     public Date dateEntry() {
-        Scanner scanner = new Scanner(System.in);
-        return this.dateParse(scanner.nextLine());
+        return this.dateParse(this.scanner.nextLine());
     }
 
     /**
@@ -30,8 +31,8 @@ class ConsoleInput implements Input {
      */
     @Override
     public int intEntry() {
-        Scanner scanner = new Scanner(System.in);
-        return this.intParse(scanner.nextLine());
+
+        return this.intParse(this.scanner.nextLine());
     }
 
     /**
@@ -41,8 +42,7 @@ class ConsoleInput implements Input {
      */
     @Override
     public String stringEntry() {
-        Scanner scanner = new Scanner(System.in);
-        return this.stringParse(scanner.nextLine());
+        return this.stringParse(this.scanner.nextLine());
     }
 
     /**
@@ -50,8 +50,7 @@ class ConsoleInput implements Input {
      */
     @Override
     public boolean anyKeyEntry() {
-        Scanner scanner = new Scanner(System.in);
-        return this.anyKeyParse(scanner.nextLine());
+        return this.anyKeyParse(this.scanner.nextLine());
     }
 
     /**
@@ -61,12 +60,12 @@ class ConsoleInput implements Input {
      * @return если дата введена корректно, возрващает обхект типа Date, иначе null
      */
 
-     Date dateParse(String s) {
+    Date dateParse(String s) {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss");
         try {
             return simpleDateFormat.parse(s);
         } catch (ParseException e) {
-        //TODO можно ввести логирование, вывод предупреждающей информации в консоль не делал, класс предназначен исключительно для возвращения требуемого значения
+            //TODO можно ввести логирование, вывод предупреждающей информации в консоль не делал, класс предназначен исключительно для возвращения требуемого значения
             return null;
         }
     }
@@ -77,7 +76,7 @@ class ConsoleInput implements Input {
      * @param s строковый параметр для возможных дейстивй со строкоый и вывод ее в качестве значения return
      * @return возвращает строковое значение
      */
-     String stringParse(String s) {
+    String stringParse(String s) {
 
         return s;
     }
@@ -88,11 +87,11 @@ class ConsoleInput implements Input {
      * @param s строковый параметр для парсинга строки в числовое значение меню
      * @return возвращает числовое значение типа int, если данные введены корректно, иначе (-1)
      */
-     int intParse(String s) {
+    int intParse(String s) {
         try {
             return Integer.parseInt(s);
         } catch (NumberFormatException e) {
-        //TODO можно ввести логирование, вывод предупреждающей информации в консоль не делал, класс предназначен исключительно для возвращения требуемого значения
+            //TODO можно ввести логирование, вывод предупреждающей информации в консоль не делал, класс предназначен исключительно для возвращения требуемого значения
             return -1;
         }
     }
@@ -102,11 +101,12 @@ class ConsoleInput implements Input {
      *
      * @param s строковый параметр содержащий символ перевода строки
      */
-     boolean anyKeyParse(String s) {
+    boolean anyKeyParse(String s) {
         do {
 
         } while (s == "/n");
         return true;
     }
+
 }
 
