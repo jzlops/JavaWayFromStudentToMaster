@@ -108,5 +108,12 @@ class ConsoleInput implements Input {
         return true;
     }
 
+    /**
+     * Метод закрывает объект Scanner связанный с потоком System.in (сам поток тоже закрывается)
+     *
+    */
+    void closeInput() {
+           this.scanner.close();
+    }
 }
 

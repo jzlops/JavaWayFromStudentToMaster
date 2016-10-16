@@ -12,6 +12,7 @@ public class StartUI {
         Output cout = new ConsoleOutput();
         ConsoleMainMenu consoleMainMenu = new ConsoleMainMenu(tracker, cin, cout);
         consoleMainMenu.start();
+        ((ConsoleInput) cin).closeInput();
     }
 }
 
