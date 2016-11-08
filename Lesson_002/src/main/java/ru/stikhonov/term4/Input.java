@@ -10,7 +10,7 @@ import java.util.Date;
  */
 interface Input {
     /**
-     * Метод должен возвратить значение типа Date при вводе данных
+     * Метод должен   возвратить значение типа Date при вводе данных
      *
      * @return возвращает объект типа Date
      * @throws ParseException
