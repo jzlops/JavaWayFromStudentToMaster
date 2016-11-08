@@ -12,9 +12,9 @@ public class Start {
      */
     public static void main(String[] args) {
         ChessBoard chessBoard = new ChessBoard();
-        chessBoard.init(64);
+        chessBoard.init(8);
         Game game = new Game();
-        if (game.move(chessBoard.checkerSquare[0], chessBoard.checkerSquare[1], chessBoard)) {
+        if (game.move(chessBoard.checkerSquare[0][0], chessBoard.checkerSquare[1][1], chessBoard)) {
             // ход удался
         } else {
             // ход не удался
