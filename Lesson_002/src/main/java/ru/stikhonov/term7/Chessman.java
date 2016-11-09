@@ -3,28 +3,29 @@ package ru.stikhonov.term7;
 /**
  * @author Sergey Tikhonov
  */
-class Chessman {
-    private boolean isLive = true;
-    final private boolean color;
-    final private String type;
+class ChessMan extends Piece {
+    final private PieceColor pieceColor;
+    final private PieceType type;
 
     /**
      * В конструкторе инициализируем шахматную фигуру
-     * @param isAlive жива ли фигура или "съедена" соперником
-     * @param color цвет фигшуры
-     * @param type тип "Queen", "King" и т.д.
+     *
+     * @param pieceColor цвет фигшуры
+     * @param type       тип фигуры
      */
-    Chessman(boolean isAlive, boolean color, String type) {
-        this.isLive = isAlive;
-        this.color = color;
+    ChessMan(PieceColor pieceColor, PieceType type) {
+        this.pieceColor = pieceColor;
         this.type = type;
     }
 
-    public boolean getLive() {
-        return isLive;
+    @Override
+    public PieceColor getPieceColor() {
+        return this.pieceColor;
     }
 
-    public void setLive(boolean live) {
-        isLive = live;
+    @Override
+    public PieceType getType() {
+        return this.type;
     }
+
 }

@@ -1,18 +1,110 @@
 package ru.stikhonov.term7;
 
+
+
 /**
  * @author Sergey Tikhonov
  */
 class Game {
+    private ChessCells begin, end;
+    private ChessBoard chessBoard;
+
+    Game(ChessBoard chessBoard) {
+        this.chessBoard = chessBoard;
+    }
+
     /**
-     * @param checkerSquareBegin объект - клетка, от куда мы хотим переместить фигурк
-     * @param checkerSquareEnd   объект - клетка, куда мы хотим переместить фигуру
-     * @param chessBoard         объект шахматная доска
+     * @param chessCellBegin от куда мы хотим переместить фигурк
+     * @param chessCellEnd   куда мы хотим переместить фигуру
      * @return true если удалось сделат ход
      */
-    public boolean move(CheckerSquare checkerSquareBegin, CheckerSquare checkerSquareEnd, ChessBoard chessBoard) {
-        // тут согласно типу фигуры определяем логику ее перемещения по клеткам шахматной доски
-        // Возможно использовать какие-либо приватные методы класса Game для реализации хода в зависимоти от типа фигуры
-        return true;
+    boolean move(String chessCellBegin, String chessCellEnd) {
+        try {
+            this.begin = ChessCells.valueOf(chessCellBegin);
+            this.end = ChessCells.valueOf(chessCellEnd);
+        } catch (IllegalArgumentException e) {
+            System.out.println("Неверные параметры хода ");
+            return false;
+        }
+        if (begin.getChessMan() == null) {
+            System.out.println("Начальная клетка - пустая, ход неверный ");
+            return false;
+        }
+
+        if (begin.getChessMan().getType().equals(PieceType.Pawn) & (begin.getChessMan().getPieceColor().equals(PieceColor.Black))) {
+            return goBlackPawn();
+        }
+        if (begin.getChessMan().getType().equals(PieceType.Pawn) & (begin.getChessMan().getPieceColor().equals(PieceColor.White))) {
+            return goWhitePawn();
+        }
+
+        // И так далее с остальными фигурами....
+
+        return false;
+    }
+
+    /**
+     * @return Двигает белую пешку, если удачно - возарвщает true
+     */
+    private boolean goWhitePawn() {
+        boolean result = false;
+        if (end.getChessMan() == null) {
+            if ((end.getX() == (begin.getX() + 1) & (end.getY() == begin.getY()))) {
+                result = true;
+            }
+            if ((end.getX() == (begin.getX() + 2)) & (begin.getX() == 2) & (end.getY() == begin.getY())) {
+                for (int i = 1; i <= chessBoard.getChessCellsLine().length ; i++) {
+                    //chessBoard.getChessCellsLine()[i].
+                }
+                result = true;
+            }
+        }
+
+        if (end.getChessMan() != null) {
+            if ((end.getY() == begin.getY() - 1) || (end.getY() == begin.getY() + 1)) {
+                if (end.getX() == begin.getX() + 1) {
+                    if (end.getChessMan().getPieceColor() != begin.getChessMan().getPieceColor()) {
+                        result = true;
+                    }
+                }
+            }
+        }
+        if (result) shift();
+        return result;
+
+    }
+
+    /**
+     * @return Двигает белую пешку, если удачно - возарвщает true
+     */
+    private boolean goBlackPawn() {
+        boolean result = false;
+        if (end.getChessMan() == null) {
+
+            if ((end.getX() == (begin.getX() - 1) & (end.getY() == begin.getY()))) {
+                result = true;
+            }
+            if ((end.getX() == (begin.getX() - 2)) & (begin.getX() == 7) & (end.getY() == begin.getY())) {
+                result = true;
+            }
+        }
+
+        if (end.getChessMan() != null) {
+            if ((end.getY() == begin.getY() + 1) || (end.getY() == begin.getY() - 1)) {
+                if (end.getX() == begin.getX() - 1) {
+                    if (end.getChessMan().getPieceColor() != begin.getChessMan().getPieceColor()) {
+                        result = true;
+                    }
+                }
+            }
+        }
+
+        if (result) shift();
+        return result;
+    }
+
+    private void shift() {
+        end.setChessMan(begin.getChessMan());
+        begin.setChessMan(null);
     }
 }
