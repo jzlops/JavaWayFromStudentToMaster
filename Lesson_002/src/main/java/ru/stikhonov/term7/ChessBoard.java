@@ -6,7 +6,6 @@ package ru.stikhonov.term7;
 class ChessBoard {
     private ChessCells[] chessCellsLine = ChessCells.values();
     private ChessCells[][] chessCellSquare;
-    private int dimension;
 
     /**
      * Метод инициализирует шахматную доску клетками ChessCells
@@ -14,8 +13,7 @@ class ChessBoard {
      * Так же метод распологает фигурры ChessMan в клетках
      */
     void init(int boardDimension) {
-        this.dimension = boardDimension;
-        this.chessCellSquare = new ChessCells[this.dimension + 1][this.dimension + 1];
+        this.chessCellSquare = new ChessCells[boardDimension + 1][boardDimension + 1];
         int cellsCounter = 0;
         CellColor cellColor = CellColor.Black;
         System.out.println();
@@ -27,6 +25,7 @@ class ChessBoard {
                 chessCellsLine[cellsCounter].setX(j);
                 chessCellsLine[cellsCounter].setCellColor(cellColor);
                 cellColor = cellColor == CellColor.Black ? CellColor.White : CellColor.Black;
+                chessCellSquare[j][i] = chessCellsLine[cellsCounter];
             }
             cellColor = cellColor == CellColor.Black ? CellColor.White : CellColor.Black;
         }
@@ -72,7 +71,7 @@ class ChessBoard {
     /**
      * @return получить набор клеток ChessCells
      */
-    ChessCells[][] getChessCellsLine() {
+    ChessCells[][] getChessCellsSquare() {
         return this.chessCellSquare;
     }
 }

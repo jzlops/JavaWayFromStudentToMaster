@@ -1,7 +1,6 @@
 package ru.stikhonov.term7;
 
 
-
 /**
  * @author Sergey Tikhonov
  */
@@ -53,10 +52,9 @@ class Game {
                 result = true;
             }
             if ((end.getX() == (begin.getX() + 2)) & (begin.getX() == 2) & (end.getY() == begin.getY())) {
-                for (int i = 1; i <= chessBoard.getChessCellsLine().length ; i++) {
-                    //chessBoard.getChessCellsLine()[i].
+                if (chessBoard.getChessCellsSquare()[begin.getX() + 1][begin.getY()].getChessMan() == null) {
+                    result = true;
                 }
-                result = true;
             }
         }
 
@@ -85,7 +83,9 @@ class Game {
                 result = true;
             }
             if ((end.getX() == (begin.getX() - 2)) & (begin.getX() == 7) & (end.getY() == begin.getY())) {
-                result = true;
+                if (chessBoard.getChessCellsSquare()[begin.getX() - 1][begin.getY()].getChessMan() == null) {
+                    result = true;
+                }
             }
         }
 
