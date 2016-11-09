@@ -15,9 +15,9 @@ public class GameTest {
         ChessBoard chessBoard = new ChessBoard();
         Game game = new Game(chessBoard);
         chessBoard.init(8);
-        Assert.assertTrue(game.move("c2", "c4"));
-        Assert.assertTrue(game.move("b7", "b5"));
-        Assert.assertTrue(game.move("c4", "b5"));
+        Assert.assertTrue(game.cellToCellUserAction("c2", "c4"));
+        Assert.assertTrue(game.cellToCellUserAction("b7", "b5"));
+        Assert.assertTrue(game.cellToCellUserAction("c4", "b5"));
     }
 
     /**
@@ -28,9 +28,9 @@ public class GameTest {
         ChessBoard chessBoard = new ChessBoard();
         Game game = new Game(chessBoard);
         chessBoard.init(8);
-        Assert.assertFalse(game.move("c2", "a4"));
-        Assert.assertFalse(game.move("b7", "b8"));
-        Assert.assertFalse(game.move("f2", "f1"));
+        Assert.assertFalse(game.cellToCellUserAction("c2", "a4"));
+        Assert.assertFalse(game.cellToCellUserAction("b7", "b8"));
+        Assert.assertFalse(game.cellToCellUserAction("f2", "f1"));
     }
 
     /**
@@ -41,9 +41,9 @@ public class GameTest {
         ChessBoard chessBoard = new ChessBoard();
         Game game = new Game(chessBoard);
         chessBoard.init(8);
-        Assert.assertFalse(game.move("cd2", "22a4"));
-        Assert.assertFalse(game.move("bf7", "b8"));
-        Assert.assertFalse(game.move("f23", "f1d"));
+        Assert.assertFalse(game.cellToCellUserAction("cd2", "22a4"));
+        Assert.assertFalse(game.cellToCellUserAction("bf7", "b8"));
+        Assert.assertFalse(game.cellToCellUserAction("f23", "f1d"));
     }
 
 

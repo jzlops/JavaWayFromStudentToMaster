@@ -5,7 +5,7 @@ package ru.stikhonov.term7;
  * @author Sergey Tikhonov
  */
 class Game {
-    private ChessCells begin, end;
+    private ChessCells startCell, endCell;
     private ChessBoard chessBoard;
 
     Game(ChessBoard chessBoard) {
@@ -13,26 +13,26 @@ class Game {
     }
 
     /**
-     * @param chessCellBegin от куда мы хотим переместить фигурк
-     * @param chessCellEnd   куда мы хотим переместить фигуру
+     * @param startCell от куда мы хотим переместить фигурк
+     * @param endCell   куда мы хотим переместить фигуру
      * @return true если удалось сделат ход
      */
-    boolean move(String chessCellBegin, String chessCellEnd) {
+    boolean cellToCellUserAction(String startCell, String endCell) {
         try {
-            this.begin = ChessCells.valueOf(chessCellBegin);
-            this.end = ChessCells.valueOf(chessCellEnd);
+            this.startCell = ChessCells.valueOf(startCell);
+            this.endCell = ChessCells.valueOf(endCell);
         } catch (IllegalArgumentException e) {
             return false;
         }
-        if (begin.getChessMan() == null) {
+        if (this.startCell.getChessMan() == null) {
             return false;
         }
 
-        if (begin.getChessMan().getType().equals(PieceType.PAWN) & (begin.getChessMan().getPieceColor().equals(PieceColor.BLACK))) {
-            return goBlackPawn();
+        if (this.startCell.getChessMan().getPieceType().equals(PieceType.PAWN) & (this.startCell.getChessMan().getPieceColor().equals(PieceColor.BLACK))) {
+            return this.new BlackPawnAction().shift();
         }
-        if (begin.getChessMan().getType().equals(PieceType.PAWN) & (begin.getChessMan().getPieceColor().equals(PieceColor.WHITE))) {
-            return goWhitePawn();
+        if (this.startCell.getChessMan().getPieceType().equals(PieceType.PAWN) & (this.startCell.getChessMan().getPieceColor().equals(PieceColor.WHITE))) {
+            return this.new WhitePawnAction().shift();
         }
 
         // И так далее с остальными фигурами....
@@ -40,72 +40,78 @@ class Game {
         return false;
     }
 
-    /**
-     * @return Двигает белую пешку, если удачно - возарвщает true
-     */
-    private boolean goWhitePawn() {
-        boolean result = false;
-        if (end.getChessMan() == null) {
-            if ((end.getX() == (begin.getX() + 1) & (end.getY() == begin.getY()))) {
-                result = true;
-            }
-            if ((end.getX() == (begin.getX() + 2)) & (begin.getX() == 2) & (end.getY() == begin.getY())) {
-                if (chessBoard.getChessCellsSquare()[begin.getX() + 1][begin.getY()].getChessMan() == null) {
+
+    class WhitePawnAction extends PieceShift {
+        /**
+         * @return Двигает белую пешку, если удачно - возвращаем true
+         */
+        @Override
+        boolean shift() {
+            boolean result = false;
+            if (endCell.getChessMan() == null) {
+                if ((endCell.getX() == (startCell.getX() + 1) & (endCell.getY() == startCell.getY()))) {
                     result = true;
                 }
-            }
-        }
-
-        if (end.getChessMan() != null) {
-            if ((end.getY() == begin.getY() - 1) || (end.getY() == begin.getY() + 1)) {
-                if (end.getX() == begin.getX() + 1) {
-                    if (end.getChessMan().getPieceColor() != begin.getChessMan().getPieceColor()) {
+                if ((endCell.getX() == (startCell.getX() + 2)) & (startCell.getX() == 2) & (endCell.getY() == startCell.getY())) {
+                    if (chessBoard.getChessCellsSquare()[startCell.getX() + 1][startCell.getY()].getChessMan() == null) {
                         result = true;
                     }
                 }
             }
-        }
-        if (result) finalShift();
-        return result;
 
-    }
-
-    /**
-     * @return Двигает белую пешку, если удачно - возарвщает true
-     */
-    private boolean goBlackPawn() {
-        boolean result = false;
-        if (end.getChessMan() == null) {
-
-            if ((end.getX() == (begin.getX() - 1) & (end.getY() == begin.getY()))) {
-                result = true;
-            }
-            if ((end.getX() == (begin.getX() - 2)) & (begin.getX() == 7) & (end.getY() == begin.getY())) {
-                if (chessBoard.getChessCellsSquare()[begin.getX() - 1][begin.getY()].getChessMan() == null) {
-                    result = true;
+            if (endCell.getChessMan() != null) {
+                if ((endCell.getY() == startCell.getY() - 1) || (endCell.getY() == startCell.getY() + 1)) {
+                    if (endCell.getX() == startCell.getX() + 1) {
+                        if (endCell.getChessMan().getPieceColor() != startCell.getChessMan().getPieceColor()) {
+                            result = true;
+                        }
+                    }
                 }
             }
+            if (result) {
+                endCell.setChessMan(startCell.getChessMan());
+                startCell.setChessMan(null);
+            }
+            return result;
         }
+    }
 
-        if (end.getChessMan() != null) {
-            if ((end.getY() == begin.getY() + 1) || (end.getY() == begin.getY() - 1)) {
-                if (end.getX() == begin.getX() - 1) {
-                    if (end.getChessMan().getPieceColor() != begin.getChessMan().getPieceColor()) {
+    class BlackPawnAction extends PieceShift {
+        /**
+         * @return Двигает черную пешку, если удачно - возвращаем true
+         */
+        @Override
+        boolean shift() {
+            boolean result = false;
+            if (endCell.getChessMan() == null) {
+
+                if ((endCell.getX() == (startCell.getX() - 1) & (endCell.getY() == startCell.getY()))) {
+                    result = true;
+                }
+                if ((endCell.getX() == (startCell.getX() - 2)) & (startCell.getX() == 7) & (endCell.getY() == startCell.getY())) {
+                    if (chessBoard.getChessCellsSquare()[startCell.getX() - 1][startCell.getY()].getChessMan() == null) {
                         result = true;
                     }
                 }
             }
+
+            if (endCell.getChessMan() != null) {
+                if ((endCell.getY() == startCell.getY() + 1) || (endCell.getY() == startCell.getY() - 1)) {
+                    if (endCell.getX() == startCell.getX() - 1) {
+                        if (endCell.getChessMan().getPieceColor() != startCell.getChessMan().getPieceColor()) {
+                            result = true;
+                        }
+                    }
+                }
+            }
+
+            if (result) {
+                endCell.setChessMan(startCell.getChessMan());
+                startCell.setChessMan(null);
+            }
+            return result;
         }
-
-        if (result) finalShift();
-        return result;
     }
 
-    /**
-     * Перемещение фигуры с начального положения в конечное
-     */
-    private void finalShift() {
-        end.setChessMan(begin.getChessMan());
-        begin.setChessMan(null);
-    }
+
 }

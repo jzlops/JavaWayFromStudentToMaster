@@ -50,7 +50,7 @@ enum ChessCells {
     }
 
     /**
-     * @return возвращает объект шахматной фигуры chessman расположенной в клетке
+     * @return возвращает объект шахматной фигуры ChessMan расположенной в клетке
      */
     public ChessMan getChessMan() {
         return chessMan;

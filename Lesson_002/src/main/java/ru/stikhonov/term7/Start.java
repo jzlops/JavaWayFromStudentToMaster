@@ -15,5 +15,6 @@ public class Start {
         ChessBoard chessBoard = new ChessBoard();
         chessBoard.init(Start.BOARD_DIMENSION);
         Game game = new Game(chessBoard);
+        game.cellToCellUserAction("e2","e4");
     }
 }

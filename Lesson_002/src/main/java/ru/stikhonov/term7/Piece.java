@@ -13,6 +13,6 @@ abstract class Piece {
     /**
      * @return возвращает текущий тип фигуры
      */
-    abstract public PieceType getType();
+    abstract public PieceType getPieceType();
 
 }

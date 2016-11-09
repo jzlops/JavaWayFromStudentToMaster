@@ -5,17 +5,17 @@ package ru.stikhonov.term7;
  */
 class ChessMan extends Piece {
     final private PieceColor pieceColor;
-    final private PieceType type;
+    final private PieceType pieceType;
 
     /**
      * В конструкторе инициализируем шахматную фигуру
      *
      * @param pieceColor цвет фигшуры
-     * @param type       тип фигуры
+     * @param pieceType       тип фигуры
      */
-    ChessMan(PieceColor pieceColor, PieceType type) {
+    ChessMan(PieceColor pieceColor, PieceType pieceType) {
         this.pieceColor = pieceColor;
-        this.type = type;
+        this.pieceType = pieceType;
     }
 
     @Override
@@ -24,8 +24,8 @@ class ChessMan extends Piece {
     }
 
     @Override
-    public PieceType getType() {
-        return this.type;
+    public PieceType getPieceType() {
+        return this.pieceType;
     }
 
 }
