@@ -1,8 +1,10 @@
 package ru.stikhonov.term7;
 
-/** Перечисление характеризует тип игровой фигуры
+/**
+ * Перечисление характеризует тип игровой фигуры
+ *
  * @author Sergey Tikhonov
  */
- enum PieceType {
-    Queen, King, Jumbo, Pawn, Rook, Knight
+enum PieceType {
+    QUEEN, KING, JUMBO, PAWN, ROOK, KNIGHT
 }

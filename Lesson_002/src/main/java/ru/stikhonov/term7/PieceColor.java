@@ -1,8 +1,10 @@
 package ru.stikhonov.term7;
 
-/** Перечисление характеризует цвет игровой фигуры
+/**
+ * Перечисление характеризует цвет игровой фигуры
+ *
  * @author Sergey Tikhonov
  */
- enum PieceColor {
-    Black, White
+enum PieceColor {
+    BLACK, WHITE
 }

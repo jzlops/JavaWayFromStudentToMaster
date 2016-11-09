@@ -7,5 +7,5 @@ enum CellColor {
     /**
      * Перечисление служит для обозначения цвета клеток доски
      */
-    Black, White
+    BLACK, WHITE
 }

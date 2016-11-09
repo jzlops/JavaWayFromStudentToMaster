@@ -28,10 +28,10 @@ class Game {
             return false;
         }
 
-        if (begin.getChessMan().getType().equals(PieceType.Pawn) & (begin.getChessMan().getPieceColor().equals(PieceColor.Black))) {
+        if (begin.getChessMan().getType().equals(PieceType.PAWN) & (begin.getChessMan().getPieceColor().equals(PieceColor.BLACK))) {
             return goBlackPawn();
         }
-        if (begin.getChessMan().getType().equals(PieceType.Pawn) & (begin.getChessMan().getPieceColor().equals(PieceColor.White))) {
+        if (begin.getChessMan().getType().equals(PieceType.PAWN) & (begin.getChessMan().getPieceColor().equals(PieceColor.WHITE))) {
             return goWhitePawn();
         }
 

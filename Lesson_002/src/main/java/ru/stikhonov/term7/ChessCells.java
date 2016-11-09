@@ -2,6 +2,7 @@ package ru.stikhonov.term7;
 
 /**
  * Перечисление создает 64 клетки для шахматной доски со своими характеристиками (цвет, координаты, имя, ссылка на фигуру chessMan)
+ *
  * @author Sergey Tikhonov
  */
 enum ChessCells {

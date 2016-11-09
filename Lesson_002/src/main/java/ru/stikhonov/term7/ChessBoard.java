@@ -15,7 +15,7 @@ class ChessBoard {
     void init(int boardDimension) {
         this.chessCellSquare = new ChessCells[boardDimension + 1][boardDimension + 1];
         int cellsCounter = 0;
-        CellColor cellColor = CellColor.Black;
+        CellColor cellColor = CellColor.BLACK;
         System.out.println();
         for (int i = 1; i <= boardDimension; i++) {
             System.out.println();
@@ -24,48 +24,48 @@ class ChessBoard {
                 chessCellsLine[cellsCounter].setY(i);
                 chessCellsLine[cellsCounter].setX(j);
                 chessCellsLine[cellsCounter].setCellColor(cellColor);
-                cellColor = cellColor == CellColor.Black ? CellColor.White : CellColor.Black;
+                cellColor = cellColor == CellColor.BLACK ? CellColor.WHITE : CellColor.BLACK;
                 chessCellSquare[j][i] = chessCellsLine[cellsCounter];
             }
-            cellColor = cellColor == CellColor.Black ? CellColor.White : CellColor.Black;
+            cellColor = cellColor == CellColor.BLACK ? CellColor.WHITE : CellColor.BLACK;
         }
         cellsFill();
     }
 
     private void cellsFill() {
-        ChessCells.a1.setChessMan(new ChessMan(PieceColor.White, PieceType.Rook));
-        ChessCells.a2.setChessMan(new ChessMan(PieceColor.White, PieceType.Pawn));
-        ChessCells.b1.setChessMan(new ChessMan(PieceColor.White, PieceType.Knight));
-        ChessCells.b2.setChessMan(new ChessMan(PieceColor.White, PieceType.Pawn));
-        ChessCells.c1.setChessMan(new ChessMan(PieceColor.White, PieceType.Jumbo));
-        ChessCells.c2.setChessMan(new ChessMan(PieceColor.White, PieceType.Pawn));
-        ChessCells.d1.setChessMan(new ChessMan(PieceColor.White, PieceType.King));
-        ChessCells.d2.setChessMan(new ChessMan(PieceColor.White, PieceType.Pawn));
-        ChessCells.e1.setChessMan(new ChessMan(PieceColor.White, PieceType.Queen));
-        ChessCells.e2.setChessMan(new ChessMan(PieceColor.White, PieceType.Pawn));
-        ChessCells.f1.setChessMan(new ChessMan(PieceColor.White, PieceType.Jumbo));
-        ChessCells.f2.setChessMan(new ChessMan(PieceColor.White, PieceType.Pawn));
-        ChessCells.g1.setChessMan(new ChessMan(PieceColor.White, PieceType.Knight));
-        ChessCells.g2.setChessMan(new ChessMan(PieceColor.White, PieceType.Pawn));
-        ChessCells.h1.setChessMan(new ChessMan(PieceColor.White, PieceType.Rook));
-        ChessCells.h2.setChessMan(new ChessMan(PieceColor.White, PieceType.Pawn));
+        ChessCells.a1.setChessMan(new ChessMan(PieceColor.WHITE, PieceType.ROOK));
+        ChessCells.a2.setChessMan(new ChessMan(PieceColor.WHITE, PieceType.PAWN));
+        ChessCells.b1.setChessMan(new ChessMan(PieceColor.WHITE, PieceType.KNIGHT));
+        ChessCells.b2.setChessMan(new ChessMan(PieceColor.WHITE, PieceType.PAWN));
+        ChessCells.c1.setChessMan(new ChessMan(PieceColor.WHITE, PieceType.JUMBO));
+        ChessCells.c2.setChessMan(new ChessMan(PieceColor.WHITE, PieceType.PAWN));
+        ChessCells.d1.setChessMan(new ChessMan(PieceColor.WHITE, PieceType.KING));
+        ChessCells.d2.setChessMan(new ChessMan(PieceColor.WHITE, PieceType.PAWN));
+        ChessCells.e1.setChessMan(new ChessMan(PieceColor.WHITE, PieceType.QUEEN));
+        ChessCells.e2.setChessMan(new ChessMan(PieceColor.WHITE, PieceType.PAWN));
+        ChessCells.f1.setChessMan(new ChessMan(PieceColor.WHITE, PieceType.JUMBO));
+        ChessCells.f2.setChessMan(new ChessMan(PieceColor.WHITE, PieceType.PAWN));
+        ChessCells.g1.setChessMan(new ChessMan(PieceColor.WHITE, PieceType.KNIGHT));
+        ChessCells.g2.setChessMan(new ChessMan(PieceColor.WHITE, PieceType.PAWN));
+        ChessCells.h1.setChessMan(new ChessMan(PieceColor.WHITE, PieceType.ROOK));
+        ChessCells.h2.setChessMan(new ChessMan(PieceColor.WHITE, PieceType.PAWN));
 
-        ChessCells.a8.setChessMan(new ChessMan(PieceColor.Black, PieceType.Rook));
-        ChessCells.a7.setChessMan(new ChessMan(PieceColor.Black, PieceType.Pawn));
-        ChessCells.b8.setChessMan(new ChessMan(PieceColor.Black, PieceType.Knight));
-        ChessCells.b7.setChessMan(new ChessMan(PieceColor.Black, PieceType.Pawn));
-        ChessCells.c8.setChessMan(new ChessMan(PieceColor.Black, PieceType.Jumbo));
-        ChessCells.c7.setChessMan(new ChessMan(PieceColor.Black, PieceType.Pawn));
-        ChessCells.d8.setChessMan(new ChessMan(PieceColor.Black, PieceType.King));
-        ChessCells.d7.setChessMan(new ChessMan(PieceColor.Black, PieceType.Pawn));
-        ChessCells.e8.setChessMan(new ChessMan(PieceColor.Black, PieceType.Queen));
-        ChessCells.e7.setChessMan(new ChessMan(PieceColor.Black, PieceType.Pawn));
-        ChessCells.f8.setChessMan(new ChessMan(PieceColor.Black, PieceType.Jumbo));
-        ChessCells.f7.setChessMan(new ChessMan(PieceColor.Black, PieceType.Pawn));
-        ChessCells.g8.setChessMan(new ChessMan(PieceColor.Black, PieceType.Knight));
-        ChessCells.g7.setChessMan(new ChessMan(PieceColor.Black, PieceType.Pawn));
-        ChessCells.h8.setChessMan(new ChessMan(PieceColor.Black, PieceType.Rook));
-        ChessCells.h7.setChessMan(new ChessMan(PieceColor.Black, PieceType.Pawn));
+        ChessCells.a8.setChessMan(new ChessMan(PieceColor.BLACK, PieceType.ROOK));
+        ChessCells.a7.setChessMan(new ChessMan(PieceColor.BLACK, PieceType.PAWN));
+        ChessCells.b8.setChessMan(new ChessMan(PieceColor.BLACK, PieceType.KNIGHT));
+        ChessCells.b7.setChessMan(new ChessMan(PieceColor.BLACK, PieceType.PAWN));
+        ChessCells.c8.setChessMan(new ChessMan(PieceColor.BLACK, PieceType.JUMBO));
+        ChessCells.c7.setChessMan(new ChessMan(PieceColor.BLACK, PieceType.PAWN));
+        ChessCells.d8.setChessMan(new ChessMan(PieceColor.BLACK, PieceType.KING));
+        ChessCells.d7.setChessMan(new ChessMan(PieceColor.BLACK, PieceType.PAWN));
+        ChessCells.e8.setChessMan(new ChessMan(PieceColor.BLACK, PieceType.QUEEN));
+        ChessCells.e7.setChessMan(new ChessMan(PieceColor.BLACK, PieceType.PAWN));
+        ChessCells.f8.setChessMan(new ChessMan(PieceColor.BLACK, PieceType.JUMBO));
+        ChessCells.f7.setChessMan(new ChessMan(PieceColor.BLACK, PieceType.PAWN));
+        ChessCells.g8.setChessMan(new ChessMan(PieceColor.BLACK, PieceType.KNIGHT));
+        ChessCells.g7.setChessMan(new ChessMan(PieceColor.BLACK, PieceType.PAWN));
+        ChessCells.h8.setChessMan(new ChessMan(PieceColor.BLACK, PieceType.ROOK));
+        ChessCells.h7.setChessMan(new ChessMan(PieceColor.BLACK, PieceType.PAWN));
     }
 
     /**
