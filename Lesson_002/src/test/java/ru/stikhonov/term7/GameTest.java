@@ -3,12 +3,13 @@ package ru.stikhonov.term7;
 import org.junit.Assert;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
-
 /**
  * @author Sergey Tikhonov
  */
 public class GameTest {
+    /**
+     * Тестирование корректного движения пешек
+     */
     @Test
     public void correctMovePawns() throws Exception {
         ChessBoard chessBoard = new ChessBoard();
@@ -18,6 +19,10 @@ public class GameTest {
         Assert.assertTrue(game.move("b7","b5"));
         Assert.assertTrue(game.move("c4","b5"));
     }
+
+    /**
+     * Тестирование некорректного движения пешек
+     */
     @Test
     public void incorrectMovePawns() throws Exception {
         ChessBoard chessBoard = new ChessBoard();
@@ -28,6 +33,9 @@ public class GameTest {
         Assert.assertFalse(game.move("f2","f1"));
     }
 
+    /**
+     * * Тестирование корректного ввода данных
+     */
     @Test
     public void incorrectEntry() throws Exception {
         ChessBoard chessBoard = new ChessBoard();
