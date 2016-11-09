@@ -15,9 +15,12 @@ public class GameTest {
         ChessBoard chessBoard = new ChessBoard();
         Game game = new Game(chessBoard);
         chessBoard.init(8);
-        Assert.assertTrue(game.cellToCellUserAction("c2", "c4"));
-        Assert.assertTrue(game.cellToCellUserAction("b7", "b5"));
-        Assert.assertTrue(game.cellToCellUserAction("c4", "b5"));
+        Assert.assertTrue(game.cellToCellUserAction("e2", "e4"));
+        Assert.assertTrue(game.cellToCellUserAction("c7", "c6"));
+        Assert.assertTrue(game.cellToCellUserAction("b2", "b4"));
+        Assert.assertTrue(game.cellToCellUserAction("c6", "c5"));
+        Assert.assertTrue(game.cellToCellUserAction("b4", "c5"));
+        Assert.assertTrue(game.cellToCellUserAction("e7", "e5"));
     }
 
     /**
@@ -31,6 +34,7 @@ public class GameTest {
         Assert.assertFalse(game.cellToCellUserAction("c2", "a4"));
         Assert.assertFalse(game.cellToCellUserAction("b7", "b8"));
         Assert.assertFalse(game.cellToCellUserAction("f2", "f1"));
+
     }
 
     /**
@@ -44,6 +48,18 @@ public class GameTest {
         Assert.assertFalse(game.cellToCellUserAction("cd2", "22a4"));
         Assert.assertFalse(game.cellToCellUserAction("bf7", "b8"));
         Assert.assertFalse(game.cellToCellUserAction("f23", "f1d"));
+    }
+    @Test
+    public void incorrectLeapPawns() throws Exception {
+        ChessBoard chessBoard = new ChessBoard();
+        Game game = new Game(chessBoard);
+        chessBoard.init(8);
+        Assert.assertTrue(game.cellToCellUserAction("h2", "h4"));
+        Assert.assertTrue(game.cellToCellUserAction("h4", "h5"));
+        Assert.assertFalse(game.cellToCellUserAction("h7", "h5"));
+        Assert.assertTrue(game.cellToCellUserAction("h5", "h6"));
+        Assert.assertFalse(game.cellToCellUserAction("h7", "h6"));
+        Assert.assertFalse(game.cellToCellUserAction("h7", "h5"));
     }
 
 
