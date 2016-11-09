@@ -22,11 +22,9 @@ class Game {
             this.begin = ChessCells.valueOf(chessCellBegin);
             this.end = ChessCells.valueOf(chessCellEnd);
         } catch (IllegalArgumentException e) {
-            System.out.println("Неверные параметры хода ");
             return false;
         }
         if (begin.getChessMan() == null) {
-            System.out.println("Начальная клетка - пустая, ход неверный ");
             return false;
         }
 
