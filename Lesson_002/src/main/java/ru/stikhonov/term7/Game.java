@@ -67,7 +67,7 @@ class Game {
                 }
             }
         }
-        if (result) shift();
+        if (result) finalShift();
         return result;
 
     }
@@ -99,11 +99,14 @@ class Game {
             }
         }
 
-        if (result) shift();
+        if (result) finalShift();
         return result;
     }
 
-    private void shift() {
+    /**
+     * Перемещение фигуры с начального положения в конечное
+     */
+    private void finalShift() {
         end.setChessMan(begin.getChessMan());
         begin.setChessMan(null);
     }

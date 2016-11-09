@@ -10,7 +10,6 @@ public class Start {
      * Создаем шахматную доску
      * Инициализируем ее клетками и фигурами
      * Создаем правила игры (или саму игру)
-     * Пробуем двигаем фигурки согласно логике игры
      */
     public static void main(String[] args) {
         ChessBoard chessBoard = new ChessBoard();
