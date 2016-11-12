@@ -12,7 +12,7 @@ class ChessBoard {
      * Клетки инифиализируется координатами и цветом
      * Так же метод распологает фигурры ChessMan в клетках
      */
-    void init(int boardDimension) {
+    void initDemension(int boardDimension) {
         this.chessCellSquare = new ChessCells[boardDimension + 1][boardDimension + 1];
         int cellsCounter = 0;
         CellColor cellColor = CellColor.BLACK;
@@ -32,6 +32,9 @@ class ChessBoard {
         cellsFill();
     }
 
+    /**
+     * Мето "заполнения" доски фигурками
+     */
     private void cellsFill() {
         ChessCells.a1.setChessMan(new ChessMan(PieceColor.WHITE, PieceType.ROOK));
         ChessCells.a2.setChessMan(new ChessMan(PieceColor.WHITE, PieceType.PAWN));

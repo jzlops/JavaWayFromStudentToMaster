@@ -28,7 +28,7 @@ class ConsoleMenuAction {
     }
 
     /**
-     * Метод вызывает основной метод execute объекта, реализующего интерфейс MenuAction
+     * Метод вызывает основной метод menuActionExecute объекта, реализующего интерфейс MenuAction
      *
      * @param menuElement номер элемента меню
      */
@@ -50,7 +50,7 @@ class ConsoleMenuAction {
 
 
     /**
-     * Внутренний класс реализующий интерфейс MenuAction (расширяющий абстрактный класс BaseAction) и имеющий один метод - execute отвечающий за добавленрие елемента в трекер
+     * Внутренний класс реализующий интерфейс MenuAction (расширяющий абстрактный класс BaseAction) и имеющий один метод - menuActionExecute отвечающий за добавленрие елемента в трекер
      */
     private class AddMenuAction extends BaseAction {
         AddMenuAction(String name) {
@@ -92,7 +92,7 @@ class ConsoleMenuAction {
     }
 
     /**
-     * Внутренний класс реализующий интерфейс MenuAction (расширяющий абстрактный класс BaseAction) и имеющий один метод - execute отвечающий за редактирование елемента в трекере
+     * Внутренний класс реализующий интерфейс MenuAction (расширяющий абстрактный класс BaseAction) и имеющий один метод - menuActionExecute отвечающий за редактирование елемента в трекере
      */
     private class EditMenuAction extends BaseAction {
         EditMenuAction(String actionName) {
@@ -143,7 +143,7 @@ class ConsoleMenuAction {
     }
 
     /**
-     * Внутренний класс реализующий интерфейс MenuAction (расширяющий абстрактный класс BaseAction) и имеющий один метод - execute отвечающий за удаление елемента в трекере
+     * Внутренний класс реализующий интерфейс MenuAction (расширяющий абстрактный класс BaseAction) и имеющий один метод - menuActionExecute отвечающий за удаление елемента в трекере
      */
     private class DeleteMenuAction extends BaseAction {
         DeleteMenuAction(String actionName) {
@@ -178,7 +178,7 @@ class ConsoleMenuAction {
     }
 
     /**
-     * Внутренний класс реализующий интерфейс MenuAction (расширяющий абстрактный класс BaseAction) и имеющий один метод - execute отвечающий за отображение всех элементов в трекере
+     * Внутренний класс реализующий интерфейс MenuAction (расширяющий абстрактный класс BaseAction) и имеющий один метод - menuActionExecute отвечающий за отображение всех элементов в трекере
      */
     private class ShowAllMenuAction extends BaseAction {
         ShowAllMenuAction(String actionName) {
@@ -213,7 +213,7 @@ class ConsoleMenuAction {
     }
 
     /**
-     * Внутренний класс реализующий интерфейс MenuAction (расширяющий абстрактный класс BaseAction) и имеющий один метод - execute отвечающий за отображение элемента по его ID
+     * Внутренний класс реализующий интерфейс MenuAction (расширяющий абстрактный класс BaseAction) и имеющий один метод - menuActionExecute отвечающий за отображение элемента по его ID
      */
     private class ShowByIDMenuAction extends BaseAction {
         ShowByIDMenuAction(String actionName) {
@@ -260,7 +260,7 @@ class ConsoleMenuAction {
     }
 
     /**
-     * Внутренний класс реализующий интерфейс MenuAction (расширяющий абстрактный класс BaseAction) и имеющий один метод - execute отвечающий за отображение элементов по фильтру
+     * Внутренний класс реализующий интерфейс MenuAction (расширяющий абстрактный класс BaseAction) и имеющий один метод - menuActionExecute отвечающий за отображение элементов по фильтру
      */
     private class ShowByFilterMenuAction extends BaseAction {
         ShowByFilterMenuAction(String actionName) {

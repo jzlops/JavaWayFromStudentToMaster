@@ -17,7 +17,7 @@ enum ChessCells {
     h1, h2, h3, h4, h5, h6, h7, h8;
 
     private int x, y;
-    private ChessMan chessMan;
+    private Piece piece;
     private CellColor cellColor;
 
 
@@ -52,15 +52,15 @@ enum ChessCells {
     /**
      * @return возвращает объект шахматной фигуры ChessMan расположенной в клетке
      */
-    public ChessMan getChessMan() {
-        return chessMan;
+    public Piece getChessMan() {
+        return this.piece;
     }
 
     /**
-     * @param chessMan присваивание клетке шахматной фигуры ChessMan
+     * @param piece присваивание клетке абстрактной фигуры Piece
      */
-    public void setChessMan(ChessMan chessMan) {
-        this.chessMan = chessMan;
+    public void setChessMan(Piece piece) {
+        this.piece = piece;
     }
 
     /**
