@@ -36,13 +36,13 @@ class ChessGame implements Executable {
 
     boolean UserCellToCellShift(String startCell, String endCell) {
         try {
-            if (ChessCells.valueOf(startCell).getChessMan() != null) {
-                return new ChessGameRules().pieceShift(ChessCells.valueOf(startCell), ChessCells.valueOf(endCell), this.chessBoard);
-            }
-        } catch (IllegalArgumentException e) {
+            return ChessCells.valueOf(startCell).getChessMan().move(ChessCells.valueOf(startCell), ChessCells.valueOf(endCell), this.chessBoard);
+        } catch (IllegalArgumentException ie) {
+            return false;
+        } catch (Exception e) {
             return false;
         }
-        return true;
     }
-
 }
+
+
