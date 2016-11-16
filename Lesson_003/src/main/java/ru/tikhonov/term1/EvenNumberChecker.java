@@ -14,8 +14,8 @@ class EvenNumberChecker implements StreamCheck {
     public boolean isNumber(InputStream in) {
         int i;
         boolean result = false;
-        Scanner scanner = new Scanner(in);
-        try {
+
+        try (Scanner scanner = new Scanner(in)) {
             if (scanner.hasNext()) {
                 i = scanner.nextInt();
                 result = (i % 2 == 0);
@@ -23,7 +23,6 @@ class EvenNumberChecker implements StreamCheck {
         } catch (Exception e) {
             return false;
         }
-        scanner.close();
         return result;
     }
 }
