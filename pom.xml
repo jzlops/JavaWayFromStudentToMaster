@@ -12,6 +12,7 @@
     <modules>
         <module>Lesson_001</module>
         <module>Lesson_002</module>
+        <module>Lesson_003</module>
     </modules>
     <dependencies>
         <dependency>

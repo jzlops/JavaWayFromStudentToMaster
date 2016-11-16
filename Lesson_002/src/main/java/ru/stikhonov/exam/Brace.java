@@ -5,6 +5,7 @@ package ru.stikhonov.exam;
  */
 class Brace {
     boolean verify(String braces) {
+
         int fit = 0;
         boolean result = false;
 
