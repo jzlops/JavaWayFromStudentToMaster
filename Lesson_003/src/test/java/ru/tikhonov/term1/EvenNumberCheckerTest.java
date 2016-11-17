@@ -18,7 +18,7 @@ public class EvenNumberCheckerTest {
     public void checkNumberIsEven() throws Exception {
         boolean result;
         EvenNumberChecker checker = new EvenNumberChecker();
-        result=checker.isNumber(new ByteArrayInputStream("100".getBytes()));
+        result = checker.isNumber(new ByteArrayInputStream("100".getBytes()));
         Assert.assertTrue(result);
     }
 
@@ -29,7 +29,7 @@ public class EvenNumberCheckerTest {
     public void checkNumberIsOdd() throws Exception {
         boolean result;
         EvenNumberChecker checker = new EvenNumberChecker();
-        result=checker.isNumber(new ByteArrayInputStream("101".getBytes()));
+        result = checker.isNumber(new ByteArrayInputStream("101".getBytes()));
         Assert.assertFalse(result);
     }
 
@@ -40,7 +40,7 @@ public class EvenNumberCheckerTest {
     public void checkNumberIsIncorrect() throws Exception {
         boolean result;
         EvenNumberChecker checker = new EvenNumberChecker();
-        result=checker.isNumber(new ByteArrayInputStream("asd".getBytes()));
+        result = checker.isNumber(new ByteArrayInputStream("asd".getBytes()));
         Assert.assertFalse(result);
 
     }
