@@ -19,7 +19,6 @@ class EvenNumberChecker implements StreamCheck {
             if (scanner.hasNext()) {
                 i = scanner.nextInt();
                 result = (i % 2 == 0);
-          //      System.out.println(i);
             }
         } catch (Exception e) {
             return false;
