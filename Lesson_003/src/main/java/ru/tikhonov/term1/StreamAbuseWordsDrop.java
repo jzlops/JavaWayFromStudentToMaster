@@ -46,15 +46,12 @@ class StreamAbuseWordsDrop {
                 bin.reset();
                 zeroBuffer(buffer);
             }
-            if (!fit) {
-                bout.append((char) bin.read());
-            }
-            if (fit) {
-                fit = false;
-            }
+            if (!fit) bout.append((char) bin.read());
+
+            fit = false;
+            bout.flush();
         }
-        bin.close();
-        bout.close();
+        bout.flush();
     }
 
     /**
