@@ -26,12 +26,17 @@ class StreamAbuseWordsDrop {
         char[] tempCharArray = new char[MAX_READ_CHUNK];
         StringBuffer buffer = new StringBuffer();
         boolean fit = false;
+        int readChars;
 
         while (!exitCondition(bin)) {
 
             for (String abuseWord : abuse) {
                 bin.mark(MAX_READ_CHUNK);
-                bin.read(tempCharArray, 0, abuseWord.length());
+                readChars = bin.read(tempCharArray, 0, abuseWord.length());
+                if (readChars < abuseWord.length()) {
+                    bin.reset();
+                    continue;
+                }
                 charArrayToStringBuffer(buffer, tempCharArray, abuseWord.length());
                 if (abuseWord.equals(buffer.toString())) {
                     fit = true;

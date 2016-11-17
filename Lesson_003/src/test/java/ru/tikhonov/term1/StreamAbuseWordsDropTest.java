@@ -16,13 +16,17 @@ import static org.junit.Assert.*;
 public class StreamAbuseWordsDropTest {
     @Test
     public void testAbuseWordsDrop() throws Exception {
-        String[] abuse = {"проймет", "акваланг", "очень", "кекс", "да здравстует велкий Мао", "он"};
+        String[] abuse = {"проймет", "акваланг", "очень", "кекс", "да здравстует велкий Мао", "он", "-1"};
         StreamAbuseWordsDrop streamAbuseWordsDrop = new StreamAbuseWordsDrop();
-        ByteArrayInputStream streamIn = new ByteArrayInputStream("Мишка очень любит мёд, мёд ядренный он проймет".getBytes());
-        ByteArrayOutputStream streamOut = new ByteArrayOutputStream();
-        streamAbuseWordsDrop.abuseWordsDrop(streamIn, streamOut, abuse);
-        Assert.assertEquals(streamOut.toString(),"Мишка  любит мёд, мёд ядренный  ");
-
+        try (
+                ByteArrayInputStream streamIn = new ByteArrayInputStream("Мишка очень любит мёд, мёд ядренный он проймет".getBytes());
+                ByteArrayOutputStream streamOut = new ByteArrayOutputStream()
+        ) {
+            streamAbuseWordsDrop.abuseWordsDrop(streamIn, streamOut, abuse);
+            Assert.assertEquals(streamOut.toString(), "Мишка  любит мёд, мёд ядренный  ");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }
