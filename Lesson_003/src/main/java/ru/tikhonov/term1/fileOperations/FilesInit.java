@@ -49,7 +49,7 @@ class FilesInit {
                 }
             } catch (IOException e) {
                 executeCondition = false;
-                System.out.printf("Ошибка операции при работе с выходным файлом файла %n");
+                System.out.printf("Ошибка операции при работе с выходным файлом %n");
                 e.printStackTrace();
             }
         }
