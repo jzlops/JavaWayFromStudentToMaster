@@ -7,15 +7,25 @@ import java.io.IOException;
  */
 public class Run {
     public static void main(String[] args) throws IOException {
-        String sourceFile = ".//Lesson_003//src//main//java//ru//tikhonov//term1//fileOperations//#source.txt";
-        String destinationFile = ".//Lesson_003//src//main//java//ru//tikhonov//term1//fileOperations//#destination.txt";
         boolean sortingResult = false;
+        String projectDir = System.getProperty("user.dir");
+        String sourceFile = projectDir + "//Lesson_003//src//main//java//ru//tikhonov//term1//fileOperations//#source.txt";
+        String destinationFile = projectDir + "//Lesson_003//src//main//java//ru//tikhonov//term1//fileOperations//#destination.txt";
+        String logFile = projectDir + "//Lesson_003//src//main//java//ru//tikhonov//term1//fileOperations//#log.txt";
+
+        Logging logger = new Logger();
         FilesInit filesInit = new FilesInit();
         Sorting filesSort = new FilesSort();
-        if (filesInit.init(sourceFile, destinationFile)) {
-            sortingResult = filesSort.sort(filesInit.getInputFile(), filesInit.getOutputFile());
+        if (logger.init(logFile)) {
+            filesInit.setLogger(logger);
+            if (filesInit.init(sourceFile, destinationFile)) {
+                ((FilesSort) filesSort).setLogger(logger);
+                sortingResult = filesSort.sort(filesInit.getInputFile(), filesInit.getOutputFile());
+            }
         }
-        System.out.printf("Результат выполнения сортировки файлов - %1$b %n", sortingResult);
+        logger.appendLog("Результат выполнения сортировки файлов - " + sortingResult + "\n");
+        logger.close();
     }
 }
-//        System.out.println(System.getProperty("user.dir"));
+
+

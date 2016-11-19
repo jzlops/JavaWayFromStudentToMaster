@@ -1,6 +1,9 @@
 package ru.tikhonov.term1.fileOperations;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
+import java.io.RandomAccessFile;
+import java.util.Date;
 
 /**
  * Класс сортировки строк из входного файа в выходной файл. Строки сортируются в порядке возрастания.
@@ -22,37 +25,39 @@ class FilesSort implements Sorting {
     private int rsMinLineLength = Integer.MAX_VALUE;
     private int rsMaxLineLength = -1;
     private long rsLineCount = 0;
-    private long iterCount = 0;
+    private long iterationCount = 0;
     private RandomAccessFile rs;
     private RandomAccessFile rd;
+    private Logging logger;
 
     @Override
     public boolean sort(File source, File distance) {
         boolean result;
         try {
             this.init(source, distance);
+            this.logger.appendLog("Начало сортировки: " + new Date() + "\n");
             for (int workLineLength = this.rsMinLineLength; workLineLength <= this.rsMaxLineLength; workLineLength++) {
                 this.writeToDistance(workLineLength);
-                System.out.printf("*");
             }
-            this.printInfo();
+            this.logger.appendLog("Конец сортировки: " + new Date() + "\n");
+            this.logJobInfo();
             result = true;
         } catch (Exception e) {
-            System.out.printf("Не удалось произвести сортировку %n");
-            e.printStackTrace();
+            this.logger.appendLog("Не удалось произвести сортировку \n");
+            this.logger.appendLog(e.toString());
             result = false;
         } finally {
             try {
                 this.rs.close();
             } catch (IOException e) {
-                System.out.printf("Не удалось закрыть входной файл %n");
-                e.printStackTrace();
+                this.logger.appendLog("Не удалось закрыть входной файл \n");
+                this.logger.appendLog(e.toString());
             }
             try {
                 this.rd.close();
             } catch (IOException e) {
-                System.out.printf("Не удалось закрыть выходной файл %n");
-                e.printStackTrace();
+                this.logger.appendLog("Не удалось закрыть выходной файл \n");
+                this.logger.appendLog(e.toString());
             }
         }
         return result;
@@ -89,7 +94,7 @@ class FilesSort implements Sorting {
         int tempLineLength;
         StringBuilder buffer = new StringBuilder();
         while (this.rs.getFilePointer() != this.rs.length()) {
-            this.iterCount++;
+            this.iterationCount++;
             buffer.append(rs.readLine());
             tempLineLength = buffer.length();
             if (tempLineLength == workLineLength) {
@@ -109,21 +114,26 @@ class FilesSort implements Sorting {
      * @throws IOException
      */
     private void init(File source, File distance) throws IOException {
-        System.out.printf("Начата обработка входного файла, ждите... %n");
         this.rs = new RandomAccessFile(source, "r");
         this.rd = new RandomAccessFile(distance, "rw");
         this.rsFileLength = rs.length();
         initMinMaxLineLength(this.rs);
     }
 
+    private void logJobInfo() {
+        this.logger.appendLog("Размер входного файла в байтах - " + this.rsFileLength + "\n");
+        this.logger.appendLog("Максимальная длинна строки во входном файле - " + this.rsMaxLineLength + "\n");
+        this.logger.appendLog("Минимальная длинна строки во входном файле - " + this.rsMinLineLength + "\n");
+        this.logger.appendLog("Количество строк - " + this.rsLineCount + "\n");
+        this.logger.appendLog("Количество итераций по входному файлу - " + this.iterationCount + "\n");
+    }
+
     /**
-     * Вывод на консоль информации и параметрах входного файла и прочей служебной информации о проделанной работе
+     * Метод добавления логгера в класс
+     *
+     * @param logger обхект релизующий общий интерфейс Logging
      */
-    private void printInfo() {
-        System.out.printf("Размер входного файла в байтах - %1$d %n", this.rsFileLength);
-        System.out.printf("Максимальная длинна строки во входном файле - %1$d %n", this.rsMaxLineLength);
-        System.out.printf("Минимальная длинна строки во входном файле - %1$d %n", this.rsMinLineLength);
-        System.out.printf("Количество строк - %1$d %n", this.rsLineCount);
-        System.out.printf("Количество итераций по входному файлу - %1$d %n", this.iterCount);
+    void setLogger(Logging logger) {
+        this.logger = logger;
     }
 }

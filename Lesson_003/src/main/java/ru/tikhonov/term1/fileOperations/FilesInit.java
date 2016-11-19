@@ -10,6 +10,7 @@ import java.io.IOException;
  */
 class FilesInit {
     private File inFile, outFile;
+    private Logging logger;
 
     /**
      * Метод проверяющий доступность входного файла и создающий (в случае отсутствия) выходной файл
@@ -26,31 +27,31 @@ class FilesInit {
         if (inFile.exists() && inFile.isFile()) {
             executeCondition = true;
         } else {
-            System.out.printf("Нет входного файла или файл недоступен %n");
+            this.logger.appendLog("Нет входного файла или файл недоступен \n");
             executeCondition = false;
         }
         if (executeCondition) {
             try {
                 if (outFile.createNewFile()) {
                     executeCondition = true;
-                    System.out.printf("Выходной файл успешно создан %n");
+                    this.logger.appendLog("Выходной файл успешно создан \n");
                 } else {
                     if (outFile.delete()) {
-                        System.out.printf("Старый выходной файл удален %n");
+                        this.logger.appendLog("Старый выходной файл удален \n");
                         if (outFile.createNewFile()) {
-                            System.out.printf("Создан новый выходной файл %n");
+                            this.logger.appendLog("Создан новый выходной файл \n");
                             executeCondition = true;
                         } else {
-                            System.out.printf("Создать новый выходной файл не удалось %n");
+                            this.logger.appendLog("Создать новый выходной файл не удалось \n");
                         }
                     } else {
-                        System.out.printf("Неудалось удалить старый выходной файл %n");
+                        this.logger.appendLog("Неудалось удалить старый выходной файл \n");
                     }
                 }
             } catch (IOException e) {
                 executeCondition = false;
-                System.out.printf("Ошибка операции при работе с выходным файлом %n");
-                e.printStackTrace();
+                this.logger.appendLog("Ошибка операции при работе с выходным файлом \n");
+                this.logger.appendLog(e.toString());
             }
         }
         return executeCondition;
@@ -73,5 +74,14 @@ class FilesInit {
 
     File getOutputFile() {
         return this.outFile;
+    }
+
+    /**
+     * Метод добавления логгера в класс
+     *
+     * @param logger обхект релизующий общий интерфейс Logging
+     */
+    void setLogger(Logging logger) {
+        this.logger = logger;
     }
 }
