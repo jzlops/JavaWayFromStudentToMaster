@@ -9,9 +9,9 @@ public class Run {
     public static void main(String[] args) throws IOException {
         boolean sortingResult = false;
         String projectDir = System.getProperty("user.dir");
-        String sourceFile = projectDir + "//Lesson_003//src//main//java//ru//tikhonov//term1//fileOperations//#source.txt";
-        String destinationFile = projectDir + "//Lesson_003//src//main//java//ru//tikhonov//term1//fileOperations//#destination.txt";
-        String logFile = projectDir + "//Lesson_003//src//main//java//ru//tikhonov//term1//fileOperations//#log.txt";
+        String sourceFile = String.format("%s//Lesson_003//src//main//java//ru//tikhonov//term1//fileOperations//#source.txt", projectDir);
+        String destinationFile = String.format("%s//Lesson_003//src//main//java//ru//tikhonov//term1//fileOperations//#destination.txt", projectDir);
+        String logFile = String.format("%s//Lesson_003//src//main//java//ru//tikhonov//term1//fileOperations//#log.txt", projectDir);
 
         Logging logger = new Logger();
         FilesInit filesInit = new FilesInit();
@@ -23,7 +23,7 @@ public class Run {
                 sortingResult = filesSort.sort(filesInit.getInputFile(), filesInit.getOutputFile());
             }
         }
-        logger.appendLog("Результат выполнения сортировки файлов - " + sortingResult + "\n");
+        logger.appendLog(String.format("Результат выполнения сортировки файлов - %b%n", sortingResult));
         logger.close();
     }
 }

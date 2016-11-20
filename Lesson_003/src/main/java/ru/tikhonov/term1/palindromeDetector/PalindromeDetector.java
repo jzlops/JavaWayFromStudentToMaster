@@ -26,8 +26,9 @@ class PalindromeDetector {
             cInOut.out(printError());
             return result;
         }
-        result = analyzeWord();
-        cInOut.out(printResult(result));
+        cInOut.out(printResult(analyzeWord1()));
+        cInOut.out(printResult(analyzeWord2()));
+
         return result;
     }
 
@@ -39,8 +40,8 @@ class PalindromeDetector {
      */
     private String printResult(boolean result) {
         String resultMessage = "";
-        if (result) resultMessage = "Слово является полиндромом";
-        if (!result) resultMessage = "Слово не является полиндромом";
+        if (result) resultMessage = "Слово является палиндромом";
+        if (!result) resultMessage = "Слово не является палиндромом";
         return resultMessage;
     }
 
@@ -58,11 +59,20 @@ class PalindromeDetector {
      *
      * @return tгue если переданное слово - палиндром
      */
-    private boolean analyzeWord() {
-        int signOddEven = this.word.length() % 2;
-        StringBuilder s1 = new StringBuilder(this.word.substring(0, this.word.length() / 2));
-        StringBuilder s2 = new StringBuilder(this.word.substring(this.word.length() / 2 + signOddEven));
-        return (s1.toString().equals(s2.reverse().toString()));
+    private boolean analyzeWord1() {
+        return (this.word.equals(new StringBuilder(this.word).reverse().toString()));
     }
 
+    private boolean analyzeWord2() {
+        boolean result = true;
+        char[] chars = this.word.toCharArray();
+
+        for (int i = 0; i < chars.length / 2; i++) {
+            if (chars[i] != chars[chars.length - i - 1]) {
+                result = false;
+                break;
+            }
+        }
+        return result;
+    }
 }

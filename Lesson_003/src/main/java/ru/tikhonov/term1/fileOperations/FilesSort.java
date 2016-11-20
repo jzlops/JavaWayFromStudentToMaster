@@ -35,11 +35,11 @@ class FilesSort implements Sorting {
         boolean result;
         try {
             this.init(source, distance);
-            this.logger.appendLog("Начало сортировки: " + new Date() + "\n");
+            this.logger.appendLog(String.format("Начало сортировки: %te%n", new Date()));
             for (int workLineLength = this.rsMinLineLength; workLineLength <= this.rsMaxLineLength; workLineLength++) {
                 this.writeToDistance(workLineLength);
             }
-            this.logger.appendLog("Конец сортировки: " + new Date() + "\n");
+            this.logger.appendLog(String.format("Конец сортировки: %te%n", new Date()));
             this.logJobInfo();
             result = true;
         } catch (Exception e) {
@@ -121,11 +121,11 @@ class FilesSort implements Sorting {
     }
 
     private void logJobInfo() {
-        this.logger.appendLog("Размер входного файла в байтах - " + this.rsFileLength + "\n");
-        this.logger.appendLog("Максимальная длинна строки во входном файле - " + this.rsMaxLineLength + "\n");
-        this.logger.appendLog("Минимальная длинна строки во входном файле - " + this.rsMinLineLength + "\n");
-        this.logger.appendLog("Количество строк - " + this.rsLineCount + "\n");
-        this.logger.appendLog("Количество итераций по входному файлу - " + this.iterationCount + "\n");
+        this.logger.appendLog(String.format("Размер входного файла в байтах  - %1$d  %n", this.rsFileLength));
+        this.logger.appendLog(String.format("Максимальная длинна строки во входном файле - %d%n", this.rsMaxLineLength));
+        this.logger.appendLog(String.format("Минимальная длинна строки во входном файле - %d%n", this.rsMinLineLength));
+        this.logger.appendLog(String.format("Количество строк - %d%n", this.rsLineCount));
+        this.logger.appendLog(String.format("Количество итераций по входному файлу - %d%n ", this.iterationCount));
     }
 
     /**
