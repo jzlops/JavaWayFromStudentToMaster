@@ -1,4 +1,4 @@
-package ru.tikhonov.term1.polindromDetector;
+package ru.tikhonov.term1.palindromeDetector;
 
 import org.junit.Assert;
 import org.junit.Test;

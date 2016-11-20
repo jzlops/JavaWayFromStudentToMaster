@@ -1,4 +1,4 @@
-package ru.tikhonov.term1.polindromDetector;
+package ru.tikhonov.term1.palindromeDetector;
 
 /**
  * Класс для анализа поиска палиндрома в слове из 5 букв
