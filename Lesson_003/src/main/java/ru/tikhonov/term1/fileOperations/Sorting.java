@@ -1,6 +1,7 @@
 package ru.tikhonov.term1.fileOperations;
 
 import java.io.File;
+import java.io.IOException;
 
 /**
  * Общий интерфейс для сортировки файлов
@@ -8,5 +9,5 @@ import java.io.File;
  * @author Sergey Tikhonov
  */
 interface Sorting {
-    boolean sort(File source, File distance);
+    boolean sort(File source, File distance) throws IOException;
 }

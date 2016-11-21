@@ -20,15 +20,16 @@ import java.util.Date;
  *
  * @author Sergey Tikhonov
  */
-class FilesSort implements Sorting {
+class FilesSortSlow implements Sorting {
     private long rsFileLength = 0;
     private int rsMinLineLength = Integer.MAX_VALUE;
     private int rsMaxLineLength = -1;
     private long rsLineCount = 0;
     private long iterationCount = 0;
-    private RandomAccessFile rs;
-    private RandomAccessFile rd;
+    private RandomAccessFile rS;
+    private RandomAccessFile rD;
     private Logging logger;
+
 
     @Override
     public boolean sort(File source, File distance) {
@@ -43,20 +44,20 @@ class FilesSort implements Sorting {
             this.logJobInfo();
             result = true;
         } catch (Exception e) {
-            this.logger.appendLog("Не удалось произвести сортировку \n");
+            this.logger.appendLog("Не удалось произвести сортировку %n");
             this.logger.appendLog(e.toString());
             result = false;
         } finally {
             try {
-                this.rs.close();
+                this.rS.close();
             } catch (IOException e) {
-                this.logger.appendLog("Не удалось закрыть входной файл \n");
+                this.logger.appendLog(String.format("Ошибка закрытия файла %s%n", source.getName()));
                 this.logger.appendLog(e.toString());
             }
             try {
-                this.rd.close();
+                this.rD.close();
             } catch (IOException e) {
-                this.logger.appendLog("Не удалось закрыть выходной файл \n");
+                this.logger.appendLog(String.format("Ошибка закрытия файла %s%n", distance.getName()));
                 this.logger.appendLog(e.toString());
             }
         }
@@ -93,17 +94,17 @@ class FilesSort implements Sorting {
     private void writeToDistance(int workLineLength) throws IOException {
         int tempLineLength;
         StringBuilder buffer = new StringBuilder();
-        while (this.rs.getFilePointer() != this.rs.length()) {
+        while (this.rS.getFilePointer() != this.rS.length()) {
             this.iterationCount++;
-            buffer.append(rs.readLine());
+            buffer.append(rS.readLine());
             tempLineLength = buffer.length();
             if (tempLineLength == workLineLength) {
                 buffer.append("\r\n");
-                this.rd.writeBytes(buffer.toString());
+                this.rD.writeBytes(buffer.toString());
             }
             buffer.setLength(0);
         }
-        rs.seek(0);
+        rS.seek(0);
     }
 
     /**
@@ -114,10 +115,10 @@ class FilesSort implements Sorting {
      * @throws IOException
      */
     private void init(File source, File distance) throws IOException {
-        this.rs = new RandomAccessFile(source, "r");
-        this.rd = new RandomAccessFile(distance, "rw");
-        this.rsFileLength = rs.length();
-        initMinMaxLineLength(this.rs);
+        this.rS = new RandomAccessFile(source, "r");
+        this.rD = new RandomAccessFile(distance, "rw");
+        this.rsFileLength = rS.length();
+        initMinMaxLineLength(this.rS);
     }
 
     private void logJobInfo() {
