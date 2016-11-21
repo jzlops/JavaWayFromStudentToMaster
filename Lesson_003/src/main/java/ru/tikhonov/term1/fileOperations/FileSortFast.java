@@ -27,10 +27,14 @@ class FileSortFast implements Sorting {
             this.init(source, distance);
             makeSeries(this.rS, 1);
             fusionSeries();
-
-            //  makeSeries(this.rC, 10);
-
-            //fusionSeries();
+            makeSeries(this.rC, 2);
+            fusionSeries();
+////            makeSeries(this.rC, 3);
+////            fusionSeries();
+            makeSeries(this.rC, 4);
+            fusionSeries();
+            makeSeries(this.rC, 8);
+            fusionSeries();
             this.logger.appendLog(String.format("Начало сортировки: %te%n", new Date()));
             result = true;
         } catch (IOException e) {
@@ -72,7 +76,6 @@ class FileSortFast implements Sorting {
         return result;
     }
 
-
     /**
      * Инициализация всех бъектов RandomAccessFile
      *
@@ -109,8 +112,6 @@ class FileSortFast implements Sorting {
         this.fileB = fileB;
         this.fileCopy = fileCopy;
     }
-
-
     /**
      * Разбивание на серии
      *
@@ -128,9 +129,8 @@ class FileSortFast implements Sorting {
             if (p == 1) this.iterationCount++;
             if (isOdd) {
                 for (int j = 0; j < p; j++) {
-                    if (rAF.getFilePointer() != rAF.length()) {
+                    if (rAF.getFilePointer() != rAF.length())
                         bufferA.append(String.format("%s%n", rAF.readLine()));
-                    }
                 }
                 this.rA.writeBytes(bufferA.toString());
                 isOdd = false;
@@ -140,32 +140,33 @@ class FileSortFast implements Sorting {
             }
             if (!isOdd) {
                 for (int j = 0; j < p; j++) {
-                    if (rAF.getFilePointer() != rAF.length()) {
+                    if (rAF.getFilePointer() != rAF.length())
                         bufferB.append(String.format("%s%n", rAF.readLine()));
-                    }
                 }
                 this.rB.writeBytes(bufferB.toString());
                 isOdd = true;
                 bufferB.setLength(0);
                 bufferA.setLength(0);
-
             }
         }
-
         this.rA.seek(0);
         this.rB.seek(0);
         rAF.seek(0);
     }
 
-
     private void fusionSeries() throws IOException {
         int isOdd = (int) this.iterationCount % 2;
         this.rC.setLength(0);
+        long fusionIterCount = this.rA.length();
         StringBuilder bufferA = new StringBuilder();
         StringBuilder bufferB = new StringBuilder();
-        for (int i = 0; i < this.iterationCount / 2 + isOdd; i++) {
-            bufferA.append(String.format("%s%n", this.rA.readLine()));
-            bufferB.append(String.format("%s%n", this.rB.readLine()));
+        for (int i = 0; i < fusionIterCount; i++) {
+            if (this.rA.getFilePointer() != this.rA.length()) {
+                bufferA.append(String.format("%s%n", this.rA.readLine()));
+            }
+            if (this.rB.getFilePointer() != this.rB.length()) {
+                bufferB.append(String.format("%s%n", this.rB.readLine()));
+            }
             if (bufferA.length() < bufferB.length()) {
                 this.rC.writeBytes(bufferA.toString());
                 this.rC.writeBytes(bufferB.toString());
