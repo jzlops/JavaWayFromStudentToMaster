@@ -1,12 +1,14 @@
 package ru.tikhonov.term1.fileOperations;
 
+
 import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
+import java.nio.channels.FileChannel;
 import java.util.Date;
 
 /**
- * Более быстрый метод сортировки с методом слияния
+ * Более быстрый метод сортировки с методом естественного слияния.
  *
  * @author Sergey Tikhonov
  */
@@ -18,24 +20,23 @@ class FileSortFast implements Sorting {
     private RandomAccessFile rB;
     private RandomAccessFile rC;
     private File fileA, fileB, fileCopy;
-    private long iterationCount = 0;
+    private boolean isNotEnd = true;
+    private long iterCount = 0;
 
     @Override
-    public boolean sort(File source, File distance) {
+    public boolean sort(final File source, final File distance) {
         boolean result;
         try {
             this.init(source, distance);
-            makeSeries(this.rS, 1);
-            fusionSeries();
-            makeSeries(this.rC, 2);
-            fusionSeries();
-////            makeSeries(this.rC, 3);
-////            fusionSeries();
-            makeSeries(this.rC, 4);
-            fusionSeries();
-            makeSeries(this.rC, 8);
-            fusionSeries();
-            this.logger.appendLog(String.format("Начало сортировки: %te%n", new Date()));
+            this.logger.appendLog(String.format("Начало сортировки: %s%n", (new Date()).toString()));
+            makeSeries(this.rS);
+
+            while (this.isNotEnd)
+                makeSeries(this.rC);
+            copyFiles(rC, rD);
+            this.logger.appendLog(String.format("Конец сортировки: %s%n", (new Date()).toString()));
+            this.logger.appendLog(String.format("Количество итераций %d%n",this.iterCount));
+
             result = true;
         } catch (IOException e) {
             this.logger.appendLog("Не удалось произвести сортировку %n");
@@ -77,13 +78,13 @@ class FileSortFast implements Sorting {
     }
 
     /**
-     * Инициализация всех бъектов RandomAccessFile
+     * Инициализация всех бъектов RandomAccessFile.
      *
-     * @param source   неотсортированный файл источник
-     * @param distance отсортированный файл назначения
+     * @param source   неотсортированный файл источник.
+     * @param distance отсортированный файл назначения.
      * @throws IOException
      */
-    private void init(File source, File distance) throws IOException {
+    private void init(final File source, final File distance) throws IOException {
         this.rS = new RandomAccessFile(source, "r");
         this.rD = new RandomAccessFile(distance, "rw");
         this.rA = new RandomAccessFile(this.fileA, "rw");
@@ -96,7 +97,7 @@ class FileSortFast implements Sorting {
      *
      * @param logger обхект релизующий общий интерфейс Logging
      */
-    void setLogger(Logging logger) {
+    void setLogger(final Logging logger) {
         this.logger = logger;
     }
 
@@ -107,78 +108,157 @@ class FileSortFast implements Sorting {
      * @param fileB    временный файл B
      * @param fileCopy временный файл копия
      */
-    void setAdditionalFiles(File fileA, File fileB, File fileCopy) {
+    void setAdditionalFiles(final File fileA, final File fileB, final File fileCopy) {
         this.fileA = fileA;
         this.fileB = fileB;
         this.fileCopy = fileCopy;
     }
+
     /**
-     * Разбивание на серии
+     * Разбивание файла на серии по алгоритму естественного слияния
      *
-     * @param rAF временный файл
-     * @param p
+     * @param rSource файл для считывания данных, изначально (в первой итерации это файл истоник, потом временный файл)
      * @throws IOException
      */
-    private void makeSeries(RandomAccessFile rAF, long p) throws IOException {
-        boolean isOdd = true;
+    private void makeSeries(final RandomAccessFile rSource) throws IOException {
+        boolean overShot = false;
+        int fusionRun = 0;
+        long temp;
+        long tempX;
         this.rA.setLength(0);
         this.rB.setLength(0);
         StringBuilder bufferA = new StringBuilder();
         StringBuilder bufferB = new StringBuilder();
-        while (rAF.getFilePointer() != rAF.length()) {
-            if (p == 1) this.iterationCount++;
-            if (isOdd) {
-                for (int j = 0; j < p; j++) {
-                    if (rAF.getFilePointer() != rAF.length())
-                        bufferA.append(String.format("%s%n", rAF.readLine()));
+        StringBuilder bufferX = new StringBuilder();
+        temp = 0;
+        while (rSource.getFilePointer() != rSource.length()) {
+            this.iterCount++;
+            tempX = bufferX.append(rSource.readLine()).length();
+            if (tempX == 0) continue;
+            if (!overShot) {
+                if (temp > tempX) {
+                    fusionRun++;
+                    if (fusionRun == 2) {
+                        fusionSeries();
+                    }
+                    bufferB.append(bufferX.toString());
+                    overShot = true;
+                    temp = tempX;
+                } else {
+                    bufferA.append(bufferX.toString());
+                    temp = tempX;
                 }
-                this.rA.writeBytes(bufferA.toString());
-                isOdd = false;
-                bufferB.setLength(0);
-                bufferA.setLength(0);
-                continue;
-            }
-            if (!isOdd) {
-                for (int j = 0; j < p; j++) {
-                    if (rAF.getFilePointer() != rAF.length())
-                        bufferB.append(String.format("%s%n", rAF.readLine()));
-                }
-                this.rB.writeBytes(bufferB.toString());
-                isOdd = true;
-                bufferB.setLength(0);
-                bufferA.setLength(0);
-            }
-        }
-        this.rA.seek(0);
-        this.rB.seek(0);
-        rAF.seek(0);
-    }
-
-    private void fusionSeries() throws IOException {
-        int isOdd = (int) this.iterationCount % 2;
-        this.rC.setLength(0);
-        long fusionIterCount = this.rA.length();
-        StringBuilder bufferA = new StringBuilder();
-        StringBuilder bufferB = new StringBuilder();
-        for (int i = 0; i < fusionIterCount; i++) {
-            if (this.rA.getFilePointer() != this.rA.length()) {
-                bufferA.append(String.format("%s%n", this.rA.readLine()));
-            }
-            if (this.rB.getFilePointer() != this.rB.length()) {
-                bufferB.append(String.format("%s%n", this.rB.readLine()));
-            }
-            if (bufferA.length() < bufferB.length()) {
-                this.rC.writeBytes(bufferA.toString());
-                this.rC.writeBytes(bufferB.toString());
             } else {
-                this.rC.writeBytes(bufferB.toString());
-                this.rC.writeBytes(bufferA.toString());
+                if (temp > tempX) {
+                    fusionRun++;
+                    if (fusionRun == 2) {
+                        fusionSeries();
+                    }
+                    bufferA.append(bufferX.toString());
+                    overShot = false;
+                    temp = tempX;
+                } else {
+                    bufferB.append(bufferX.toString());
+                    temp = tempX;
+                }
             }
+            if (bufferA.length() != 0)
+                this.rA.writeBytes(String.format("%s%n", bufferA.toString()));
+            if (bufferB.length() != 0)
+                this.rB.writeBytes(String.format("%s%n", bufferB.toString()));
+            bufferX.setLength(0);
             bufferA.setLength(0);
             bufferB.setLength(0);
+            if (fusionRun == 2) fusionRun = 0;
         }
-        this.rC.seek(0);
+
+        if (rA.length() >= rSource.length()) {
+            this.isNotEnd = false;
+        }
+        fusionSeries();
+
+        this.rA.setLength(0);
+        this.rB.setLength(0);
+        rSource.seek(0);
+        rD.seek(0);
+        copyFiles(this.rD, this.rC);
+    }
+
+    /**
+     * Слияние сериализованных временных файлов (первых их кусочков) и добалвнеие полученного в файл назначения.
+     *
+     * @throws IOException
+     */
+    private void fusionSeries() throws IOException {
+
+        this.rA.seek(0);
+        this.rB.seek(0);
+        StringBuilder bufferA = new StringBuilder();
+        StringBuilder bufferB = new StringBuilder();
+
+        if (rA.getFilePointer() != rA.length())
+            bufferA.append(this.rA.readLine());
+        if (rB.getFilePointer() != rB.length())
+            bufferB.append(this.rB.readLine());
+
+        do {
+            if ((bufferA.length() <= bufferB.length()) && (bufferA.length() != 0)) {
+                this.rD.writeBytes((String.format("%s%n", bufferA.toString())));
+                bufferA.setLength(0);
+                if (rA.getFilePointer() != rA.length())
+                    bufferA.append(this.rA.readLine());
+                continue;
+            }
+            if ((bufferB.length() < bufferA.length()) && ((bufferB.length() != 0))) {
+                this.rD.writeBytes((String.format("%s%n", bufferB.toString())));
+                bufferB.setLength(0);
+                if (rB.getFilePointer() != rB.length())
+                    bufferB.append(this.rB.readLine());
+                continue;
+            }
+            if ((bufferB.length() > 0) && (bufferA.length() == 0)) {
+                this.rD.writeBytes((String.format("%s%n", bufferB.toString())));
+                bufferB.setLength(0);
+                if (rB.getFilePointer() != rB.length())
+                    bufferB.append(this.rB.readLine());
+                continue;
+            }
+            if ((bufferA.length() > 0) && ((bufferB.length() == 0))) {
+                this.rD.writeBytes((String.format("%s%n", bufferA.toString())));
+                bufferA.setLength(0);
+                if (rA.getFilePointer() != rA.length())
+                    bufferA.append(this.rA.readLine());
+            }
+
+        } while ((bufferA.length() + bufferB.length()) != 0);
+
+        bufferA.setLength(0);
+        bufferB.setLength(0);
+
         this.rB.seek(0);
         this.rA.seek(0);
+        this.rA.setLength(0);
+        this.rB.setLength(0);
+    }
+
+    /**
+     * Копирование фалов через каналы
+     *
+     * @param src  объект RandomaccessFile источник
+     * @param dest объект RandomaccessFile назначение
+     */
+    private void copyFiles(final RandomAccessFile src, final RandomAccessFile dest) throws IOException {
+        FileChannel rcD, rcS;
+        rcD = dest.getChannel();
+        rcS = src.getChannel();
+        try {
+            rcD.transferFrom(rcS, 0, rcS.size());
+            dest.seek(0);
+            src.setLength(0);
+        } catch (Exception e) {
+            this.logger.appendLog("Не удалось переместить данные с временного файла в конечный");
+            this.logger.appendLog(e.toString());
+        }
+        dest.setLength(dest.length() - 1L);
     }
 }
