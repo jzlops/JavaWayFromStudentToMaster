@@ -35,7 +35,7 @@ class AnswerBot implements Answerable, Closeable {
                     e1.printStackTrace();
                     System.out.printf("Не удалось закрыть файл ответов");
                 }
-                System.exit(0);
+
             }
         } else {
             System.out.printf("Не удалось найти файл ответов");
@@ -53,7 +53,7 @@ class AnswerBot implements Answerable, Closeable {
         } catch (IOException e) {
             System.out.printf("Неудалось закрыть файл ответов");
             e.printStackTrace();
-            System.exit(0);
+
         }
     }
 
@@ -80,7 +80,7 @@ class AnswerBot implements Answerable, Closeable {
                 System.out.printf("Неудалось закрыть файл ответов");
                 e1.printStackTrace();
             }
-            System.exit(0);
+
         }
         return line;
     }
@@ -117,7 +117,7 @@ class AnswerBot implements Answerable, Closeable {
                 System.out.printf("Неудалось закрыть файл ответов");
                 e1.printStackTrace();
             }
-            System.exit(0);
+
         }
         return array;
     }

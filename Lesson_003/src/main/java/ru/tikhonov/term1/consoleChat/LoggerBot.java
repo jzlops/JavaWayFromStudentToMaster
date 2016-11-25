@@ -23,7 +23,7 @@ class LoggerBot implements Printable, Closeable {
             } catch (Exception e) {
                 System.out.printf("Файл лога уже существует и удалить его не удалось");
                 e.printStackTrace();
-                System.exit(0);
+
             }
         }
 
@@ -32,7 +32,7 @@ class LoggerBot implements Printable, Closeable {
         } catch (IOException e) {
             System.out.printf("Не  удалось создать логфайл %n");
             e.printStackTrace();
-            System.exit(0);
+
         }
 
         try {
@@ -40,7 +40,7 @@ class LoggerBot implements Printable, Closeable {
         } catch (FileNotFoundException e) {
             System.out.printf("Не удалось открыть файл в режиме чтение/запись %n");
             e.printStackTrace();
-            System.exit(0);
+
         }
     }
 
@@ -64,7 +64,7 @@ class LoggerBot implements Printable, Closeable {
                 System.out.printf("Неудалось закрыть файл логовов");
                 e1.printStackTrace();
             }
-            System.exit(0);
+
         }
     }
 
@@ -78,7 +78,7 @@ class LoggerBot implements Printable, Closeable {
         } catch (IOException e) {
             System.out.printf("Неудалось закрыть логфайл");
             e.printStackTrace();
-            System.exit(0);
+
         }
     }
 

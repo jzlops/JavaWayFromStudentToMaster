@@ -5,7 +5,7 @@ import java.io.File;
 /**
  * @author Sergey Tikhonov
  */
-class Run {
+public class Run {
     public static void main(String[] args) {
         String projectDir = System.getProperty("user.dir");
         String logFile = String.format("%s//Lesson_003//src//main//java//ru//tikhonov//term1//consoleChat//files//#log.txt", projectDir);
