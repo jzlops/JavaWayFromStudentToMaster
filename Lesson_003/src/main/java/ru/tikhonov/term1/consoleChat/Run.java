@@ -11,19 +11,20 @@ class Run {
         String logFile = String.format("%s//Lesson_003//src//main//java//ru//tikhonov//term1//consoleChat//files//#log.txt", projectDir);
         String answerFile = String.format("%s//Lesson_003//src//main//java//ru//tikhonov//term1//consoleChat//files//#answers.txt", projectDir);
 
-        LoggerBot logger = new LoggerBot();
-        InOut inOut = new InputOutput();
-        Printable printer = new ConsoleOut();
+        LoggerBot loggerBot = new LoggerBot();
+        InputOutput inOut = new InputOutput();
+        ConsoleOut consoleOut = new ConsoleOut();
         AnswerBot answerBot = new AnswerBot();
 
-        logger.init(new File(logFile));
+        loggerBot.init(new File(logFile));
         answerBot.init(new File(answerFile));
 
-        ChatBot chatBot = new ChatBot(inOut, logger, answerBot, printer);
+        ChatBot chatBot = new ChatBot(inOut, loggerBot, answerBot, consoleOut);
 
         chatBot.chat();
 
-        logger.close();
+        loggerBot.close();
         answerBot.close();
+        inOut.close();
     }
 }

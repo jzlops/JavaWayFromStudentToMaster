@@ -31,4 +31,8 @@ class InputOutput implements InOut {
         if (scanner.hasNext()) return scanner.nextLine();
         return "Error";
     }
+
+    void close() {
+        scanner.close();
+    }
 }
