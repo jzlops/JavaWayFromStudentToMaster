@@ -5,7 +5,7 @@ package ru.tikhonov.term1.consoleChat;
  *
  * @author Sergey Tikhonov
  */
-interface Printable {
+public interface Printable {
     /**
      * Метод печатающий сообщение
      *

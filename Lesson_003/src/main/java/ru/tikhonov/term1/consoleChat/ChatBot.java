@@ -9,7 +9,7 @@ package ru.tikhonov.term1.consoleChat;
  *
  * @author Sergey Tikhonov
  */
-class ChatBot {
+public class ChatBot {
     private final Printable loggerBot;
     private final InOut inOut;
     private final Answerable answerBot;
@@ -25,7 +25,7 @@ class ChatBot {
      * @param answerBot Объект работы с истоничком ответов
      * @param printBot  Объект печатающий сообщение
      */
-    ChatBot(final InOut inOut, final Printable loggerBot, final Answerable answerBot, final Printable printBot) {
+    public ChatBot(final InOut inOut, final Printable loggerBot, final Answerable answerBot, final Printable printBot) {
         this.inOut = inOut;
         this.loggerBot = loggerBot;
         this.consolePrinter = printBot;
@@ -35,7 +35,7 @@ class ChatBot {
     /**
      * Основной цикл чата
      */
-    void chat() {
+   public void chat() {
         final StringBuilder inBuffer = new StringBuilder();
         do {
             inBuffer.append(String.format("User: %s", this.inOut.getMessage()));

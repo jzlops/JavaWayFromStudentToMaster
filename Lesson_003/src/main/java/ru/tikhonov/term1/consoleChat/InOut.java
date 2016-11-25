@@ -5,7 +5,7 @@ package ru.tikhonov.term1.consoleChat;
  *
  * @author Sergey Tikhonov
  */
-interface InOut {
+public interface InOut {
     /**
      * Запросить сообщение String у объекта
      *

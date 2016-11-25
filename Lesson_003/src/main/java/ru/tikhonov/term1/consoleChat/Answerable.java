@@ -5,7 +5,7 @@ package ru.tikhonov.term1.consoleChat;
  *
  * @author Sergey Tikhonov
  */
-interface Answerable {
+public interface Answerable {
     /**
      * По звпросу позвращает ответ-строку
      *

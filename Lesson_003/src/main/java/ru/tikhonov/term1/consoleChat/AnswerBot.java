@@ -12,7 +12,7 @@ import java.util.Random;
  *
  * @author Sergey Tikhonov
  */
-public class AnswerBot implements Answerable, Closeable {
+class AnswerBot implements Answerable, Closeable {
     private RandomAccessFile raA;
     private long answersPointer[];
 

@@ -69,7 +69,7 @@ class LoggerBot implements Printable, Closeable {
     }
 
     /**
-     * Закрытие фала
+     * Закрытие файла
      */
     @Override
     public void close() {
