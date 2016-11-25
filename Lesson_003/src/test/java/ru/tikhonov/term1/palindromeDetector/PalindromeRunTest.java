@@ -11,7 +11,8 @@ public class PalindromeRunTest {
     public void isPalindrome() {
         InputOutput cInOut = new StubInOut();
         PalindromeDetector pd = new PalindromeDetector(cInOut);
-        ((StubInOut) cInOut).setInput("Gf1FG");
+        ((StubInOut) cInOut).setInput("11111");
+        System.out.println(cInOut.in());
         Assert.assertTrue(pd.palindromeCheck(cInOut.in()));
     }
 

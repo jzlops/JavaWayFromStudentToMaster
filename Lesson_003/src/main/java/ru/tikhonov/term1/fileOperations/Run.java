@@ -8,13 +8,14 @@ import java.io.IOException;
 public class Run {
     public static void main(String[] args) throws IOException {
         boolean sortingResult;
+        System.out.println(System.getProperty("user.dir"));
         String projectDir = System.getProperty("user.dir");
-        String sourceFile = String.format("%s//Lesson_003//src//main//java//ru//tikhonov//term1//fileOperations//Files//#source.txt", projectDir);
-        String destinationFile = String.format("%s//Lesson_003//src//main//java//ru//tikhonov//term1//fileOperations//Files//#destination.txt", projectDir);
-        String logFile = String.format("%s//Lesson_003//src//main//java//ru//tikhonov//term1//fileOperations//Files//#log.txt", projectDir);
-        String fileA = String.format("%s//Lesson_003//src//main//java//ru//tikhonov//term1//fileOperations//Files//~A.txt", projectDir);
-        String fileB = String.format("%s//Lesson_003//src//main//java//ru//tikhonov//term1//fileOperations//Files//~B.txt", projectDir);
-        String sourceFileCopy = String.format("%s//Lesson_003//src//main//java//ru//tikhonov//term1//fileOperations//Files//~SourceCopy.txt", projectDir);
+        String sourceFile = String.format("%s//Lesson_003//src//main//java//ru//tikhonov//term1//fileOperations//files//#source.txt", projectDir);
+        String destinationFile = String.format("%s//Lesson_003//src//main//java//ru//tikhonov//term1//fileOperations//files//#destination.txt", projectDir);
+        String logFile = String.format("%s//Lesson_003//src//main//java//ru//tikhonov//term1//fileOperations//files//#log.txt", projectDir);
+        String fileA = String.format("%s//Lesson_003//src//main//java//ru//tikhonov//term1//fileOperations//files//~A.txt", projectDir);
+        String fileB = String.format("%s//Lesson_003//src//main//java//ru//tikhonov//term1//fileOperations//files//~B.txt", projectDir);
+        String sourceFileCopy = String.format("%s//Lesson_003//src//main//java//ru//tikhonov//term1//fileOperations//files//~SourceCopy.txt", projectDir);
 
         Logging logger = new Logger();
         FilesInit filesInit = new FilesInit();

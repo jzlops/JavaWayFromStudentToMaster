@@ -29,7 +29,7 @@ class PalindromeDetector {
         cInOut.out(printResult(analyzeWord1()));
         cInOut.out(printResult(analyzeWord2()));
 
-        return result;
+        return analyzeWord1();
     }
 
     /**
