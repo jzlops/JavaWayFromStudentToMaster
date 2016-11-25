@@ -16,6 +16,7 @@ public class ChatBot {
     private Printable consolePrinter;
     private boolean isExit = false;
     private boolean isMute = false;
+    private boolean runningStatus = true;
 
     /**
      * Конструктор чата, принимает в себя ряд объектов для работы
@@ -35,8 +36,9 @@ public class ChatBot {
     /**
      * Основной цикл чата
      */
-   public void chat() {
+    public void chat() {
         final StringBuilder inBuffer = new StringBuilder();
+        this.runningStatus = true;
         do {
             inBuffer.append(String.format("User: %s", this.inOut.getMessage()));
 
@@ -46,20 +48,26 @@ public class ChatBot {
             if (inBuffer.toString().toLowerCase().equals("user: go")) {
                 this.isMute = false;
             }
+            inOut.sendMessage(this.loggerBot, inBuffer.toString());
+
             if (inBuffer.toString().toLowerCase().equals("user: stop")) {
                 this.isExit = true;
                 continue;
             }
-            inOut.sendMessage(this.loggerBot, inBuffer.toString());
+
             inBuffer.setLength(0);
-            inBuffer.append(String.format("Bot: %s", answerBot.getAnswer()));
 
             if (!this.isMute) {
+                inBuffer.append(String.format("Bot: %s", answerBot.getAnswer()));
                 this.inOut.sendMessage(this.consolePrinter, inBuffer.toString());
                 this.inOut.sendMessage(this.loggerBot, inBuffer.toString());
             }
             inBuffer.setLength(0);
         } while (!isExit);
+        this.runningStatus = false;
+    }
 
+    public boolean getRunningStatus() {
+        return this.runningStatus;
     }
 }
