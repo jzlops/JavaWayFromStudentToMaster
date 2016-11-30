@@ -6,7 +6,7 @@ import org.junit.Test;
 /**
  * @author Sergey Tikhonov
  */
-public class PalindromeRunTest {
+public class PalindromeServerRunTest {
     @Test
     public void isPalindrome() {
         InputOutput cInOut = new StubInOut();

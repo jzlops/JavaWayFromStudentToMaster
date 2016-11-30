@@ -1,6 +1,7 @@
 package ru.tikhonov.term1.fserver;
 
 
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 
@@ -11,7 +12,5 @@ import java.io.OutputStream;
  * @author Sergey Tikhonov
  */
 public interface FileOperations {
-    boolean execOperation(final String commandName, final OutputStream outMessage) throws IOException;
-
-    boolean getHelp(final String helpMessage);
+    boolean execOperation(final String commandName, final DataOutputStream outMessage) throws IOException;
 }

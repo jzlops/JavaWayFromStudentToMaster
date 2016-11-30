@@ -8,9 +8,8 @@ import java.io.*;
  * @author Sergey Tikhonov
  */
 public interface InputOutput {
-    boolean getMessage(final InputStream inputStream, final OutputStream outputStream);
-
-    boolean setMessage(final OutputStream outputStream, final InputStream inputStream);
+    boolean transferFromTo(final DataOutputStream outputStream, final DataInputStream inputStream) throws IOException;
+    boolean transferToFrom(final DataOutputStream outputStream, final DataInputStream inputStream) throws IOException;
 
 
 }
