@@ -52,11 +52,11 @@ class Server implements InputOutput {
 
         showGreetings();
 
-//        while (!this.isExit) {
-//            if (scannerFromInputStream.hasNextLine()) {
-//           //     commandParserAndRunner(scannerFromInputStream.nextLine());
-//            }
-//        }
+        while (!this.isExit) {
+            if (scannerFromInputStream.hasNextLine()) {
+                commandParserAndRunner(scannerFromInputStream.nextLine());
+            }
+        }
         scannerFromInputStream.close();
         this.socketOutputStream.close();
         this.socketInputStream.close();

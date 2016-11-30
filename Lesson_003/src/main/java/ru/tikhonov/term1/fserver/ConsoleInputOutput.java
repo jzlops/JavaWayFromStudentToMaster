@@ -19,7 +19,7 @@ public class ConsoleInputOutput implements InputOutput {
         return true;
     }
 
-    public boolean transferToFrom(DataOutputStream toConsoleOutputStream, DataInputStream fromSocketInputStream) throws IOException {
+    public boolean transferToFrom(DataOutputStream toConsoleOutputStream, DataInputStream fromSocketInputStream) {
         StringBuilder buffer = new StringBuilder();
         char c;
         try {
@@ -29,8 +29,10 @@ public class ConsoleInputOutput implements InputOutput {
                 c = fromSocketInputStream.readChar();
             }
             System.out.println(buffer.toString());
-        } catch (Exception e) {
-            System.out.println("Error");
+        } catch (EOFException e) {
+            return true;
+        } catch (IOException e) {
+            e.printStackTrace();
         }
         return true;
     }
