@@ -3,6 +3,7 @@ package ru.tikhonov.term1.fserver;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Arrays;
 import java.util.Scanner;
 
 /**
@@ -10,10 +11,12 @@ import java.util.Scanner;
  *
  * @author Sergey Tikhonov
  */
-class Server implements InputOutput {
-    private FileOperations[] fileEngines = new FileOperations[10];
-    private DataInputStream socketInputStream;
-    private DataOutputStream socketOutputStream;
+class Server {
+    private ServerFileOperations[] fileEngines = new ServerFileOperations[10];
+    private InputStream socketInputStream;
+    private OutputStream socketOutputStream;
+    private BufferedReader socketBufferedReader;
+    private PrintWriter socketPrintWriter;
     private boolean isExit = false;
     private String parentDir = ".";
     private String currentDir = ".";
@@ -34,218 +37,264 @@ class Server implements InputOutput {
 
     void start() throws IOException {
         System.out.printf("Server is running...");
-        Scanner scannerFromInputStream;
         ServerSocket serverSocket = new ServerSocket(9999);
         Socket workSocket = serverSocket.accept();
 
+        this.socketOutputStream = workSocket.getOutputStream();
+        this.socketInputStream = workSocket.getInputStream();
+        this.socketBufferedReader = new BufferedReader(new InputStreamReader(this.socketInputStream));
+        this.socketPrintWriter = new PrintWriter(this.socketOutputStream, true);
 
-        this.socketInputStream = new DataInputStream(workSocket.getInputStream());
-        this.socketOutputStream = new DataOutputStream(workSocket.getOutputStream());
-
-        this.fileEngines[0] = this.new DownloadFile();
-        this.fileEngines[1] = this.new UploadFile();
+        this.fileEngines[0] = this.new DownloadServerFile();
+        this.fileEngines[1] = this.new UploadServerFile();
         this.fileEngines[2] = this.new ListDir();
         this.fileEngines[3] = this.new ChangeDir();
         this.fileEngines[4] = this.new GoToParent();
 
-        scannerFromInputStream = new Scanner(this.socketInputStream);
-
         showGreetings();
+        sayStop();
 
+        String s;
         while (!this.isExit) {
-            if (scannerFromInputStream.hasNextLine()) {
-                commandParserAndRunner(scannerFromInputStream.nextLine());
+            if ((s = this.socketBufferedReader.readLine()) != null) {
+                this.commandParserAndRunner(s);
             }
         }
-        scannerFromInputStream.close();
         this.socketOutputStream.close();
         this.socketInputStream.close();
+
     }
 
+    private void sayStop() {
+        this.socketPrintWriter.println("#STOP");
+    }
 
-    private void commandParserAndRunner(final String command) throws IOException {
+    private void sayFailed() {
+        this.socketPrintWriter.println("#FAILED");
+    }
+
+    private void sayDownload() {
+        this.socketPrintWriter.println("#DOWNLOAD_START");
+    }
+
+    private void commandParserAndRunner(String command) throws IOException {
         StringBuilder commandBuffer = new StringBuilder();
         Scanner scanner = new Scanner(command.toLowerCase());
         while (scanner.hasNext()) {
             commandBuffer.append(scanner.next());
             if (commandBuffer.toString().equals("help")) {
                 showHelp();
-                scanner.close();
+                sayStop();
                 break;
             }
-            if (commandBuffer.toString().equals("stop")) {
+            if (commandBuffer.toString().equals("quit")) {
                 isExit = true;
+                sayStop();
                 break;
             }
             if (commandBuffer.toString().equals("download")) {
-                fileEngines[0].execOperation(command, this.socketOutputStream);
-                commandBuffer.setLength(0);
+                if (fileEngines[0].execOperation(command, this.socketOutputStream)) {
+                    sayStop();
+                } else {
+                    sayFailed();
+                }
                 break;
             }
             if (commandBuffer.toString().equals("upload")) {
-                fileEngines[1].execOperation(command, this.socketOutputStream);
-                commandBuffer.setLength(0);
+                if (fileEngines[1].execOperation(command, this.socketOutputStream)) {
+                    sayStop();
+                } else {
+                    sayFailed();
+                }
                 break;
-
             }
             if (commandBuffer.toString().equals("ls")) {
-                fileEngines[2].execOperation(command, this.socketOutputStream);
-                commandBuffer.setLength(0);
+                if (fileEngines[2].execOperation(command, this.socketOutputStream)) {
+                    sayStop();
+                } else {
+                    sayFailed();
+                }
                 break;
-
             }
             if (commandBuffer.toString().equals("cd")) {
-                fileEngines[3].execOperation(command, this.socketOutputStream);
-                commandBuffer.setLength(0);
+                if (fileEngines[3].execOperation(command, this.socketOutputStream)) {
+                    sayStop();
+                } else {
+                    sayFailed();
+                }
                 break;
             }
             if (commandBuffer.toString().equals("..")) {
-                fileEngines[4].execOperation(command, this.socketOutputStream);
-                commandBuffer.setLength(0);
+                if (fileEngines[4].execOperation(command, this.socketOutputStream)) {
+                    sayStop();
+                } else {
+                    sayFailed();
+                }
                 break;
             }
+            sayFailed();
         }
+        commandBuffer.setLength(0);
         scanner.close();
     }
 
     private void showHelp() throws IOException {
-        this.socketOutputStream.writeChars("\n\r Type <cd> <directory> - to change current directory to new <directory>  \n\r");
-        this.socketOutputStream.writeChars("\n\r Type <ls> - to show list of files and directories in the current directory \n\r");
-        this.socketOutputStream.writeChars("\n\r Type <..> - to back the parent directory \n\r");
-        this.socketOutputStream.writeChars("\n\r Type <download> <srcFile> - to copy the source file form server to  \n\r");
-        this.socketOutputStream.writeChars("   destination file on the local computer (existed file will be overwrite) \n\r");
-        this.socketOutputStream.writeChars("\n\r Type <upload> <srcFile> - to copy source file form the client computer to  \n\r");
-        this.socketOutputStream.writeChars("   destination folder on the server \n\r");
-        this.socketOutputStream.writeChars("\n\r");
-        this.socketOutputStream.flush();
+        this.socketPrintWriter.println(" Type <cd> <directory> - to change current directory to new <directory>  ");
+        this.socketPrintWriter.println(" Type <ls> - to show list of files and directories in the current directory ");
+        this.socketPrintWriter.println(" Type <..> - to back the parent directory ");
+        this.socketPrintWriter.println(" Type <download> <srcFile> - to copy the source file form server to  ");
+        this.socketPrintWriter.println("   destination file on the local computer (existed file will be overwrite) ");
+        this.socketPrintWriter.println(" Type <upload> <srcFile> - to copy source file form the client computer to  ");
+        this.socketPrintWriter.println("   destination folder on the server ");
+        this.socketPrintWriter.println("");
     }
 
     private void showGreetings() throws IOException {
-        this.socketOutputStream.writeChars("\n\r <============= Greetings User =============> \n\r");
-        this.socketOutputStream.writeChars("\n\r Type <help> - to showHelp on supported commands\n\r");
-        this.socketOutputStream.writeChars("\n\r Type <stop> - to disconnect from server \n\r");
-        this.socketOutputStream.flush();
+        this.socketPrintWriter.println(" <============= Greetings User =============> ");
+        this.socketPrintWriter.println(" Type <help> - to showHelp on supported commands");
+        this.socketPrintWriter.println(" Type <quit> - to disconnect from server ");
     }
 
-
-    @Override
-    public boolean transferFromTo(final DataOutputStream outputStream, final DataInputStream inputStream) {
-        return false;
-    }
-
-    @Override
-    public boolean transferToFrom(DataOutputStream outputStream, DataInputStream inputStream) throws IOException {
-        return false;
-    }
-
-    class ListDir implements FileOperations {
-
+    private class ListDir implements ServerFileOperations {
         @Override
-        public boolean execOperation(final String commandName, final DataOutputStream outStreamToClient) throws IOException {
+        public boolean execOperation(String commandName, OutputStream outStreamToClient) throws IOException {
+            PrintWriter outToClient = new PrintWriter(outStreamToClient, true);
             File listedDir = new File(currentDir);
             String[] list = listedDir.list();
-
-            for (String s : list) {
-                outStreamToClient.writeChars(String.format("/%s%n", s));
+            if (list != null) {
+                outToClient.println("#OK");
+                for (String s : list) {
+                    outToClient.println(String.format("/%s", s));
+                }
+                outToClient.println("");
+                return true;
+            } else {
+                return false;
             }
-            outStreamToClient.writeChars("\n\r");
-            outStreamToClient.flush();
-            return true;
         }
     }
 
-    class ChangeDir implements FileOperations {
-
+    private class ChangeDir implements ServerFileOperations {
         @Override
-        public boolean execOperation(final String commandName, final DataOutputStream outStreamToClient) throws IOException {
-            boolean result;
+        public boolean execOperation(String commandName, OutputStream outStreamToClient) throws IOException {
+            PrintWriter outToClient = new PrintWriter(outStreamToClient, true);
             String tmpTailDir;
-            File chekedDir;
+            File checkedDir;
             StringBuilder tmpBuffer = new StringBuilder();
             Scanner scanner = new Scanner(commandName.toLowerCase());
             scanner.next();
             if (scanner.hasNext()) {
                 tmpTailDir = String.format("%s%s", "/", scanner.next());
+                if ((tmpTailDir.equals("/.")) || (tmpTailDir.contains("//")) || (tmpTailDir.contains("..") || (tmpTailDir.contains("\\")))) {
+                    return false;
+                }
                 tmpBuffer.append(currentDir).append(tmpTailDir);
-                chekedDir = new File(tmpBuffer.toString());
-                if ((chekedDir.isDirectory()) && (chekedDir.exists())) {
+                checkedDir = new File(tmpBuffer.toString());
+                if ((checkedDir.isDirectory()) && (checkedDir.exists())) {
                     currentDir = tmpBuffer.toString();
-                    outStreamToClient.writeChars("\n\rOK\n\r");
-                    outStreamToClient.writeChars(currentDir);
-                    outStreamToClient.writeChars("\n\r");
-                    outStreamToClient.flush();
+                    outToClient.println("#OK");
+                    outToClient.println(currentDir);
+                    outToClient.flush();
                     tailsDir[tailsIndex] = tmpTailDir;
                     tailsIndex++;
                     return true;
                 }
             }
-            outStreamToClient.writeChars("\n\rFAILED\n\r");
-            outStreamToClient.flush();
-            result = false;
-
-            return result;
+            return false;
         }
     }
 
-    class DownloadFile implements FileOperations {
-
+    private class DownloadServerFile implements ServerFileOperations {
         @Override
-        public boolean execOperation(final String commandName, final DataOutputStream outStreamToClient) throws IOException {
+        public boolean execOperation(String commandName, OutputStream outStreamToClient) throws IOException {
+            int BUFFER_SIZE = 64 * 1024;
+            String downloadedFileName;
+            PrintWriter outToClientMessage = new PrintWriter(outStreamToClient, true);
             Scanner scanner = new Scanner(commandName.toLowerCase());
             StringBuilder buffer = new StringBuilder();
             File sourceFile;
             scanner.next();
-            int readElement = 0;
             if (scanner.hasNext()) {
-                buffer.append(currentDir).append("/").append(scanner.next());
-                sourceFile = new File(buffer.toString());
-                if ((sourceFile.exists()) && (sourceFile.isFile())) {
-                    BufferedInputStream fromFileStream = new BufferedInputStream(new FileInputStream(sourceFile));
-                    readElement = fromFileStream.read();
-                    while (readElement >= 0) {
-                        outStreamToClient.write(readElement);
-                        readElement = fromFileStream.read();
-                    }
-                    outStreamToClient.flush();
-                    fromFileStream.close();
-                } else {
-                    outStreamToClient.writeChars("\n\rFAILED\n\r");
-                    outStreamToClient.flush();
+                downloadedFileName = scanner.next();
+                if (downloadedFileName.length() == 0) {
+                    return false;
                 }
+                buffer.append(currentDir).append("/").append(downloadedFileName);
+                sourceFile = new File(buffer.toString());
+
+                if ((sourceFile.exists()) && (sourceFile.isFile())) {
+                    sayDownload();
+                    outToClientMessage.println(downloadedFileName);
+
+                    BufferedInputStream buffFileIn = new BufferedInputStream(new FileInputStream(sourceFile), BUFFER_SIZE);
+                    DataOutputStream dataOutStreamToClient = new DataOutputStream(outStreamToClient);
+
+                    long fileLength = sourceFile.length();
+                    int enumerator;
+                    byte[] chunk = new byte[BUFFER_SIZE];
+
+                    System.out.printf("%nFile Length for download is %d bytes %n", fileLength);
+                    dataOutStreamToClient.write(longToByteArray(fileLength));
+                    System.out.println(Arrays.toString(longToByteArray(fileLength)));
+                    dataOutStreamToClient.flush();
+
+                    while ((enumerator = buffFileIn.read(chunk)) != -1) {
+                        dataOutStreamToClient.write(chunk, 0, enumerator);
+                        System.out.printf("Bytes read per iteration is %d%n", enumerator);
+                        dataOutStreamToClient.flush();
+                    }
+                    System.out.printf("Download file finished, number of bytes is transmitted to client is %d%n", fileLength);
+                    buffFileIn.close();
+                } else {
+                    return false;
+                }
+            } else {
+                return false;
             }
             return true;
         }
+
+        byte[] longToByteArray(long value) {
+            return new byte[]
+                    {
+                            (byte) (value >>> 56),
+                            (byte) (value >>> 48),
+                            (byte) (value >>> 40),
+                            (byte) (value >>> 32),
+                            (byte) (value >>> 24),
+                            (byte) (value >>> 16),
+                            (byte) (value >>> 8),
+                            (byte) value
+                    };
+        }
     }
 
-    class UploadFile implements FileOperations {
-
+    private class UploadServerFile implements ServerFileOperations {
         @Override
-        public boolean execOperation(final String commandName, final DataOutputStream outMessage) {
+        public boolean execOperation(String commandName, OutputStream outMessage) {
             return false;
         }
 
     }
 
-    class GoToParent implements FileOperations {
+    private class GoToParent implements ServerFileOperations {
         @Override
-        public boolean execOperation(final String commandName, final DataOutputStream outStreamToClient) throws IOException {
-            boolean result;
+        public boolean execOperation(String commandName, OutputStream outStreamToClient) throws IOException {
+            PrintWriter outToClient = new PrintWriter(outStreamToClient, true);
             if (!currentDir.equals(parentDir)) {
                 tailsIndex--;
                 currentDir = currentDir.substring(0, currentDir.length() - tailsDir[tailsIndex].length());
-                outStreamToClient.writeChars("\n\rOK\n\r");
-                outStreamToClient.writeChars(currentDir);
-                outStreamToClient.writeChars("\n\r");
-                outStreamToClient.flush();
-                result = true;
+                outToClient.println("#OK");
+                outToClient.println(currentDir);
+                outToClient.println("");
+                return true;
             } else {
-                outStreamToClient.writeChars("\n\rFAILED\n\r");
-                outStreamToClient.flush();
-                result = false;
+                return false;
             }
-            outStreamToClient.flush();
-            return result;
         }
     }
-
 }
+
+
+
+

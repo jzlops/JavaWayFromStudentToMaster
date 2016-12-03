@@ -20,7 +20,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>ru.tikhonov.term1.consoleChat.Run</mainClass>
+                            <mainClass>ru.tikhonov.term1.fserver.ServerRun</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

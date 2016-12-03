@@ -1,4 +1,4 @@
-package ru.tikhonov.term1.fserver;
+package ru.tikhonov.term1.fclient;
 
 import java.io.IOException;
 
@@ -7,8 +7,7 @@ import java.io.IOException;
  */
 public class ClientRun {
     public static void main(String[] args) throws IOException {
-        ConsoleInputOutput consoleInputOutput = new ConsoleInputOutput();
-        Client client = new Client(consoleInputOutput);
+        Client client = new Client();
         client.start();
     }
 }
