@@ -14,8 +14,14 @@ class Client {
     private boolean inputStreamReadPause = false;
     private String currentDir = ".";
     private String downloadFileName;
+    private String uploadFileName;
     private boolean isExit = false;
 
+    /**
+     * Запускаем клиента
+     *
+     * @throws IOException
+     */
     void start() throws IOException {
         Socket socket = new Socket("127.0.0.1", 9999);
         this.socketInputStream = socket.getInputStream();
@@ -37,6 +43,12 @@ class Client {
     }
 
     private class InOut implements ru.tikhonov.term1.fclient.InputOutput {
+        /**
+         * Метод для считывания ответов от сервера
+         *
+         * @param inputStream входящий поток на клиенте
+         * @throws IOException
+         */
         @Override
         public void transferFrom(InputStream inputStream) throws IOException {
             Scanner scanner = new Scanner(inputStream);
@@ -58,12 +70,25 @@ class Client {
                     inOut[0].transferFrom(socketInputStream);
                     return;
                 }
+                if ((buffer.toString().equals("#UPLOAD_START")) && (scanner.hasNextLine())) {
+                    uploadFileName = scanner.nextLine();
+                    inOut[0].transferTo(socketOutputStream);
+                    return;
+                }
+                /* вывод на консоль данных с сервера */
                 System.out.println(buffer.toString());
                 buffer.setLength(0);
             }
             inputStreamReadPause = true;
         }
 
+        /**
+         * Метод для считывания комманд с консоли от пользователя и передача их серверу
+         * Осуществляет частичный арсинг комманд, часть комманд парстится на сервере (что плохо очень, передалю потом)
+         *
+         * @param outputStream исходящий поток клиента
+         * @throws IOException
+         */
         @Override
         public void transferTo(OutputStream outputStream) throws IOException {
             PrintWriter out = new PrintWriter(outputStream, true);
@@ -71,65 +96,201 @@ class Client {
             StringBuilder buffer = new StringBuilder();
             if (scanner.hasNextLine()) {
                 buffer.append(scanner.nextLine());
-                out.println(buffer.toString());
+
+                if ((buffer.toString().toLowerCase().startsWith("upload")) && (buffer.toString().length()) > "upload".length()) {
+                    if (!fileIsNotDirCheck(buffer.toString())) {
+                        System.out.println("#FAILED!");
+                        return;
+                    }
+                }
+                if ((buffer.toString().toLowerCase().startsWith("download")) && (buffer.toString().length()) > "download".length()) {
+                    if (!fileIsNotDirCheck(buffer.toString())) {
+                        System.out.println("#FAILED!");
+                        return;
+                    }
+                }
+                if (buffer.toString().toLowerCase().equals("download")) {
+                    System.out.println("#FAILED!");
+                    return;
+                }
+                if (buffer.toString().toLowerCase().equals("upload")) {
+                    System.out.println("#FAILED!");
+                    return;
+                }
                 if (buffer.toString().toLowerCase().equals("quit")) {
                     isExit = true;
+                    out.println(buffer.toString());
+                    return;
+                }
+                if (!buffer.toString().equals("")) {
+                    out.println(buffer.toString());
+                    inputStreamReadPause = false;
                 }
             }
-            inputStreamReadPause = false;
+        }
+
+        /**
+         * Парсим комманды работы с файлами и проверяем что это - не дирректория
+         *
+         * @param command комманада для проверки
+         * @return
+         */
+        private boolean fileIsNotDirCheck(String command) {
+            Scanner scanner = new Scanner(command.toLowerCase());
+            File checkedFile;
+            String fileName;
+            scanner.next();
+            if (scanner.hasNext()) {
+                fileName = scanner.next();
+                if (fileName.length() == 0) {
+                    return false;
+                }
+                checkedFile = new File(String.format("%s%s%s", currentDir, "/", fileName));
+                if (checkedFile.isDirectory()) {
+                    return false;
+                }
+            } else {
+                return false;
+            }
+            return true;
         }
     }
 
     private class fileDownloadUpload implements ru.tikhonov.term1.fclient.InputOutput {
+        /**
+         * Метод для скачивания файла с сервера
+         *
+         * @param inputStream входящий сетевой поток на клиенте
+         * @throws IOException
+         */
         @Override
         public void transferFrom(InputStream inputStream) throws IOException {
-            File dstFile = new File(currentDir + "/" + downloadFileName);
-            int BUFFER_SIZE = 64 * 1024;
-            if ((dstFile.exists()) && (dstFile.isFile())) {
-                dstFile.delete();
+            File fileFromServer = new File(currentDir + "/" + downloadFileName);
+            if ((fileFromServer.exists()) && (fileFromServer.isFile())) {
+                fileFromServer.delete();
             }
-            dstFile.createNewFile();
+            fileFromServer.createNewFile();
 
-            BufferedOutputStream buffFileOut = new BufferedOutputStream(new FileOutputStream(dstFile));
+            BufferedOutputStream bufferedFileStream = new BufferedOutputStream(new FileOutputStream(fileFromServer));
             DataInputStream dataInputStreamFromServer = new DataInputStream(inputStream);
 
+            int BUFFER_SIZE = 64 * 1024;
             byte[] b = new byte[8];
             byte[] chunk = new byte[BUFFER_SIZE];
             long supposeFileLength;
-            long iterCount;
+            long iterationCount;
             int enumerator;
             long lastBuffer;
+
+            /*читаем массив из 8 байтов представляющий длинну скачиваемого файла
+             * конвертируем массив в число long */
             dataInputStreamFromServer.read(b, 0, 8);
             supposeFileLength = byteArrayToLong(b, 0);
             System.out.printf("File length is %d bytes %n", supposeFileLength);
-            iterCount = supposeFileLength / BUFFER_SIZE;
+            iterationCount = supposeFileLength / BUFFER_SIZE;
             lastBuffer = supposeFileLength % BUFFER_SIZE;
-            while (iterCount >= 0) {
-                if ((iterCount > 0) && (dataInputStreamFromServer.available() >= BUFFER_SIZE)) {
+
+            /*Читаем входной поток на клиенте кусками BUFFER_SIZE и остатком от буфера на последне итерции
+            * если в потоке нет данных, ждем его заполнения*/
+            while (iterationCount >= 0) {
+                if ((iterationCount > 0) && (dataInputStreamFromServer.available() >= BUFFER_SIZE)) {
                     enumerator = dataInputStreamFromServer.read(chunk);
-                    buffFileOut.write(chunk, 0, enumerator);
+                    bufferedFileStream.write(chunk, 0, BUFFER_SIZE);
+                    bufferedFileStream.flush();
                     System.out.printf("Bytes read per iteration from input socket %d%n", enumerator);
-                    iterCount--;
+                    iterationCount--;
                     continue;
                 }
-                if ((iterCount == 0) && (dataInputStreamFromServer.available() == lastBuffer)) {
+                if ((iterationCount == 0) && (dataInputStreamFromServer.available() == lastBuffer)) {
                     enumerator = dataInputStreamFromServer.read(chunk);
-                    buffFileOut.write(chunk, 0, enumerator);
+                    bufferedFileStream.write(chunk, 0, (int) lastBuffer);
+                    bufferedFileStream.flush();
                     System.out.printf("Bytes read per iteration from input socket %d%n", enumerator);
-                    iterCount--;
-                    continue;
+                    iterationCount--;
                 }
             }
-            buffFileOut.flush();
-            buffFileOut.close();
+            bufferedFileStream.flush();
+            bufferedFileStream.close();
             System.out.printf("Bytes remain in input socket buffer is %d%n", dataInputStreamFromServer.available());
             System.out.printf("Download file is finished %n");
         }
 
+        /**
+         * Загрузка файла на сервер
+         *
+         * @param outputStreamToServer выходной сетевой поток клиента
+         * @throws IOException
+         */
         @Override
-        public void transferTo(OutputStream outputStream) throws IOException {
+        public void transferTo(OutputStream outputStreamToServer) throws IOException {
+            File sourceFile = new File(currentDir + "/" + uploadFileName);
+            int BUFFER_SIZE = 64 * 1024;
+
+            BufferedInputStream bufferedFileStream = new BufferedInputStream(new FileInputStream(sourceFile), BUFFER_SIZE);
+            DataOutputStream dataOutputStreamToServer = new DataOutputStream(outputStreamToServer);
+
+            long supposeFileLength = sourceFile.length();
+            int enumerator;
+            byte[] chunk = new byte[BUFFER_SIZE];
+            long iterationCount = supposeFileLength / BUFFER_SIZE;
+            long lastBuffer = supposeFileLength % BUFFER_SIZE;
+
+            System.out.printf("%nFile Length for upload is %d bytes %n", supposeFileLength);
+
+            /*сообщаем серверу длинну выгружаемого файла в виде массива из 8 байтов*/
+            dataOutputStreamToServer.write(longToByteArray(supposeFileLength));
+            dataOutputStreamToServer.flush();
+
+            /* Выгрузка файла кусками BUFFER_SIZE в выхдной поток на клиенте и остаток от буфера на последней итерации*/
+            /* если в потоке нет данных, ждем его заполнения*/
+            while (iterationCount >= 0) {
+                if ((iterationCount > 0) && (bufferedFileStream.available() >= BUFFER_SIZE)) {
+                    enumerator = bufferedFileStream.read(chunk);
+                    dataOutputStreamToServer.write(chunk, 0, BUFFER_SIZE);
+                    System.out.printf("Bytes read per iteration is %d%n", enumerator);
+                    dataOutputStreamToServer.flush();
+                    iterationCount--;
+                    continue;
+                }
+                if ((iterationCount == 0) && (bufferedFileStream.available() == lastBuffer)) {
+                    enumerator = bufferedFileStream.read(chunk);
+                    dataOutputStreamToServer.write(chunk, 0, (int) lastBuffer);
+                    System.out.printf("Bytes read per iteration is %d%n", enumerator);
+                    dataOutputStreamToServer.flush();
+                    iterationCount--;
+                }
+            }
+            System.out.printf("Upload file finished, number of bytes is transmitted to Server is %d%n", supposeFileLength);
+            bufferedFileStream.close();
         }
 
+        /**
+         * Конвертер long -> byte[8]
+         *
+         * @param value значние long
+         * @return
+         */
+        byte[] longToByteArray(long value) {
+            return new byte[]
+                    {
+                            (byte) (value >>> 56),
+                            (byte) (value >>> 48),
+                            (byte) (value >>> 40),
+                            (byte) (value >>> 32),
+                            (byte) (value >>> 24),
+                            (byte) (value >>> 16),
+                            (byte) (value >>> 8),
+                            (byte) value
+                    };
+        }
+
+        /**
+         * Конвертор byte[]->long
+         *
+         * @param buffer массив byte
+         * @param offset смещеение
+         * @return
+         */
         long byteArrayToLong(byte[] buffer, int offset) {
             return (buffer[offset] << 56)
                     + ((buffer[offset + 1] & 0xFF) << 48)

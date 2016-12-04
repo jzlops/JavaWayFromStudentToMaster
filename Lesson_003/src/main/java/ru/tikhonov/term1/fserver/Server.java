@@ -3,11 +3,10 @@ package ru.tikhonov.term1.fserver;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.Arrays;
 import java.util.Scanner;
 
 /**
- * Класс сервера
+ * Класс консольного сервера
  *
  * @author Sergey Tikhonov
  */
@@ -24,15 +23,15 @@ class Server {
     private int tailsIndex = 0;
 
     /**
-     * Создаем сервер и сокет к нему на порту 9999
+     * Создаем сервер
      *
      * @throws IOException
      */
     void start(String parentDir) throws IOException {
+        this.start();
         this.parentDir = parentDir;
         this.currentDir = parentDir;
         tailsDir[0] = "";
-        this.start();
     }
 
     void start() throws IOException {
@@ -51,10 +50,13 @@ class Server {
         this.fileEngines[3] = this.new ChangeDir();
         this.fileEngines[4] = this.new GoToParent();
 
+        /*выволдим приветсвие*/
         showGreetings();
+        /*посылаем комманду СТОП на клиент*/
         sayStop();
 
         String s;
+
         while (!this.isExit) {
             if ((s = this.socketBufferedReader.readLine()) != null) {
                 this.commandParserAndRunner(s);
@@ -62,26 +64,48 @@ class Server {
         }
         this.socketOutputStream.close();
         this.socketInputStream.close();
-
     }
 
+    /**
+     * Сказать клиенту СТОП
+     */
     private void sayStop() {
         this.socketPrintWriter.println("#STOP");
     }
 
+    /**
+     * Сказать клиенту ОШИБКА
+     */
     private void sayFailed() {
         this.socketPrintWriter.println("#FAILED");
     }
 
+    /**
+     * Сказать клиенту ЗАГРУЗКА НАЧАТА
+     */
     private void sayDownload() {
         this.socketPrintWriter.println("#DOWNLOAD_START");
     }
 
+    /**
+     * Сказать клиенту ВЫГРУЗКА НАЧАТА
+     */
+    private void sayUpload() {
+        this.socketPrintWriter.println("#UPLOAD_START");
+    }
+
+    /**
+     * Основной парсер комманд на стороне серера (необходимо перенести большую часть фунционаа на клиент
+     *
+     * @param command комманада для парсинга данных
+     * @throws IOException
+     */
     private void commandParserAndRunner(String command) throws IOException {
         StringBuilder commandBuffer = new StringBuilder();
         Scanner scanner = new Scanner(command.toLowerCase());
         while (scanner.hasNext()) {
             commandBuffer.append(scanner.next());
+
             if (commandBuffer.toString().equals("help")) {
                 showHelp();
                 sayStop();
@@ -93,7 +117,7 @@ class Server {
                 break;
             }
             if (commandBuffer.toString().equals("download")) {
-                if (fileEngines[0].execOperation(command, this.socketOutputStream)) {
+                if (fileEngines[0].execOperation(command, this.socketOutputStream, null)) {
                     sayStop();
                 } else {
                     sayFailed();
@@ -101,7 +125,7 @@ class Server {
                 break;
             }
             if (commandBuffer.toString().equals("upload")) {
-                if (fileEngines[1].execOperation(command, this.socketOutputStream)) {
+                if (fileEngines[1].execOperation(command, this.socketOutputStream, this.socketInputStream)) {
                     sayStop();
                 } else {
                     sayFailed();
@@ -109,7 +133,7 @@ class Server {
                 break;
             }
             if (commandBuffer.toString().equals("ls")) {
-                if (fileEngines[2].execOperation(command, this.socketOutputStream)) {
+                if (fileEngines[2].execOperation(command, this.socketOutputStream, null)) {
                     sayStop();
                 } else {
                     sayFailed();
@@ -117,7 +141,7 @@ class Server {
                 break;
             }
             if (commandBuffer.toString().equals("cd")) {
-                if (fileEngines[3].execOperation(command, this.socketOutputStream)) {
+                if (fileEngines[3].execOperation(command, this.socketOutputStream, null)) {
                     sayStop();
                 } else {
                     sayFailed();
@@ -125,7 +149,7 @@ class Server {
                 break;
             }
             if (commandBuffer.toString().equals("..")) {
-                if (fileEngines[4].execOperation(command, this.socketOutputStream)) {
+                if (fileEngines[4].execOperation(command, this.socketOutputStream, null)) {
                     sayStop();
                 } else {
                     sayFailed();
@@ -138,6 +162,11 @@ class Server {
         scanner.close();
     }
 
+    /**
+     * Выкнуть в поток клиенут информацию по коммандам
+     *
+     * @throws IOException
+     */
     private void showHelp() throws IOException {
         this.socketPrintWriter.println(" Type <cd> <directory> - to change current directory to new <directory>  ");
         this.socketPrintWriter.println(" Type <ls> - to show list of files and directories in the current directory ");
@@ -149,6 +178,12 @@ class Server {
         this.socketPrintWriter.println("");
     }
 
+    /**
+     * Выкнуть в поток клиенут приветсвие
+     *
+     * @throws IOException
+     */
+
     private void showGreetings() throws IOException {
         this.socketPrintWriter.println(" <============= Greetings User =============> ");
         this.socketPrintWriter.println(" Type <help> - to showHelp on supported commands");
@@ -156,8 +191,17 @@ class Server {
     }
 
     private class ListDir implements ServerFileOperations {
+        /**
+         * Выводит клиенту список файлов и директорий
+         *
+         * @param commandName           комманда
+         * @param outStreamToClient     выходной сетевой поток
+         * @param inputStreamFromClient входной сетевой поток
+         * @return результат выполнения
+         * @throws IOException
+         */
         @Override
-        public boolean execOperation(String commandName, OutputStream outStreamToClient) throws IOException {
+        public boolean execOperation(String commandName, OutputStream outStreamToClient, InputStream inputStreamFromClient) throws IOException {
             PrintWriter outToClient = new PrintWriter(outStreamToClient, true);
             File listedDir = new File(currentDir);
             String[] list = listedDir.list();
@@ -176,7 +220,16 @@ class Server {
 
     private class ChangeDir implements ServerFileOperations {
         @Override
-        public boolean execOperation(String commandName, OutputStream outStreamToClient) throws IOException {
+        /**
+         * Спускаемся вниз по деррикториям
+         *
+         * @param commandName           комманда
+         * @param outStreamToClient     выходной сетевой поток
+         * @param inputStreamFromClient входной сетевой поток
+         * @return результат выполнения
+         * @throws IOException
+         */
+        public boolean execOperation(String commandName, OutputStream outStreamToClient, InputStream inputStreamFromClient) throws IOException {
             PrintWriter outToClient = new PrintWriter(outStreamToClient, true);
             String tmpTailDir;
             File checkedDir;
@@ -204,47 +257,103 @@ class Server {
         }
     }
 
+    private class GoToParent implements ServerFileOperations {
+        @Override
+        /**
+         * Поднимаемся вверх по директориям
+         *
+         * @param commandName           комманда
+         * @param outStreamToClient     выходной сетевой поток
+         * @param inputStreamFromClient входной сетевой поток
+         * @return результат выполнения
+         * @throws IOException
+         */
+        public boolean execOperation(String commandName, OutputStream outStreamToClient, InputStream inputStreamFromClient) throws IOException {
+            PrintWriter outToClient = new PrintWriter(outStreamToClient, true);
+            if (!currentDir.equals(parentDir)) {
+                tailsIndex--;
+                currentDir = currentDir.substring(0, currentDir.length() - tailsDir[tailsIndex].length());
+                outToClient.println("#OK");
+                outToClient.println(currentDir);
+                outToClient.println("");
+                return true;
+            } else {
+                return false;
+            }
+        }
+    }
+
     private class DownloadServerFile implements ServerFileOperations {
         @Override
-        public boolean execOperation(String commandName, OutputStream outStreamToClient) throws IOException {
+        /**
+         * Закгржаем файл на клиента
+         *
+         * @param commandName           комманда
+         * @param outStreamToClient     выходной сетевой поток
+         * @param inputStreamFromClient входной сетевой поток
+         * @return результат выполнения
+         * @throws IOException
+         */
+        public boolean execOperation(String commandName, OutputStream outStreamToClient, InputStream inputStreamFromClient) throws IOException {
             int BUFFER_SIZE = 64 * 1024;
-            String downloadedFileName;
+            String fileNameToClient;
             PrintWriter outToClientMessage = new PrintWriter(outStreamToClient, true);
             Scanner scanner = new Scanner(commandName.toLowerCase());
             StringBuilder buffer = new StringBuilder();
-            File sourceFile;
+            File fileToClient;
             scanner.next();
             if (scanner.hasNext()) {
-                downloadedFileName = scanner.next();
-                if (downloadedFileName.length() == 0) {
+                fileNameToClient = scanner.next();
+                if (fileNameToClient.length() == 0) {
                     return false;
                 }
-                buffer.append(currentDir).append("/").append(downloadedFileName);
-                sourceFile = new File(buffer.toString());
+                buffer.append(currentDir).append("/").append(fileNameToClient);
+                fileToClient = new File(buffer.toString());
 
-                if ((sourceFile.exists()) && (sourceFile.isFile())) {
+                if ((fileToClient.exists()) && (fileToClient.isFile())) {
+
+                    /*После всевозможного парсинга - говорим клиенту что начанаем загрузку*/
                     sayDownload();
-                    outToClientMessage.println(downloadedFileName);
+                    outToClientMessage.println(fileNameToClient);
 
-                    BufferedInputStream buffFileIn = new BufferedInputStream(new FileInputStream(sourceFile), BUFFER_SIZE);
+
+                    BufferedInputStream bufferedFileStream = new BufferedInputStream(new FileInputStream(fileToClient), BUFFER_SIZE);
                     DataOutputStream dataOutStreamToClient = new DataOutputStream(outStreamToClient);
 
-                    long fileLength = sourceFile.length();
+                    long supposeFileLength = fileToClient.length();
                     int enumerator;
                     byte[] chunk = new byte[BUFFER_SIZE];
+                    long iterationCount;
+                    long lastBuffer;
 
-                    System.out.printf("%nFile Length for download is %d bytes %n", fileLength);
-                    dataOutStreamToClient.write(longToByteArray(fileLength));
-                    System.out.println(Arrays.toString(longToByteArray(fileLength)));
+                    System.out.printf("%nFile Length for download is %d bytes %n", supposeFileLength);
+                    dataOutStreamToClient.write(longToByteArray(supposeFileLength));
                     dataOutStreamToClient.flush();
 
-                    while ((enumerator = buffFileIn.read(chunk)) != -1) {
-                        dataOutStreamToClient.write(chunk, 0, enumerator);
-                        System.out.printf("Bytes read per iteration is %d%n", enumerator);
-                        dataOutStreamToClient.flush();
+                    iterationCount = supposeFileLength / BUFFER_SIZE;
+                    lastBuffer = supposeFileLength % BUFFER_SIZE;
+
+                    /*Читаем входной поток от файла кусками BUFFER_SIZE и остатком от буфера на последне итерции и передаем в исходящий сетевой поток
+                    * если в файловом потоке нет данных, ждем его заполнения*/
+                    while (iterationCount >= 0) {
+                        if ((iterationCount > 0) && (bufferedFileStream.available() >= BUFFER_SIZE)) {
+                            enumerator = bufferedFileStream.read(chunk);
+                            dataOutStreamToClient.write(chunk, 0, BUFFER_SIZE);
+                            dataOutStreamToClient.flush();
+                            System.out.printf("Bytes read  per iteration from input socket %d%n", enumerator);
+                            iterationCount--;
+                            continue;
+                        }
+                        if ((iterationCount == 0) && (bufferedFileStream.available() == lastBuffer)) {
+                            enumerator = bufferedFileStream.read(chunk);
+                            dataOutStreamToClient.write(chunk, 0, (int) lastBuffer);
+                            dataOutStreamToClient.flush();
+                            System.out.printf("Bytes read per iteration from input  socket %d%n", enumerator);
+                            iterationCount--;
+                        }
                     }
-                    System.out.printf("Download file finished, number of bytes is transmitted to client is %d%n", fileLength);
-                    buffFileIn.close();
+                    System.out.printf("Download file finished, number of bytes is transmitted to client is %d%n", supposeFileLength);
+                    bufferedFileStream.close();
                 } else {
                     return false;
                 }
@@ -254,6 +363,12 @@ class Server {
             return true;
         }
 
+        /**
+         * Конвертер long -> byte[8]
+         *
+         * @param value значние long
+         * @return
+         */
         byte[] longToByteArray(long value) {
             return new byte[]
                     {
@@ -271,26 +386,105 @@ class Server {
 
     private class UploadServerFile implements ServerFileOperations {
         @Override
-        public boolean execOperation(String commandName, OutputStream outMessage) {
-            return false;
-        }
+        /**
+         * Скачиваем файл с клиента
+         *
+         * @param commandName           комманда
+         * @param outStreamToClient     выходной сетевой поток
+         * @param inputStreamFromClient входной сетевой поток
+         * @return результат выполнения
+         * @throws IOException
+         */
+        public boolean execOperation(String commandName, OutputStream outStreamToClient, InputStream inputStreamFromClient) throws IOException {
+            int BUFFER_SIZE = 64 * 1024;
+            String fileNameFromClient;
+            PrintWriter outToClientMessage = new PrintWriter(outStreamToClient, true);
+            Scanner scanner = new Scanner(commandName.toLowerCase());
+            StringBuilder buffer = new StringBuilder();
+            File fileFromClient;
+            scanner.next();
+            if (scanner.hasNext()) {
+                fileNameFromClient = scanner.next();
+                if (fileNameFromClient.length() == 0) {
+                    return false;
+                }
+                buffer.append(currentDir).append("/").append(fileNameFromClient);
+                fileFromClient = new File(buffer.toString());
 
-    }
+                if (!fileFromClient.isFile()) {
+                    return false;
+                }
+                if (fileFromClient.exists()) {
+                    fileFromClient.delete();
+                }
+                fileFromClient.createNewFile();
 
-    private class GoToParent implements ServerFileOperations {
-        @Override
-        public boolean execOperation(String commandName, OutputStream outStreamToClient) throws IOException {
-            PrintWriter outToClient = new PrintWriter(outStreamToClient, true);
-            if (!currentDir.equals(parentDir)) {
-                tailsIndex--;
-                currentDir = currentDir.substring(0, currentDir.length() - tailsDir[tailsIndex].length());
-                outToClient.println("#OK");
-                outToClient.println(currentDir);
-                outToClient.println("");
-                return true;
+                /*После всевозможного парсинга - говорим клиенту что начанаем выгрузку*/
+                sayUpload();
+                outToClientMessage.println(fileNameFromClient);
+
+                BufferedOutputStream bufferedFileStream = new BufferedOutputStream(new FileOutputStream(fileFromClient), BUFFER_SIZE);
+                DataInputStream dataInStreamFromClient = new DataInputStream(inputStreamFromClient);
+
+                byte[] b = new byte[8];
+                byte[] chunk = new byte[BUFFER_SIZE];
+                long supposeFileLength;
+                long iterationCount;
+                int enumerator;
+                long lastBuffer;
+
+                dataInStreamFromClient.read(b, 0, 8);
+                supposeFileLength = byteArrayToLong(b, 0);
+                System.out.printf("File length is %d bytes %n", supposeFileLength);
+                iterationCount = supposeFileLength / BUFFER_SIZE;
+                lastBuffer = supposeFileLength % BUFFER_SIZE;
+
+                /*Читаем входной сетевой поток кусками BUFFER_SIZE и остатком от буфера на последне итерции и пишем все в фаловый поток
+                * если в сетевом потоке нет данных, ждем его заполнения*/
+                while (iterationCount >= 0) {
+                    if ((iterationCount > 0) && (dataInStreamFromClient.available() >= BUFFER_SIZE)) {
+                        enumerator = dataInStreamFromClient.read(chunk);
+                        bufferedFileStream.write(chunk, 0, BUFFER_SIZE);
+                        bufferedFileStream.flush();
+                        System.out.printf("Bytes read per  iteration from input socket %d%n", enumerator);
+                        iterationCount--;
+                        continue;
+                    }
+                    if ((iterationCount == 0) && (dataInStreamFromClient.available() == lastBuffer)) {
+                        enumerator = dataInStreamFromClient.read(chunk);
+                        bufferedFileStream.write(chunk, 0, (int) lastBuffer);
+                        bufferedFileStream.flush();
+                        System.out.printf("Bytes read  per iteration from input socket %d%n", enumerator);
+                        iterationCount--;
+                    }
+                }
+                bufferedFileStream.flush();
+                bufferedFileStream.close();
+                System.out.printf("Bytes remain in input socket buffer is %d%n", dataInStreamFromClient.available());
+                System.out.printf("Upload file is finished %n");
+
             } else {
                 return false;
             }
+            return true;
+        }
+
+        /**
+         * Конвертор byte[]->long
+         *
+         * @param buffer массив byte
+         * @param offset смещеение
+         * @return
+         */
+        long byteArrayToLong(byte[] buffer, int offset) {
+            return (buffer[offset] << 56)
+                    + ((buffer[offset + 1] & 0xFF) << 48)
+                    + ((buffer[offset + 2] & 0xFF) << 40)
+                    + ((buffer[offset + 3] & 0xFF) << 32)
+                    + ((buffer[offset + 4] & 0xFF) << 24)
+                    + ((buffer[offset + 5] & 0xFF) << 16)
+                    + ((buffer[offset + 6] & 0xFF) << 8)
+                    + (buffer[offset + 7] & 0xFF);
         }
     }
 }

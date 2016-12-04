@@ -1,12 +1,14 @@
 package ru.tikhonov.term1.fserver;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
+
 /**
- * Интерфейс для работы с файловым менеджером
+ * Интерфес для работы с файлами
  *
  * @author Sergey Tikhonov
  */
- interface ServerFileOperations {
-    boolean execOperation( String commandName,  OutputStream outMessage) throws IOException;
+interface ServerFileOperations {
+    boolean execOperation(String commandName, OutputStream outMessage, InputStream inMessage) throws IOException;
 }
