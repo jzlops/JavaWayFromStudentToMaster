@@ -11,7 +11,11 @@ public class ServerRun {
         if (args.length > 0){
             server.start(args[0]);
         } else{
-            server.start();
+            try {
+                server.start();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 }

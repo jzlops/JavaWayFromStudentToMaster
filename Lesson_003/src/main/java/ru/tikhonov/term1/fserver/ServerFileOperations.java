@@ -10,5 +10,5 @@ import java.io.OutputStream;
  * @author Sergey Tikhonov
  */
 interface ServerFileOperations {
-    boolean execOperation(String commandName, OutputStream outMessage, InputStream inMessage) throws IOException;
+    boolean execOperation(String commandName, OutputStream outMessage, InputStream inMessage);
 }

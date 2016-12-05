@@ -8,9 +8,9 @@ import java.io.*;
  * @author Sergey Tikhonov
  */
 public interface InputOutput {
-    void transferFrom(InputStream inputStream) throws IOException;
+    void transferFrom(InputStream inputStream);
 
-    void transferTo(OutputStream outputStream) throws IOException;
+    void transferTo(OutputStream outputStream);
 
 
 }

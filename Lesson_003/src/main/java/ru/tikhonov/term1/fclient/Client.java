@@ -16,29 +16,38 @@ class Client {
     private String downloadFileName;
     private String uploadFileName;
     private boolean isExit = false;
+    private Scanner consoleScanner;
 
     /**
      * Запускаем клиента
      *
      * @throws IOException
      */
-    void start() throws IOException {
-        Socket socket = new Socket("127.0.0.1", 9999);
-        this.socketInputStream = socket.getInputStream();
-        this.socketOutputStream = socket.getOutputStream();
+    void start() {
 
-        this.inOut[0] = new fileDownloadUpload();
-        this.inOut[1] = new InOut();
+        try (Socket socket = new Socket("127.0.0.1", 9999);
+             InputStream socketInputStream = socket.getInputStream();
+             OutputStream socketOutputStream = socket.getOutputStream();
+             Scanner consoleScanner = new Scanner(System.in)) {
 
-        while (!isExit) {
-            if (!this.inputStreamReadPause) {
-                this.inOut[1].transferFrom(this.socketInputStream);
+            this.consoleScanner = consoleScanner;
+            this.socketInputStream = socketInputStream;
+            this.socketOutputStream = socketOutputStream;
+
+
+            this.inOut[0] = new fileDownloadUpload();
+            this.inOut[1] = new InOut();
+
+            while (!isExit) {
+                if (!this.inputStreamReadPause) {
+                    this.inOut[1].transferFrom(this.socketInputStream);
+                }
+                if (this.inputStreamReadPause) {
+                    this.inOut[1].transferTo(this.socketOutputStream);
+                }
             }
-
-            if (this.inputStreamReadPause) {
-                this.inOut[1].transferTo(this.socketOutputStream);
-
-            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -50,7 +59,7 @@ class Client {
          * @throws IOException
          */
         @Override
-        public void transferFrom(InputStream inputStream) throws IOException {
+        public void transferFrom(InputStream inputStream) {
             Scanner scanner = new Scanner(inputStream);
             StringBuilder buffer = new StringBuilder();
 
@@ -90,15 +99,15 @@ class Client {
          * @throws IOException
          */
         @Override
-        public void transferTo(OutputStream outputStream) throws IOException {
+        public void transferTo(OutputStream outputStream) {
             PrintWriter out = new PrintWriter(outputStream, true);
-            Scanner scanner = new Scanner(System.in);
             StringBuilder buffer = new StringBuilder();
-            if (scanner.hasNextLine()) {
-                buffer.append(scanner.nextLine());
+
+            if (consoleScanner.hasNextLine()) {
+                buffer.append(consoleScanner.nextLine());
 
                 if ((buffer.toString().toLowerCase().startsWith("upload")) && (buffer.toString().length()) > "upload".length()) {
-                    if (!fileIsNotDirCheck(buffer.toString())) {
+                    if (!fileExistCheck(buffer.toString())) {
                         System.out.println("#FAILED!");
                         return;
                     }
@@ -137,6 +146,26 @@ class Client {
          */
         private boolean fileIsNotDirCheck(String command) {
             Scanner scanner = new Scanner(command.toLowerCase());
+            File chckdFile;
+            String fileName;
+            scanner.next();
+            if (scanner.hasNext()) {
+                fileName = scanner.next();
+                if (fileName.length() == 0) {
+                    return false;
+                }
+                chckdFile = new File(String.format("%s%s%s", currentDir, "/", fileName));
+                if (chckdFile.isDirectory()) {
+                    return false;
+                }
+            } else {
+                return false;
+            }
+            return true;
+        }
+
+        private boolean fileExistCheck(String command) {
+            Scanner scanner = new Scanner(command.toLowerCase());
             File checkedFile;
             String fileName;
             scanner.next();
@@ -149,6 +178,9 @@ class Client {
                 if (checkedFile.isDirectory()) {
                     return false;
                 }
+                if (!checkedFile.exists()) {
+                    return false;
+                }
             } else {
                 return false;
             }
@@ -156,7 +188,7 @@ class Client {
         }
     }
 
-    private class fileDownloadUpload implements ru.tikhonov.term1.fclient.InputOutput {
+    private class fileDownloadUpload implements InputOutput {
         /**
          * Метод для скачивания файла с сервера
          *
@@ -164,55 +196,60 @@ class Client {
          * @throws IOException
          */
         @Override
-        public void transferFrom(InputStream inputStream) throws IOException {
-            File fileFromServer = new File(currentDir + "/" + downloadFileName);
-            if ((fileFromServer.exists()) && (fileFromServer.isFile())) {
-                fileFromServer.delete();
-            }
-            fileFromServer.createNewFile();
-
-            BufferedOutputStream bufferedFileStream = new BufferedOutputStream(new FileOutputStream(fileFromServer));
-            DataInputStream dataInputStreamFromServer = new DataInputStream(inputStream);
-
-            int BUFFER_SIZE = 64 * 1024;
-            byte[] b = new byte[8];
-            byte[] chunk = new byte[BUFFER_SIZE];
-            long supposeFileLength;
-            long iterationCount;
-            int enumerator;
-            long lastBuffer;
-
-            /*читаем массив из 8 байтов представляющий длинну скачиваемого файла
-             * конвертируем массив в число long */
-            dataInputStreamFromServer.read(b, 0, 8);
-            supposeFileLength = byteArrayToLong(b, 0);
-            System.out.printf("File length is %d bytes %n", supposeFileLength);
-            iterationCount = supposeFileLength / BUFFER_SIZE;
-            lastBuffer = supposeFileLength % BUFFER_SIZE;
-
-            /*Читаем входной поток на клиенте кусками BUFFER_SIZE и остатком от буфера на последне итерции
-            * если в потоке нет данных, ждем его заполнения*/
-            while (iterationCount >= 0) {
-                if ((iterationCount > 0) && (dataInputStreamFromServer.available() >= BUFFER_SIZE)) {
-                    enumerator = dataInputStreamFromServer.read(chunk);
-                    bufferedFileStream.write(chunk, 0, BUFFER_SIZE);
-                    bufferedFileStream.flush();
-                    System.out.printf("Bytes read per iteration from input socket %d%n", enumerator);
-                    iterationCount--;
-                    continue;
+        public void transferFrom(InputStream inputStream) {
+            try {
+                File fileFromServer = new File(currentDir + "/" + downloadFileName);
+                if ((fileFromServer.exists()) && (fileFromServer.isFile())) {
+                    fileFromServer.delete();
                 }
-                if ((iterationCount == 0) && (dataInputStreamFromServer.available() == lastBuffer)) {
-                    enumerator = dataInputStreamFromServer.read(chunk);
-                    bufferedFileStream.write(chunk, 0, (int) lastBuffer);
-                    bufferedFileStream.flush();
-                    System.out.printf("Bytes read per iteration from input socket %d%n", enumerator);
-                    iterationCount--;
+                fileFromServer.createNewFile();
+
+                try (BufferedOutputStream bufferedFileStream = new BufferedOutputStream(new FileOutputStream(fileFromServer))) {
+
+                    DataInputStream dataInputStreamFromServer = new DataInputStream(inputStream);
+                    int BUFFER_SIZE = 64 * 1024;
+                    byte[] b = new byte[8];
+                    byte[] chunk = new byte[BUFFER_SIZE];
+                    long supposeFileLength;
+                    long iterationCount;
+                    int enumerator;
+                    long lastBuffer;
+
+                    /*читаем массив из 8 байтов представляющий длинну скачиваемого файла
+                     * конвертируем массив в число long */
+                    dataInputStreamFromServer.read(b, 0, 8);
+                    supposeFileLength = byteArrayToLong(b, 0);
+                    System.out.printf("File length is %d bytes %n", supposeFileLength);
+                    iterationCount = supposeFileLength / BUFFER_SIZE;
+                    lastBuffer = supposeFileLength % BUFFER_SIZE;
+
+                     /*Читаем входной поток на клиенте кусками BUFFER_SIZE и остатком от буфера на последне итерции
+                       * если в потоке нет данных, ждем его заполнения*/
+                    while (iterationCount >= 0) {
+                        if ((iterationCount > 0) && (dataInputStreamFromServer.available() >= BUFFER_SIZE)) {
+                            enumerator = dataInputStreamFromServer.read(chunk);
+                            bufferedFileStream.write(chunk, 0, BUFFER_SIZE);
+                            bufferedFileStream.flush();
+                            System.out.printf("Bytes read per iteration from input socket %d%n", enumerator);
+                            iterationCount--;
+                            continue;
+                        }
+                        if ((iterationCount == 0) && (dataInputStreamFromServer.available() == lastBuffer)) {
+                            enumerator = dataInputStreamFromServer.read(chunk);
+                            bufferedFileStream.write(chunk, 0, (int) lastBuffer);
+                            bufferedFileStream.flush();
+                            System.out.printf("Bytes read per iteration from input socket %d%n", enumerator);
+                            iterationCount--;
+                        }
+                    }
+                    System.out.printf("Bytes remain in input socket buffer is %d%n", dataInputStreamFromServer.available());
+                    System.out.printf("Download file is finished %n");
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-            bufferedFileStream.flush();
-            bufferedFileStream.close();
-            System.out.printf("Bytes remain in input socket buffer is %d%n", dataInputStreamFromServer.available());
-            System.out.printf("Download file is finished %n");
         }
 
         /**
@@ -222,46 +259,53 @@ class Client {
          * @throws IOException
          */
         @Override
-        public void transferTo(OutputStream outputStreamToServer) throws IOException {
-            File sourceFile = new File(currentDir + "/" + uploadFileName);
-            int BUFFER_SIZE = 64 * 1024;
+        public void transferTo(OutputStream outputStreamToServer) {
+            try {
+                File sourceFile = new File(currentDir + "/" + uploadFileName);
+                int BUFFER_SIZE = 64 * 1024;
 
-            BufferedInputStream bufferedFileStream = new BufferedInputStream(new FileInputStream(sourceFile), BUFFER_SIZE);
-            DataOutputStream dataOutputStreamToServer = new DataOutputStream(outputStreamToServer);
+                try (BufferedInputStream bufferedFileStream = new BufferedInputStream(new FileInputStream(sourceFile), BUFFER_SIZE)) {
 
-            long supposeFileLength = sourceFile.length();
-            int enumerator;
-            byte[] chunk = new byte[BUFFER_SIZE];
-            long iterationCount = supposeFileLength / BUFFER_SIZE;
-            long lastBuffer = supposeFileLength % BUFFER_SIZE;
+                    DataOutputStream dataOutputStreamToServer = new DataOutputStream(outputStreamToServer);
+                    long supposeFileLength = sourceFile.length();
+                    int enumerator;
+                    byte[] chunk = new byte[BUFFER_SIZE];
+                    long iterationCount = supposeFileLength / BUFFER_SIZE;
+                    long lastBuffer = supposeFileLength % BUFFER_SIZE;
 
-            System.out.printf("%nFile Length for upload is %d bytes %n", supposeFileLength);
+                    System.out.printf("%nFile Length for upload is %d bytes %n", supposeFileLength);
 
-            /*сообщаем серверу длинну выгружаемого файла в виде массива из 8 байтов*/
-            dataOutputStreamToServer.write(longToByteArray(supposeFileLength));
-            dataOutputStreamToServer.flush();
-
-            /* Выгрузка файла кусками BUFFER_SIZE в выхдной поток на клиенте и остаток от буфера на последней итерации*/
-            /* если в потоке нет данных, ждем его заполнения*/
-            while (iterationCount >= 0) {
-                if ((iterationCount > 0) && (bufferedFileStream.available() >= BUFFER_SIZE)) {
-                    enumerator = bufferedFileStream.read(chunk);
-                    dataOutputStreamToServer.write(chunk, 0, BUFFER_SIZE);
-                    System.out.printf("Bytes read per iteration is %d%n", enumerator);
+                   /*сообщаем серверу длинну выгружаемого файла в виде массива из 8 байтов*/
+                    dataOutputStreamToServer.write(longToByteArray(supposeFileLength));
                     dataOutputStreamToServer.flush();
-                    iterationCount--;
-                    continue;
+
+                   /* Выгрузка файла кусками BUFFER_SIZE в выхдной поток на клиенте и остаток от буфера на последней итерации*/
+                  /* если в потоке нет данных, ждем его заполнения*/
+                    while (iterationCount >= 0) {
+                        if ((iterationCount > 0) && (bufferedFileStream.available() >= BUFFER_SIZE)) {
+                            enumerator = bufferedFileStream.read(chunk);
+                            dataOutputStreamToServer.write(chunk, 0, BUFFER_SIZE);
+                            System.out.printf("Bytes read per iteration is %d%n", enumerator);
+                            dataOutputStreamToServer.flush();
+                            iterationCount--;
+                            continue;
+                        }
+                        if ((iterationCount == 0) && (bufferedFileStream.available() == lastBuffer)) {
+                            enumerator = bufferedFileStream.read(chunk);
+                            dataOutputStreamToServer.write(chunk, 0, (int) lastBuffer);
+                            System.out.printf("Bytes read per iteration is %d%n", enumerator);
+                            dataOutputStreamToServer.flush();
+                            iterationCount--;
+                        }
+                    }
+                    System.out.printf("Upload file finished, number of bytes is transmitted to Server is %d%n", supposeFileLength);
+                    bufferedFileStream.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
-                if ((iterationCount == 0) && (bufferedFileStream.available() == lastBuffer)) {
-                    enumerator = bufferedFileStream.read(chunk);
-                    dataOutputStreamToServer.write(chunk, 0, (int) lastBuffer);
-                    System.out.printf("Bytes read per iteration is %d%n", enumerator);
-                    dataOutputStreamToServer.flush();
-                    iterationCount--;
-                }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-            System.out.printf("Upload file finished, number of bytes is transmitted to Server is %d%n", supposeFileLength);
-            bufferedFileStream.close();
         }
 
         /**
