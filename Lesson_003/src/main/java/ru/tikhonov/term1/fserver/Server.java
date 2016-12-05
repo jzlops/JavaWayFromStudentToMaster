@@ -405,7 +405,7 @@ class Server {
         public boolean execOperation(String commandName, OutputStream outStreamToClient, InputStream inputStreamFromClient) {
             int BUFFER_SIZE = 64 * 1024;
             String fileNameFromClient;
-            PrintWriter outToClientMessage = new PrintWriter(outStreamToClient, true);
+
             Scanner scanner = new Scanner(commandName.toLowerCase());
             StringBuilder buffer = new StringBuilder();
             File fileFromClient;
@@ -432,13 +432,14 @@ class Server {
                 }
 
                 /*После всевозможного парсинга - говорим клиенту что начанаем выгрузку*/
-                try (BufferedOutputStream bufferedFileStream = new BufferedOutputStream(new FileOutputStream(fileFromClient), BUFFER_SIZE)) {
+                try (BufferedOutputStream bufferedFileStream = new BufferedOutputStream(new FileOutputStream(fileFromClient), BUFFER_SIZE);
+                     PrintWriter outToClientMessage = new PrintWriter(outStreamToClient, true);
+                     DataInputStream dataInStreamFromClient = new DataInputStream(inputStreamFromClient)) {
 
                     /*Говорим клиенту чтоб готовился к выгрузке файла*/
                     sayUpload();
                     outToClientMessage.println(fileNameFromClient);
 
-                    DataInputStream dataInStreamFromClient = new DataInputStream(inputStreamFromClient);
 
                     byte[] b = new byte[8];
                     byte[] chunk = new byte[BUFFER_SIZE];
