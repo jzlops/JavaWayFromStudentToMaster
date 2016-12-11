@@ -20,7 +20,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>ru.tikhonov.term1.fserver.ServerRun</mainClass>
+                            <mainClass>ru.tikhonov.term1.exam.Run</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
