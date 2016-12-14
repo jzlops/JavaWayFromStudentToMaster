@@ -28,7 +28,7 @@ class Logger {
             try {
                 file.createNewFile();
             } catch (IOException e) {
-                System.out.printf("Creation logFile is unsuccessful %s", System.getProperty("line.separator"));
+               System.out.printf("Creation logFile is unsuccessful %s", System.getProperty("line.separator"));
                 result = false;
             }
         }
@@ -39,7 +39,7 @@ class Logger {
                 this.logFile = logFile;
             } catch (IOException e) {
                 System.out.printf("Opening logFile in READ/WRITE mode is unsuccessful %s", System.getProperty("line.separator"));
-                e.printStackTrace();
+                //e.printStackTrace();
                 result = false;
             }
         }
@@ -54,7 +54,7 @@ class Logger {
             this.logFile.write(this.logBuffer.toString().getBytes());
         } catch (IOException e) {
             System.out.printf("Error adding information to logFile %s", System.getProperty("line.separator"));
-            e.printStackTrace();
+         //   e.printStackTrace();
         }
         logBuffer.setLength(0);
     }
@@ -64,7 +64,7 @@ class Logger {
             this.logFile.close();
         } catch (IOException e) {
             System.out.printf("Error closing logFile %s", System.getProperty("line.separator"));
-            e.printStackTrace();
+          //  e.printStackTrace();
         }
     }
 }

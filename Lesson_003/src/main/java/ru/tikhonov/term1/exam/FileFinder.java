@@ -2,6 +2,7 @@ package ru.tikhonov.term1.exam;
 
 
 import java.io.File;
+import java.io.FilenameFilter;
 
 /**
  * Класс реализующий поиск файла по заданому шаблону
@@ -15,7 +16,7 @@ class FileFinder {
     private String[] args;
     private String key;
     private StringBuilder allMatchedFiles = new StringBuilder();
-    private FilesAnalyzer filesFilter = new FilesAnalyzer();
+    private FilenameFilter fileNameFilter;
 
     /**
      * Конструктор принимающий массив параметров из коммандной строки
@@ -30,14 +31,50 @@ class FileFinder {
      * Основной метод класса, для поиска файла и вывода информации на консоль и лог-файл
      */
     void start() {
-        if (!validateAndInit()) {
+        int validateState;
+        Validate validate = new Validate();
+        Logger logger = new Logger();
+        this.logger = logger;
+        validate.setLogger(this.logger);
+
+        validateState = validate.isCorrect(this.args);
+
+        if (validateState == -1) {
+            printHelp();
             return;
         }
-        filesFilter.setParameters(this.filePattern, this.key, this.allMatchedFiles);
+        if (validateState > 0) {
+            printError(validateState);
+            return;
+        }
+        /*Инициализация переменных*/
+        init();
+        /*Поиск файла*/
         scan(this.parentDir);
+        /*Вывод результато в консоль*/
         System.out.printf(this.allMatchedFiles.toString());
+        /*Запись в лог файл*/
         logger.appendLog("Request result:", this.allMatchedFiles.toString());
         logger.close();
+    }
+
+    /**
+     * Инициализация внуцтренних переменных, введенными аргументами
+     */
+
+    private void init() {
+        this.parentDir = new File(this.args[1]);
+        this.filePattern = this.args[3].toLowerCase();
+        this.key = this.args[4].toLowerCase();
+        if (this.key.equals("-m")) {
+            this.fileNameFilter = new FilesMaskAnalyzer(this.filePattern, this.allMatchedFiles);
+        }
+        if (this.key.equals("-f")) {
+            this.fileNameFilter = new FileFullNameAnalyzer(this.filePattern, this.allMatchedFiles);
+        }
+        if (this.key.equals("-r")) {
+            this.fileNameFilter = new FileRegexAnalyzer(this.filePattern, this.allMatchedFiles);
+        }
     }
 
     /**
@@ -46,67 +83,9 @@ class FileFinder {
      * @param dir директория для анализа
      */
     private void scan(File dir) {
-        for (File currentDir : dir.listFiles(this.filesFilter)) {
+        for (File currentDir : dir.listFiles(this.fileNameFilter)) {
             this.scan(currentDir);
         }
-    }
-
-    /**
-     * Основной парсер аргументов коммандной строки
-     *
-     * @return true если все аргументы введены корректно, иначе false
-     */
-    private boolean validateAndInit() {
-        if ((this.args.length == 1) && (this.args[0]).toLowerCase().equals("-help")) {
-            printHelp();
-            return false;
-        }
-
-        this.logger = new Logger();
-        if (!this.logger.init(this.args[6])) {
-            printError(6);
-            return false;
-        }
-        this.logger.appendLog("Input arguments:", String.format("%s %s %s %s %s %s %s ", this.args[0], this.args[1], this.args[2], this.args[3], this.args[4], this.args[5], this.args[6]));
-
-
-        if (this.args.length < 7) {
-            printError(8);
-            return false;
-        }
-        if (!this.args[0].toLowerCase().equals("-d")) {
-            printError(0);
-            return false;
-        }
-        if (!this.args[2].toLowerCase().equals("-n")) {
-            printError(2);
-            return false;
-        }
-        if (!this.args[4].toLowerCase().equals("-m")) {
-            if (!this.args[4].toLowerCase().equals("-f")) {
-                printError(4);
-                return false;
-            }
-        }
-        if (!this.args[5].toLowerCase().equals("-o")) {
-            printError(5);
-            return false;
-        }
-        File parentDir = new File(this.args[1]);
-        if ((!parentDir.exists()) || (!parentDir.isDirectory())) {
-            printError(1);
-            return false;
-        }
-
-        if ((this.args[4].toLowerCase().equals("-m")) && (!this.args[3].toLowerCase().startsWith("*."))) {
-            printError(5);
-            return false;
-        }
-
-        this.parentDir = parentDir;
-        this.filePattern = this.args[3].toLowerCase();
-        this.key = this.args[4].toLowerCase();
-        return true;
     }
 
     /**
@@ -114,7 +93,7 @@ class FileFinder {
      */
     private void printHelp() {
         StringBuilder help = new StringBuilder();
-        help.append(System.getProperty("line.separator"));
+        help.append("Help:").append(System.getProperty("line.separator"));
         help.append(" key -d for define root dir").append(System.getProperty("line.separator"));
         help.append(" key -n for define full filename, file-mask or regular expression").append(System.getProperty("line.separator"));
         help.append(" key -m for mask pattern ").append(System.getProperty("line.separator"));
@@ -134,10 +113,13 @@ class FileFinder {
     private void printError(int errorCode) {
         StringBuilder error = new StringBuilder();
         error.append("Syntax error").append(System.getProperty("line.separator"));
-        if (errorCode == 8) {
+        if (errorCode == 7) {
             error.append("insufficiency arguments").append(System.getProperty("line.separator"));
         }
-        if (errorCode == 0) {
+        if (errorCode == 6) {
+            error.append("Logfile name is incorrect").append(System.getProperty("line.separator"));
+        }
+        if (errorCode == 1) {
             error.append("Uncorrected key -d").append(System.getProperty("line.separator"));
         }
         if (errorCode == 2) {
@@ -149,18 +131,23 @@ class FileFinder {
         if (errorCode == 5) {
             error.append("Uncorrected key -o").append(System.getProperty("line.separator"));
         }
-        if (errorCode == 1) {
+        if (errorCode == 3) {
             error.append("Directory name is incorrect").append(System.getProperty("line.separator"));
         }
-        if (errorCode == 5) {
+        if (errorCode == 8) {
             error.append("File-mask parameter is incorrect").append(System.getProperty("line.separator"));
         }
         error.append(System.getProperty("line.separator"));
         error.append("Use key -help for assistant").append(System.getProperty("line.separator"));
         error.append(System.getProperty("line.separator"));
-
         System.out.printf(error.toString());
+
+        if ((errorCode == 99) || (errorCode == 7)) {
+            return;
+        }
         this.logger.appendLog("Error message generated:", error.toString());
     }
 
 }
+
+

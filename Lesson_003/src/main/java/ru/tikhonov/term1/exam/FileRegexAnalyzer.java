@@ -2,28 +2,29 @@ package ru.tikhonov.term1.exam;
 
 import java.io.File;
 import java.io.FilenameFilter;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
- * Класс фильтрующий папки и файлы
- *
  * @author Sergey Tikhonov
  */
-class FilesAnalyzer implements FilenameFilter {
+public class FileRegexAnalyzer implements FilenameFilter {
     private String filter;
-    private String key;
     private StringBuilder allMatchedFiles;
+    Matcher matcher;
+    Pattern pattern;
 
     /**
      * Выставляем шаблон и ключ для фильтрации
      *
      * @param filter шаблон из комманадной строки
-     * @param key    ключ коммандной строки
      * @param result записываем результаты поиска в объект StringBuilder
      */
-    void setParameters(String filter, String key, StringBuilder result) {
-        this.key = key;
+    FileRegexAnalyzer(String filter, StringBuilder result) {
         this.filter = filter;
         this.allMatchedFiles = result;
+        this.pattern = Pattern.compile(this.filter);
+
     }
 
     /**
@@ -40,17 +41,10 @@ class FilesAnalyzer implements FilenameFilter {
             return true;
         }
         if (supposeFile.isFile()) {
-            if (this.key.equals("-m")) {
-                if (name.endsWith(this.filter.substring(1))) {
-                    this.allMatchedFiles.append(supposeFile).append(System.getProperty("line.separator"));
-                    return false;
-                }
-            }
-            if (this.key.equals("-f")) {
-                if (name.equals(this.filter)) {
-                    this.allMatchedFiles.append(supposeFile).append(System.getProperty("line.separator"));
-                    return false;
-                }
+            this.matcher = pattern.matcher(name);
+            if (matcher.find()) {
+                this.allMatchedFiles.append(supposeFile).append(System.getProperty("line.separator"));
+                return false;
             }
         }
         return false;

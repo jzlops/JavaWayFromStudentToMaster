@@ -20,6 +20,10 @@ package ru.tikhonov.term1.exam;
 public class Run {
     public static void main(String[] args) {
         FileFinder fileFinder = new FileFinder(args);
+//        String s[] = {"-d", ".", "-n", "*.txt", "-m", "-o", "lpt1"};
+//        String s[] = {"-help"};
+//        String s[] = {"-d", ".", "-n", "t.txt", "-r", "-o", "log.log"};
+//        FileFinder fileFinder = new FileFinder(s);
         fileFinder.start();
     }
 }
